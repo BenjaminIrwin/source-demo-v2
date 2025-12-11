@@ -18,7 +18,7 @@ export default function Home() {
         <div className="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto">
           {/* Claims */}
           <div 
-            onClick={() => router.push('/graph')}
+            onClick={() => router.push('/claims')}
             className="bg-slate-800/50 backdrop-blur-sm rounded-2xl shadow-lg shadow-black/20 hover:shadow-xl hover:shadow-indigo-500/10 transition-all duration-300 cursor-pointer border border-slate-700/50 hover:border-indigo-500/50 p-8 group"
           >
             <div className="mb-6">

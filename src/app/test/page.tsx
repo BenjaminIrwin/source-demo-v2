@@ -121,7 +121,11 @@ export default function TestPage() {
               </div>
               <SemanticLabeling 
                 sentence={testCase.sentence} 
-                roles={testCase.roles} 
+                roles={testCase.roles}
+                recipes={{ mainRecipe: { sections: [] } }}
+                startDate=""
+                endDate=""
+                location=""
               />
             </div>
           ))}

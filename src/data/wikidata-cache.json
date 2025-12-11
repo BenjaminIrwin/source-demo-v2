@@ -1,0 +1,55 @@
+{
+  "fetchedAt": "2025-12-11T15:19:07.696Z",
+  "entities": {
+    "Q43723": {
+      "id": "Q43723",
+      "label": "Benjamin Netanyahu",
+      "description": "Prime Minister of Israel (1996–1999; 2009–2021; since 2022)",
+      "image": "https://commons.wikimedia.org/wiki/Special:FilePath/Benjamin_Netanyahu%2C_February_2023.jpg?width=300",
+      "instanceOf": [
+        "human"
+      ],
+      "birthDate": "+1949-10-21T00:00:00Z",
+      "deathDate": null,
+      "occupation": [
+        "politician",
+        "diplomat",
+        "statesperson"
+      ],
+      "country": "Israel"
+    },
+    "Q38799": {
+      "id": "Q38799",
+      "label": "Hamas",
+      "description": "Palestinian Islamist political and military organization",
+      "image": "https://commons.wikimedia.org/wiki/Special:FilePath/25th_anniversary_of_Hamas_(13).jpg?width=300",
+      "instanceOf": [
+        "political organization",
+        "Islamist movement",
+        "military organization",
+        "religious organization",
+        "resistance movement",
+        "terrorist organization"
+      ],
+      "birthDate": null,
+      "deathDate": null,
+      "occupation": [],
+      "country": null
+    },
+    "Q27020200": {
+      "id": "Q27020200",
+      "label": "Barak Hiram",
+      "description": "Israeli military officer",
+      "image": "https://commons.wikimedia.org/wiki/Special:FilePath/%D7%91%D7%A8%D7%A7_%D7%97%D7%99%D7%A8%D7%9D%2C_%D7%9E%D7%A4%D7%A7%D7%93_%D7%A2%D7%95%D7%A6%D7%91%D7%AA_%D7%94%D7%91%D7%96%D7%A7.webp?width=300",
+      "instanceOf": [
+        "human"
+      ],
+      "birthDate": "+1979-00-00T00:00:00Z",
+      "deathDate": null,
+      "occupation": [
+        "military officer"
+      ],
+      "country": "Israel"
+    }
+  }
+}

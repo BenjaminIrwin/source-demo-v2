@@ -1,0 +1,620 @@
+{
+  "claims": [
+    {
+      "id": 1,
+      "sentence": "Hamas militants attacked Israel",
+      "startDate": "2023-10-07",
+      "endDate": "2023-10-07",
+      "location": "Israel",
+      "roles": [
+        { "word": "Hamas militants", "role": "Agent" },
+        { "word": "attacked", "role": "Action", "isAction": true },
+        { "word": "Israel", "role": "Patient" }
+      ],
+      "recipes": {
+        "mainRecipe": {
+          "sections": [
+            {
+              "type": "dated",
+              "items": [
+                {
+                  "id": "b2c3d4e5-2222-4000-8000-000000000001",
+                  "text": "performed some violent action(s) against Israel",
+                  "verified": true,
+                  "children": [
+                    {
+                      "id": "b2c3d4e5-2222-4000-8000-000000000002",
+                      "text": "bombed Israel",
+                      "verified": true,
+                      "children": [
+                        { "id": "b2c3d4e5-2222-4000-8000-000000000020", "text": "performed some action", "verified": true },
+                        { "id": "b2c3d4e5-2222-4000-8000-000000000021", "text": "A bomb detonated in Israel", "verified": true }
+                      ]
+                    },
+                    {
+                      "id": "b2c3d4e5-2222-4000-8000-000000000003",
+                      "text": "killed people",
+                      "verified": true,
+                      "children": [
+                        { "id": "b2c3d4e5-2222-4000-8000-000000000022", "text": "performed some action", "verified": true },
+                        {
+                          "id": "b2c3d4e5-2222-4000-8000-000000000023",
+                          "text": "people died",
+                          "verified": true,
+                          "children": [
+                            { "id": "b2c3d4e5-2222-4000-8000-000000000024", "text": "People were alive", "verified": true },
+                            { "id": "b2c3d4e5-2222-4000-8000-000000000025", "text": "People were dead", "verified": true }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "id": "b2c3d4e5-2222-4000-8000-000000000008",
+                      "text": "breached Israel-Gaza border",
+                      "children": [
+                        { "id": "b2c3d4e5-2222-4000-8000-000000000026", "text": "...moved across the border" },
+                        { "id": "b2c3d4e5-2222-4000-8000-000000000027", "text": "The move was illegal" }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "anyDate",
+              "items": [
+                {
+                  "id": "c3d4e5f6-3333-4000-8000-000000000001",
+                  "text": "communicated intent to cause harm to Israel on October 7th 2023",
+                  "children": [
+                    { "id": "c3d4e5f6-3333-4000-8000-000000000002", "text": "said that they were going to harm Israel on October 7th 2023" },
+                    { "id": "c3d4e5f6-3333-4000-8000-000000000003", "text": "signalled that they were going to harm Israel on October 7th 2023" },
+                    { "id": "c3d4e5f6-3333-4000-8000-000000000004", "text": "messaged that they were going to harm Israel on October 7th 2023" },
+                    { "id": "c3d4e5f6-3333-4000-8000-000000000005", "text": "signed that they were going to harm Israel on October 7th 2023" }
+                  ]
+                }
+              ]
+            }
+          ],
+          "relationships": [
+            { "from": "b2c3d4e5-2222-4000-8000-000000000020", "to": "b2c3d4e5-2222-4000-8000-000000000021", "type": "causes" },
+            { "from": "b2c3d4e5-2222-4000-8000-000000000022", "to": "b2c3d4e5-2222-4000-8000-000000000023", "type": "causes" },
+            { "from": "b2c3d4e5-2222-4000-8000-000000000024", "to": "b2c3d4e5-2222-4000-8000-000000000025", "type": "before" }
+          ]
+        },
+        "roleRecipes": {
+          "Agent": [
+            {
+              "name": "Hamas",
+              "wikidata": "Q38799"
+            },
+            {
+              "name": "Hamas militants",
+              "isGroup": true,
+              "items": [
+                { "id": "a1b2c3d4-1111-4000-8000-000000000001", "text": "Is an animate being" },
+                {
+                  "id": "a1b2c3d4-1111-4000-8000-000000000002",
+                  "text": "Is a militant",
+                  "children": [
+                    {
+                      "id": "a1b2c3d4-1111-4000-8000-000000000003",
+                      "text": "Supports a political cause",
+                      "children": [
+                        { "id": "a1b2c3d4-1111-4000-8000-000000000004", "text": "Communicates that they support a political cause" }
+                      ]
+                    },
+                    { "id": "a1b2c3d4-1111-4000-8000-000000000005", "text": "Uses violence" }
+                  ]
+                },
+                {
+                  "id": "a1b2c3d4-1111-4000-8000-000000000006",
+                  "text": "Is a member of Hamas",
+                  "children": [
+                    { "id": "a1b2c3d4-1111-4000-8000-000000000007", "text": "inherits \"Hamas\" membership" },
+                    { "id": "a1b2c3d4-1111-4000-8000-000000000008", "text": "wears \"Hamas\" clothing or attire" },
+                    { "id": "a1b2c3d4-1111-4000-8000-000000000009", "text": "has official membership of \"Hamas\"" },
+                    { "id": "a1b2c3d4-1111-4000-8000-000000000010", "text": "communicates that they are members of \"Hamas\"" }
+                  ]
+                }
+              ]
+            }
+          ],
+          "Patient": {
+            "location": {
+              "lat": 31.0461,
+              "lng": 34.8516
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": 2,
+      "sentence": "Militants fired missiles from the Gaza Strip over Southern Israel to Tel Aviv",
+      "startDate": "2023-10-07T08:00",
+      "endDate": "2023-10-07T08:30",
+      "location": "the Gaza Strip",
+      "roles": [
+        { "word": "Militants", "role": "Agent" },
+        { "word": "fired", "role": "Action", "isAction": true },
+        { "word": "missiles", "role": "Theme" },
+        { "word": "from the Gaza Strip", "role": "Init_location" },
+        { "word": "over Southern Israel", "role": "Path" },
+        { "word": "to Tel Aviv", "role": "Final_location" }
+      ],
+      "recipes": {
+        "mainRecipe": {
+          "sections": [
+            {
+              "type": "dated",
+              "items": [
+                { "id": "d4e5f6a7-2222-4000-8000-000000000001", "text": "performed some action" },
+                { "id": "d4e5f6a7-2222-4000-8000-000000000002", "text": "Missiles moved from the Gaza Strip to Tel Aviv" }
+              ]
+            }
+          ],
+          "relationships": [
+            { "from": "d4e5f6a7-2222-4000-8000-000000000001", "to": "d4e5f6a7-2222-4000-8000-000000000002", "type": "causes" }
+          ]
+        },
+        "roleRecipes": {
+          "Agent": {
+            "isGroup": true,
+            "items": [
+              { "id": "d4e5f6a7-2111-4000-8000-000000000001", "text": "Is an animate being" },
+              {
+                "id": "d4e5f6a7-2111-4000-8000-000000000002",
+                "text": "Is a militant",
+                "children": [
+                  {
+                    "id": "d4e5f6a7-2111-4000-8000-000000000003",
+                    "text": "Supports a political cause",
+                    "children": [
+                      { "id": "d4e5f6a7-2111-4000-8000-000000000004", "text": "Communicates that they support a political cause" }
+                    ]
+                  },
+                  { "id": "d4e5f6a7-2111-4000-8000-000000000005", "text": "Uses violence" }
+                ]
+              }
+            ]
+          },
+          "Theme": {
+            "isGroup": true,
+            "items": [
+              {
+                "id": "d4e5f6a7-2112-4000-8000-000000000001",
+                "text": "Is a projectile weapon",
+                "children": [
+                  { "id": "d4e5f6a7-2112-4000-8000-000000000002", "text": "Is propelled through the air" },
+                  { "id": "d4e5f6a7-2112-4000-8000-000000000003", "text": "Is designed to travel a distance" }
+                ]
+              },
+              {
+                "id": "d4e5f6a7-2112-4000-8000-000000000004",
+                "text": "Is a missile",
+                "children": [
+                  { "id": "d4e5f6a7-2112-4000-8000-000000000005", "text": "Contains a propulsion system" },
+                  { "id": "d4e5f6a7-2112-4000-8000-000000000006", "text": "Contains an explosive payload" },
+                  { "id": "d4e5f6a7-2112-4000-8000-000000000007", "text": "Is man-made" }
+                ]
+              }
+            ]
+          },
+          "Init_location": {
+            "location": {
+              "lat": 31.3547,
+              "lng": 34.3088
+            }
+          },
+          "Path": {
+            "location": {
+              "lat": 30.8,
+              "lng": 34.8
+            }
+          },
+          "Final_location": {
+            "location": {
+              "lat": 32.0853,
+              "lng": 34.7818
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": 3,
+      "sentence": "An Egyptian official said \"We have warned them an explosion of the situation is coming, and very soon, and it would be big. But they underestimated such warnings\"",
+      "roles": [
+        { "word": "An Egyptian official", "role": "Agent" },
+        { "word": "said", "role": "Action", "isAction": true },
+        { "word": "We have warned them an explosion of the situation is coming, and very soon, and it would be big. But they underestimated such warnings", "role": "Content.quote" }
+      ],
+      "recipes": {
+        "mainRecipe": {
+          "sections": [
+            {
+              "type": "dated",
+              "items": [
+                {
+                  "id": "e5f6a7b8-3222-4000-8000-000000000001",
+                  "text": "communicated \"We have warned them an explosion of the situation is coming, and very soon, and it would be big. But they underestimated such warnings\"",
+                  "children": [
+                    { "id": "e5f6a7b8-3222-4000-8000-000000000002", "text": "said \"We have warned them an explosion of the situation is coming, and very soon, and it would be big. But they underestimated such warnings\"" },
+                    { "id": "e5f6a7b8-3222-4000-8000-000000000003", "text": "signed \"We have warned them an explosion of the situation is coming, and very soon, and it would be big. But they underestimated such warnings\"" },
+                    { "id": "e5f6a7b8-3222-4000-8000-000000000004", "text": "signalled \"We have warned them an explosion of the situation is coming, and very soon, and it would be big. But they underestimated such warnings\"" },
+                    { "id": "e5f6a7b8-3222-4000-8000-000000000005", "text": "messaged \"We have warned them an explosion of the situation is coming, and very soon, and it would be big. But they underestimated such warnings\"" }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        "roleRecipes": {
+          "Agent": {
+            "items": [
+              { "id": "e5f6a7b8-3111-4000-8000-000000000001", "text": "Is an animate being" },
+              {
+                "id": "e5f6a7b8-3111-4000-8000-000000000002",
+                "text": "Is Egyptian",
+                "children": [
+                  { "id": "e5f6a7b8-3111-4000-8000-000000000003", "text": "Holds Egyptian citizenship" },
+                  { "id": "e5f6a7b8-3111-4000-8000-000000000004", "text": "Is born in Egypt" },
+                  { "id": "e5f6a7b8-3111-4000-8000-000000000005", "text": "Represents the Egyptian government" }
+                ]
+              },
+              {
+                "id": "e5f6a7b8-3111-4000-8000-000000000006",
+                "text": "Is an official",
+                "children": [
+                  { "id": "e5f6a7b8-3111-4000-8000-000000000007", "text": "Holds a position in government" },
+                  { "id": "e5f6a7b8-3111-4000-8000-000000000008", "text": "Has authority to speak on behalf of the government" },
+                  { "id": "e5f6a7b8-3111-4000-8000-000000000009", "text": "Is appointed or elected to a governmental role" }
+                ]
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": 4,
+      "sentence": "Benjamin Netanyahu denied that Israel had received prior warning of the October 7th attacks",
+      "roles": [
+        { "word": "Benjamin Netanyahu", "role": "Agent" },
+        { "word": "denied", "role": "Action", "isAction": true },
+        { "word": "Israel had received prior warning of the attacks", "role": "Content.clause" }
+      ],
+      "recipes": {
+        "mainRecipe": {
+          "sections": [
+            {
+              "type": "dated",
+              "items": [
+                {
+                  "id": "f6a7b8c9-4222-4000-8000-000000000001",
+                  "text": "communicated that Israel had not received prior warning of the attacks",
+                  "children": [
+                    { "id": "f6a7b8c9-4222-4000-8000-000000000002", "text": "said that Israel had not received prior warning of the attacks" },
+                    { "id": "f6a7b8c9-4222-4000-8000-000000000003", "text": "signed that Israel had not received prior warning of the attacks" },
+                    { "id": "f6a7b8c9-4222-4000-8000-000000000004", "text": "signalled that Israel had not received prior warning of the attacks" },
+                    { "id": "f6a7b8c9-4222-4000-8000-000000000005", "text": "messaged that Israel had not received prior warning of the attacks" }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        "roleRecipes": {
+          "Agent": {
+            "wikidata": "Q43723"
+          }
+        }
+      }
+    },
+    {
+      "id": 5,
+      "sentence": "Hamas announced the start of Operation Al-Aqsa Flood",
+      "roles": [
+        { "word": "Hamas", "role": "Agent" },
+        { "word": "announced", "role": "Action", "isAction": true },
+        { "word": "the start of Operation Al-Aqsa Flood", "role": "Content.entity" }
+      ],
+      "recipes": {
+        "mainRecipe": {
+          "sections": [
+            {
+              "type": "dated",
+              "items": [
+                {
+                  "id": "a7b8c9d0-5222-4000-8000-000000000001",
+                  "text": "communicated that Operation Al-Aqsa Flood had started",
+                  "children": [
+                    { "id": "a7b8c9d0-5222-4000-8000-000000000002", "text": "said that Operation Al-Aqsa Flood had started" },
+                    { "id": "a7b8c9d0-5222-4000-8000-000000000003", "text": "signed that Operation Al-Aqsa Flood had started" },
+                    { "id": "a7b8c9d0-5222-4000-8000-000000000004", "text": "signalled that Operation Al-Aqsa Flood had started" },
+                    { "id": "a7b8c9d0-5222-4000-8000-000000000005", "text": "messaged that Operation Al-Aqsa Flood had started" }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        "roleRecipes": {
+          "Agent": {
+            "wikidata": "Q38799"
+          }
+        }
+      }
+    },
+    {
+      "id": 6,
+      "sentence": "Ten civilians were killed in Kibbutz Kissufim",
+      "location": "Kibbutz Kissufim",
+      "roles": [
+        { "word": "Ten civilians", "role": "Patient" },
+        { "word": "were killed", "role": "Action", "isAction": true }
+      ],
+      "recipes": {
+        "mainRecipe": {
+          "sections": [
+            {
+              "type": "dated",
+              "items": [
+                { "id": "b8c9d0e1-6222-4000-8000-000000000001", "text": "performed some action" },
+                {
+                  "id": "b8c9d0e1-6222-4000-8000-000000000002",
+                  "text": "10 civilians died",
+                  "children": [
+                    { "id": "b8c9d0e1-6222-4000-8000-000000000003", "text": "10 civilians were alive" },
+                    { "id": "b8c9d0e1-6222-4000-8000-000000000004", "text": "10 civilians were dead" }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        "roleRecipes": {
+          "Patient": {
+            "isGroup": true,
+            "items": [
+              { "id": "b8c9d0e1-6111-4000-8000-000000000001", "text": "Is an animate being" },
+              {
+                "id": "b8c9d0e1-6111-4000-8000-000000000002",
+                "text": "Is a group of people",
+                "children": [
+                  { "id": "b8c9d0e1-6111-4000-8000-000000000003", "text": "Contains exactly 10 individuals" },
+                  { "id": "b8c9d0e1-6111-4000-8000-000000000004", "text": "Each individual is a person" }
+                ]
+              },
+              {
+                "id": "b8c9d0e1-6111-4000-8000-000000000005",
+                "text": "Is civilian",
+                "children": [
+                  { "id": "b8c9d0e1-6111-4000-8000-000000000006", "text": "Is not a member of any military" },
+                  { "id": "b8c9d0e1-6111-4000-8000-000000000007", "text": "Is not an armed combatant" },
+                  { "id": "b8c9d0e1-6111-4000-8000-000000000008", "text": "Is a non-combatant" }
+                ]
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": 7,
+      "sentence": "Barak Hiram authorized his tank unit to shell an Israeli home",
+      "roles": [
+        { "word": "Barak Hiram", "role": "Agent" },
+        { "word": "authorized", "role": "Action", "isAction": true },
+        { "word": "his tank unit", "role": "Patient" },
+        { "word": "to shell an Israeli home", "role": "Scope" }
+      ],
+      "recipes": {
+        "mainRecipe": {
+          "sections": [
+            {
+              "type": "dated",
+              "items": [
+                {
+                  "id": "c9d0e1f2-7222-4000-8000-000000000001",
+                  "text": "communicated to his tank unit that they had permission to shell an Israeli home",
+                  "children": [
+                    { "id": "c9d0e1f2-7222-4000-8000-000000000002", "text": "said to his tank unit that they had permission to shell an Israeli home" },
+                    { "id": "c9d0e1f2-7222-4000-8000-000000000003", "text": "signed to his tank unit that they had permission to shell an Israeli home" },
+                    { "id": "c9d0e1f2-7222-4000-8000-000000000004", "text": "signalled to his tank unit that they had permission to shell an Israeli home" },
+                    { "id": "c9d0e1f2-7222-4000-8000-000000000005", "text": "messaged to his tank unit that they had permission to shell an Israeli home" }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        "roleRecipes": {
+          "Agent": {
+            "wikidata": "Q27020200"
+          },
+          "Patient": {
+            "isGroup": true,
+            "items": [
+              {
+                "id": "c9d0e1f2-7112-4000-8000-000000000001",
+                "text": "Is a military unit",
+                "children": [
+                  { "id": "c9d0e1f2-7112-4000-8000-000000000002", "text": "Is part of a military organization" },
+                  { "id": "c9d0e1f2-7112-4000-8000-000000000003", "text": "Has personnel" },
+                  { "id": "c9d0e1f2-7112-4000-8000-000000000004", "text": "Operates under military command structure" }
+                ]
+              },
+              {
+                "id": "c9d0e1f2-7112-4000-8000-000000000005",
+                "text": "Is a tank unit",
+                "children": [
+                  { "id": "c9d0e1f2-7112-4000-8000-000000000006", "text": "Operates tank vehicles" },
+                  { "id": "c9d0e1f2-7112-4000-8000-000000000007", "text": "Has access to armored vehicles" },
+                  { "id": "c9d0e1f2-7112-4000-8000-000000000008", "text": "Is trained in armored warfare" }
+                ]
+              },
+              {
+                "id": "c9d0e1f2-7112-4000-8000-000000000009",
+                "text": "Is subordinate to Barak Hiram",
+                "children": [
+                  { "id": "c9d0e1f2-7112-4000-8000-000000000010", "text": "Reports to Barak Hiram" },
+                  { "id": "c9d0e1f2-7112-4000-8000-000000000011", "text": "Receives orders from Barak Hiram" }
+                ]
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": 8,
+      "sentence": "Hamas fighters fought against armed residents",
+      "startDate": "2023-10-07",
+      "endDate": "2023-10-07",
+      "location": "Israel",
+      "roles": [
+        { "word": "Hamas fighters", "role": "Agent" },
+        { "word": "fought", "role": "Action", "isAction": true },
+        { "word": "armed residents", "role": "Co_agent" }
+      ],
+      "recipes": {
+        "mainRecipe": {
+          "sections": [
+            {
+              "type": "dated",
+              "title": "Hamas fighters → armed residents",
+              "items": [
+                {
+                  "id": "d0e1f2a3-8222-4000-8000-000000000001",
+                  "text": "performed violent action(s) against armed residents"
+                }
+              ]
+            },
+            {
+              "type": "dated",
+              "title": "armed residents → Hamas fighters",
+              "items": [
+                {
+                  "id": "d0e1f2a3-8222-4000-8000-000000000010",
+                  "text": "performed violent action(s) against Hamas fighters"
+                }
+              ]
+            }
+          ]
+        },
+        "roleRecipes": {
+          "Agent": {
+            "isGroup": true,
+            "items": [
+              { "id": "d0e1f2a3-8111-4000-8000-000000000001", "text": "Is an animate being" },
+              {
+                "id": "d0e1f2a3-8111-4000-8000-000000000002",
+                "text": "Is a fighter",
+                "children": [
+                  { "id": "d0e1f2a3-8111-4000-8000-000000000003", "text": "Engages in combat" },
+                  { "id": "d0e1f2a3-8111-4000-8000-000000000004", "text": "Uses violence" }
+                ]
+              },
+              {
+                "id": "d0e1f2a3-8111-4000-8000-000000000005",
+                "text": "Is a member of Hamas",
+                "children": [
+                  { "id": "d0e1f2a3-8111-4000-8000-000000000006", "text": "inherits \"Hamas\" membership" },
+                  { "id": "d0e1f2a3-8111-4000-8000-000000000007", "text": "wears \"Hamas\" clothing or attire" },
+                  { "id": "d0e1f2a3-8111-4000-8000-000000000008", "text": "has official membership of \"Hamas\"" },
+                  { "id": "d0e1f2a3-8111-4000-8000-000000000009", "text": "communicates that they are members of \"Hamas\"" }
+                ]
+              }
+            ]
+          },
+          "Co_agent": {
+            "isGroup": true,
+            "items": [
+              { "id": "d0e1f2a3-8112-4000-8000-000000000001", "text": "Is an animate being" },
+              {
+                "id": "d0e1f2a3-8112-4000-8000-000000000002",
+                "text": "Is a resident",
+                "children": [
+                  { "id": "d0e1f2a3-8112-4000-8000-000000000003", "text": "Lives in the area" },
+                  { "id": "d0e1f2a3-8112-4000-8000-000000000004", "text": "Has a home in the area" }
+                ]
+              },
+              {
+                "id": "d0e1f2a3-8112-4000-8000-000000000005",
+                "text": "Is armed",
+                "children": [
+                  { "id": "d0e1f2a3-8112-4000-8000-000000000006", "text": "Possesses a weapon" },
+                  { "id": "d0e1f2a3-8112-4000-8000-000000000007", "text": "Has access to a weapon" }
+                ]
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": 9,
+      "sentence": "41 foreign workers were employed by Kibbutz Alumim",
+      "frame": "BEING_EMPLOYED",
+      "roles": [
+        { "word": "41 foreign workers", "role": "Agent" },
+        { "word": "were employed", "role": "Action", "isAction": true },
+        { "word": "Kibbutz Alumim", "role": "Beneficiary" }
+      ],
+      "recipes": {
+        "mainRecipe": {
+          "sections": [
+            {
+              "type": "dated",
+              "items": [
+                {
+                  "id": "e1f2a3b4-9222-4000-8000-000000000001",
+                  "text": "had an employment relationship with Kibbutz Alumim",
+                  "children": [
+                    { "id": "e1f2a3b4-9222-4000-8000-000000000002", "text": "had a contract to work for Kibbutz Alumim" },
+                    { "id": "e1f2a3b4-9222-4000-8000-000000000003", "text": "had a verbal agreement to work for Kibbutz Alumim" },
+                    { "id": "e1f2a3b4-9222-4000-8000-000000000004", "text": "performed work for Kibbutz Alumim" },
+                    { "id": "e1f2a3b4-9222-4000-8000-000000000005", "text": "received compensation from Kibbutz Alumim" }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        "roleRecipes": {
+          "Agent": {
+            "isGroup": true,
+            "items": [
+              { "id": "e1f2a3b4-9111-4000-8000-000000000001", "text": "Is an animate being" },
+              {
+                "id": "e1f2a3b4-9111-4000-8000-000000000002",
+                "text": "Is a worker",
+                "children": [
+                  { "id": "e1f2a3b4-9111-4000-8000-000000000003", "text": "Performs labor" },
+                  { "id": "e1f2a3b4-9111-4000-8000-000000000004", "text": "Receives compensation for labor" }
+                ]
+              },
+              {
+                "id": "e1f2a3b4-9111-4000-8000-000000000005",
+                "text": "Is foreign",
+                "children": [
+                  { "id": "e1f2a3b4-9111-4000-8000-000000000006", "text": "Is not a citizen of Israel" },
+                  { "id": "e1f2a3b4-9111-4000-8000-000000000007", "text": "Is from another country" },
+                  { "id": "e1f2a3b4-9111-4000-8000-000000000008", "text": "Has a foreign passport" }
+                ]
+              }
+            ]
+          },
+          "Beneficiary": {
+            "location": {
+              "lat": 31.3833,
+              "lng": 34.4667
+            }
+          }
+        }
+      }
+    }
+  ]
+}
