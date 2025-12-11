@@ -14,6 +14,29 @@ export default function Home() {
           </h1>
         </div>
 
+        {/* Featured: Pipeline Demo */}
+        <div 
+          onClick={() => router.push('/pipeline')}
+          className="mb-8 bg-gradient-to-r from-indigo-600/20 to-purple-600/20 backdrop-blur-sm rounded-2xl shadow-lg shadow-black/20 hover:shadow-xl hover:shadow-indigo-500/20 transition-all duration-300 cursor-pointer border border-indigo-500/30 hover:border-indigo-400/50 p-8 group max-w-4xl mx-auto"
+        >
+          <div className="flex items-center justify-between">
+            <div className="text-left">
+              <div className="flex items-center gap-2 mb-2">
+                <span className="text-xs font-semibold text-indigo-400 uppercase tracking-wider">New</span>
+                <span className="w-2 h-2 bg-indigo-400 rounded-full animate-pulse" />
+              </div>
+              <h2 className="text-2xl font-bold text-white mb-2">Extraction Pipeline Demo</h2>
+              <p className="text-slate-400 text-sm">See how claims are extracted from articles and enriched with specific details</p>
+            </div>
+            <div className="flex items-center text-indigo-400 font-medium group-hover:text-indigo-300">
+              <span className="hidden sm:inline mr-2">Try it</span>
+              <svg className="w-6 h-6 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+              </svg>
+            </div>
+          </div>
+        </div>
+
         {/* Part of Speech Selection */}
         <div className="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto">
           {/* Claims */}
