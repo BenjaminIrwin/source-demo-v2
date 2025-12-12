@@ -108,7 +108,7 @@ export default function ArticleViewer({
               let className = 'transition-all duration-300 ';
               if (isHighlighted) {
                 // Pronounced highlight for hovered claim
-                className += 'bg-indigo-100 text-indigo-900 underline decoration-indigo-500 decoration-2 underline-offset-2 px-1 -mx-1 rounded font-medium';
+                className += 'bg-indigo-100 text-indigo-900 underline decoration-indigo-500 decoration-2 underline-offset-2 px-1 -mx-1 rounded';
               } else if (isClaim) {
                 // Subtle highlight for all claims
                 className += 'bg-amber-100/70 text-slate-900 underline decoration-amber-400/60 decoration-1 underline-offset-2 px-0.5 -mx-0.5 rounded';

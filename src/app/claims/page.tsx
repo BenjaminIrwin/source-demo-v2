@@ -1,17 +1,41 @@
 'use client';
 
+import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import claimsData from '@/data/claims.json';
 
 interface Claim {
   id: number;
   sentence: string;
 }
 
-const claims = claimsData.claims as Claim[];
-
 export default function ClaimsPage() {
   const router = useRouter();
+  const [claims, setClaims] = useState<Claim[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    async function fetchClaims() {
+      try {
+        const res = await fetch('/api/data/claims');
+        const data = await res.json();
+        setClaims(data.claims || []);
+      } catch (error) {
+        console.error('Error fetching claims:', error);
+      } finally {
+        setIsLoading(false);
+      }
+    }
+    
+    fetchClaims();
+  }, []);
+
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-indigo-950 flex items-center justify-center">
+        <div className="text-white">Loading...</div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-indigo-950 flex items-center justify-center py-20">

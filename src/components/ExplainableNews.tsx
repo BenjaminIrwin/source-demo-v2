@@ -1,12 +1,8 @@
 'use client';
 
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import { NewspaperIcon, InformationCircleIcon } from '@heroicons/react/24/solid';
 import ClaimSidebar from './ClaimSidebar';
-
-// Import data
-import explainableNewsData from '@/data/explainable-news.json';
-import claimsData from '@/data/claims.json';
 
 interface NewsSentence {
   id: string;
@@ -52,6 +48,32 @@ interface Evidence {
   reasoning?: EvidenceReasoning[];
 }
 
+interface RecipeItem {
+  id: string;
+  text: string;
+  frame?: string;
+  verified?: boolean;
+  children?: RecipeItem[];
+}
+
+interface RecipeSection {
+  type: 'dated' | 'anyDate';
+  items: RecipeItem[];
+}
+
+interface MainRecipe {
+  sections: RecipeSection[];
+}
+
+interface RoleRecipe {
+  wikidata?: string;
+}
+
+interface Recipes {
+  mainRecipe?: MainRecipe;
+  roleRecipes?: Record<string, RoleRecipe>;
+}
+
 interface Claim {
   id: number;
   sentence: string;
@@ -62,6 +84,7 @@ interface Claim {
   frame?: string;
   roles: SemanticRole[];
   evidence?: Evidence[];
+  recipes?: Recipes;
 }
 
 // Single clickable sentence component
@@ -101,26 +124,51 @@ function ClickableSentence({
 export default function ExplainableNews() {
   const [hoveredSentenceId, setHoveredSentenceId] = useState<string | null>(null);
   const [selectedSentenceId, setSelectedSentenceId] = useState<string | null>(null);
+  const [newsData, setNewsData] = useState<ExplainableNewsData | null>(null);
+  const [allClaims, setAllClaims] = useState<Claim[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
 
-  const newsData = explainableNewsData as ExplainableNewsData;
-  const allClaims = claimsData.claims as Claim[];
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const [newsRes, claimsRes] = await Promise.all([
+          fetch('/api/data/explainable-news'),
+          fetch('/api/data/claims')
+        ]);
+        
+        const [news, claims] = await Promise.all([
+          newsRes.json(),
+          claimsRes.json()
+        ]);
+        
+        setNewsData(news);
+        setAllClaims(claims.claims || []);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      } finally {
+        setIsLoading(false);
+      }
+    }
+    
+    fetchData();
+  }, []);
 
   // Get claims for the selected sentence
   const selectedClaims = useMemo(() => {
-    if (!selectedSentenceId) return [];
+    if (!selectedSentenceId || !newsData) return [];
     const sentence = newsData.sentences.find(s => s.id === selectedSentenceId);
     if (!sentence) return [];
     return sentence.claimIds
       .map(id => allClaims.find(c => c.id === id))
       .filter((c): c is Claim => c !== undefined);
-  }, [selectedSentenceId, newsData.sentences, allClaims]);
+  }, [selectedSentenceId, newsData, allClaims]);
 
   // Get the selected sentence text
   const selectedSentenceText = useMemo(() => {
-    if (!selectedSentenceId) return undefined;
+    if (!selectedSentenceId || !newsData) return undefined;
     const sentence = newsData.sentences.find(s => s.id === selectedSentenceId);
     return sentence?.text;
-  }, [selectedSentenceId, newsData.sentences]);
+  }, [selectedSentenceId, newsData]);
 
   const handleSentenceClick = (sentenceId: string) => {
     setSelectedSentenceId(sentenceId);
@@ -134,6 +182,14 @@ export default function ExplainableNews() {
   const totalEvidence = useMemo(() => {
     return allClaims.reduce((acc, claim) => acc + (claim.evidence?.length || 0), 0);
   }, [allClaims]);
+
+  if (isLoading || !newsData) {
+    return (
+      <div className="w-full max-w-4xl mx-auto flex items-center justify-center py-12">
+        <div className="text-white">Loading...</div>
+      </div>
+    );
+  }
 
   return (
     <div className="w-full max-w-4xl mx-auto">
@@ -176,18 +232,6 @@ export default function ExplainableNews() {
         </p>
       </div>
 
-      {/* Legend */}
-      <div className="mt-4 flex items-center gap-4 text-xs text-slate-500">
-        <div className="flex items-center gap-1.5">
-          <div className="w-6 h-0.5 bg-indigo-400/60" />
-          <span>Hover indicator</span>
-        </div>
-        <div className="flex items-center gap-1.5">
-          <div className="w-6 h-0.5 bg-indigo-400" />
-          <span>Selected sentence</span>
-        </div>
-      </div>
-
       {/* Sidebar */}
       <ClaimSidebar
         claims={selectedClaims}
@@ -198,4 +242,3 @@ export default function ExplainableNews() {
     </div>
   );
 }
-

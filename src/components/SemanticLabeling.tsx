@@ -19,7 +19,6 @@ import {
 import { ChatBubbleLeftIcon } from '@heroicons/react/24/outline';
 import dynamic from 'next/dynamic';
 import 'mapbox-gl/dist/mapbox-gl.css';
-import wikidataCache from '@/data/wikidata-cache.json';
 
 // Role color mapping for semantic labels and underlines
 const roleColors: Record<string, { line: string; text: string }> = {
@@ -98,8 +97,10 @@ interface WikidataEntity {
 }
 
 // Helper to get wikidata entity from cache
-function getWikidataEntity(qid: string): WikidataEntity | null {
-  return (wikidataCache.entities as Record<string, WikidataEntity>)[qid] || null;
+function getWikidataEntity(qid: string, cache: Record<string, unknown>): WikidataEntity | null {
+  const entities = (cache as { entities?: Record<string, WikidataEntity> }).entities;
+  if (!entities) return null;
+  return entities[qid] || null;
 }
 
 // Format Wikidata date (e.g., "+1949-10-21T00:00:00Z" -> "21 October 1949")
@@ -220,6 +221,7 @@ interface SemanticLabelingProps {
   stative?: boolean;
   frame?: string;
   evidence?: Evidence[];
+  wikidataCache?: Record<string, unknown>;
 }
 
 interface RecipeSection {
@@ -767,7 +769,7 @@ function EvidenceCard({
           <ul className="space-y-1.5">
             {evidence.subclaims.map((subclaim) => (
               <li key={subclaim.id} className="flex items-start gap-2">
-                <span className="text-slate-500 mt-0.5">•</span>
+                <span className="text-slate-500 text-xs leading-4">•</span>
                 <span className="text-slate-300 text-xs flex-1">{subclaim.text}</span>
                 {subclaim.frame && (
                   <span className="text-slate-500 text-[9px] font-medium uppercase tracking-wide shrink-0 bg-slate-800/50 px-1.5 py-0.5 rounded">
@@ -798,7 +800,7 @@ function EvidenceCard({
                 <ul className="ml-5 space-y-1">
                   {reason.points.map((point, pointIdx) => (
                     <li key={pointIdx} className="flex items-start gap-2">
-                      <span className="text-slate-600 mt-0.5">○</span>
+                      <span className="text-slate-600 text-xs leading-4">○</span>
                       <span className="text-slate-400 text-xs">{point}</span>
                     </li>
                   ))}
@@ -813,7 +815,7 @@ function EvidenceCard({
   );
 }
 
-export default function SemanticLabeling({ sentence, roles, recipes, startDate, endDate, location, stative = false, frame = '', evidence = [] }: SemanticLabelingProps) {
+export default function SemanticLabeling({ sentence, roles, recipes, startDate, endDate, location, stative = false, frame = '', evidence = [], wikidataCache = {} }: SemanticLabelingProps) {
   const fontSize = getFontSize(roles);
   
   // State for tracking which recipe items should be highlighted
@@ -1056,7 +1058,7 @@ export default function SemanticLabeling({ sentence, roles, recipes, startDate, 
                     <div className="space-y-6">
                       {/* Render wikidata entries */}
                       {roleData.wikidataEntries.map((entry, idx) => {
-                        const entity = getWikidataEntity(entry.wikidata);
+                        const entity = getWikidataEntity(entry.wikidata, wikidataCache);
                         const displayName = entry.name || strippedWord;
                         return (
                           <div key={`wikidata-${idx}`}>
@@ -1166,7 +1168,7 @@ export default function SemanticLabeling({ sentence, roles, recipes, startDate, 
                     setSelectedEvidenceId(null);
                     setHighlightedIds(new Set());
                   }}
-                  className="text-indigo-400 hover:text-indigo-300 text-xs transition-colors"
+                  className="text-indigo-400 hover:text-indigo-300 text-xs transition-colors cursor-pointer"
                 >
                   Clear selection
                 </button>

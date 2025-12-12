@@ -1,18 +1,19 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { DocumentTextIcon, SparklesIcon, BeakerIcon, ArrowLeftIcon, ChevronLeftIcon, ChevronRightIcon, ArrowRightIcon, CalendarIcon, MapPinIcon, DocumentCheckIcon, VideoCameraIcon, ArchiveBoxIcon, LightBulbIcon, PhotoIcon, TagIcon, NewspaperIcon, ScaleIcon } from '@heroicons/react/24/solid';
+import { DocumentTextIcon, SparklesIcon, BeakerIcon, ArrowLeftIcon, ChevronLeftIcon, ChevronRightIcon, ArrowRightIcon, CalendarIcon, MapPinIcon, DocumentCheckIcon, VideoCameraIcon, ArchiveBoxIcon, LightBulbIcon, PhotoIcon, TagIcon } from '@heroicons/react/24/solid';
 import ArticleViewer from '@/components/ArticleViewer';
 import ExplainableNews from '@/components/ExplainableNews';
 import GrokComparison from '@/components/GrokComparison';
 
-// Import data
-import articleData from '@/data/article.json';
-import vagueClaimsData from '@/data/claims_vague.json';
-import enrichedClaimsData from '@/data/claims.json';
-
-const STAGES = ['Source', 'Identify', 'Enrich', 'Explain', 'Compare'];
+const STAGES = [
+  { name: 'Source', title: 'Source Article', description: 'We start with a news article that contains claims we want to verify and enrich with supporting information.' },
+  { name: 'Identify', title: 'Claim Identification', description: 'AI identifies individual claims within the article, extracting statements that can be fact-checked or enriched.' },
+  { name: 'Enrich', title: 'Claim Enrichment', description: 'Each claim is enriched with semantic roles, dates, locations, and linked to supporting evidence sources.' },
+  { name: 'Explain', title: 'Explainable News', description: 'Claims are transformed into interactive, explainable content with inline evidence and citations.' },
+  { name: 'Compare', title: 'AI Comparison', description: 'Compare our recipe-based approach against traditional AI summarization to see the difference in accuracy and transparency.' },
+];
 
 // Types for enriched claims
 interface Role {
@@ -171,7 +172,7 @@ function ClaimsList({
   targetHeights?: number[];
 }) {
   return (
-    <div className={`flex flex-col ${compact ? 'pt-6 pl-2 gap-2' : 'pt-4 pl-4 gap-3'}`}>
+    <div className={`flex flex-col ${compact ? 'pt-6 pl-2 gap-2' : 'gap-3'}`}>
       {claims.map((claim, index) => (
         <div
           key={index}
@@ -401,16 +402,51 @@ function AlignedClaimsGrid({
   );
 }
 
-export default function PipelinePage() {
+function PipelineContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const [currentStage, setCurrentStage] = useState(0);
   const [highlightedClaimIndex, setHighlightedClaimIndex] = useState<number | null>(null);
   // Transition phases: 0=none, 1=article fading/claims sliding left, 2=crossfade to enriched
   const [transitionPhase, setTransitionPhase] = useState(0);
+  
+  // Data loading states
+  const [articleData, setArticleData] = useState<{ content: string } | null>(null);
+  const [vagueClaimsData, setVagueClaimsData] = useState<{ claims: string[] } | null>(null);
+  const [enrichedClaimsData, setEnrichedClaimsData] = useState<{ claims: EnrichedClaim[] } | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
 
-  const vagueClaims = vagueClaimsData.claims;
-  const enrichedClaims = enrichedClaimsData.claims as EnrichedClaim[];
+  // Fetch data on mount
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const [articleRes, vagueRes, enrichedRes] = await Promise.all([
+          fetch('/api/data/article'),
+          fetch('/api/data/claims-vague'),
+          fetch('/api/data/claims')
+        ]);
+        
+        const [article, vague, enriched] = await Promise.all([
+          articleRes.json(),
+          vagueRes.json(),
+          enrichedRes.json()
+        ]);
+        
+        setArticleData(article);
+        setVagueClaimsData(vague);
+        setEnrichedClaimsData(enriched);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      } finally {
+        setIsLoading(false);
+      }
+    }
+    
+    fetchData();
+  }, []);
+
+  const vagueClaims = vagueClaimsData?.claims || [];
+  const enrichedClaims = (enrichedClaimsData?.claims || []) as EnrichedClaim[];
   
   // Derived state for backwards compatibility
   const isTransitioning = transitionPhase > 0;
@@ -477,34 +513,32 @@ export default function PipelinePage() {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [currentStage, isTransitioning]);
 
-  const getStageDescription = () => {
-    if (isTransitioning && currentStage === 2) {
-      return 'Enriching claims with specific details...';
-    }
-    switch (currentStage) {
-      case 0: return 'Start with a source article containing claims to verify';
-      case 1: return 'Hover over claims to see them highlighted in the article';
-      case 2: return 'Compare extracted claims with their enriched versions';
-      case 3: return 'See how claims become explainable news content';
-      case 4: return 'Compare recipe-based editing vs traditional AI approaches';
-      default: return '';
-    }
-  };
 
   // Determine what to show
   const isStage2 = currentStage === 2;
-  const showArticle = currentStage <= 1 || (isStage2 && isTransitioning);
+
+  // Show loading state
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-indigo-950 flex items-center justify-center">
+        <div className="text-white">Loading...</div>
+      </div>
+    );
+  }
 
   return (
-    <div className="bg-gradient-to-br from-slate-950 via-slate-900 to-indigo-950 py-8 px-6">
+    <div className="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-indigo-950 py-8 px-6">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
-        <div className="text-center mb-6">
-          <h1 className="text-3xl font-bold text-white mb-2 tracking-tight">
-            Claim Extraction Pipeline
+        <div className="text-center mb-8">
+          <h1 className="text-4xl font-bold text-white mb-3 tracking-tight">
+            Source Demo Dec 2025
           </h1>
-          <p className="text-slate-400 text-base transition-all duration-300">
-            {getStageDescription()}
+          <h2 className="text-xl font-semibold text-indigo-400 mb-2">
+            Step {currentStage + 1} – {STAGES[currentStage].title}
+          </h2>
+          <p className="text-slate-400 text-base max-w-2xl mx-auto">
+            {STAGES[currentStage].description}
           </p>
         </div>
 
@@ -530,7 +564,7 @@ export default function PipelinePage() {
               </div>
               <div>
                 <ArticleViewer
-                  article={articleData.content}
+                  article={articleData?.content || ''}
                   claims={currentStage >= 1 ? vagueClaims : []}
                   highlightedClaimIndex={highlightedClaimIndex}
                 />
@@ -659,7 +693,7 @@ export default function PipelinePage() {
               }`}
             >
               <ChevronLeftIcon className="w-5 h-5" />
-              {currentStage > 0 ? STAGES[currentStage - 1] : 'Previous'}
+              {currentStage > 0 ? STAGES[currentStage - 1].name : 'Previous'}
             </button>
 
             <span className="text-slate-500 text-sm">
@@ -675,7 +709,7 @@ export default function PipelinePage() {
                   : 'text-slate-300 hover:text-white hover:bg-slate-700/50'
               }`}
             >
-              {currentStage < STAGES.length - 1 ? STAGES[currentStage + 1] : 'Next'}
+              {currentStage < STAGES.length - 1 ? STAGES[currentStage + 1].name : 'Next'}
               <ChevronRightIcon className="w-5 h-5" />
             </button>
           </div>
@@ -700,5 +734,13 @@ export default function PipelinePage() {
         }
       `}</style>
     </div>
+  );
+}
+
+export default function PipelinePage() {
+  return (
+    <Suspense fallback={<div className="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-indigo-950 flex items-center justify-center"><div className="text-white">Loading...</div></div>}>
+      <PipelineContent />
+    </Suspense>
   );
 }

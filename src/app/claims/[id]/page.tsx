@@ -1,8 +1,8 @@
 'use client';
 
+import { useEffect, useState } from 'react';
 import { useParams, useRouter, useSearchParams } from 'next/navigation';
 import SemanticLabeling, { SemanticRole, ClaimRecipes, Evidence } from '@/components/SemanticLabeling';
-import claimsData from '@/data/claims.json';
 
 interface Claim {
   id: number;
@@ -17,17 +17,44 @@ interface Claim {
   evidence?: Evidence[];
 }
 
-const claims = claimsData.claims as Claim[];
-
 export default function ClaimDetailPage() {
   const router = useRouter();
   const params = useParams();
   const searchParams = useSearchParams();
   const id = Number(params.id);
   
+  const [claims, setClaims] = useState<Claim[]>([]);
+  const [wikidataCache, setWikidataCache] = useState<Record<string, unknown>>({});
+  const [isLoading, setIsLoading] = useState(true);
+  
   // Check if we came from the pipeline
   const fromPipeline = searchParams.get('from') === 'pipeline';
   const pipelineStage = searchParams.get('stage');
+  
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const [claimsRes, wikidataRes] = await Promise.all([
+          fetch('/api/data/claims'),
+          fetch('/api/data/wikidata-cache')
+        ]);
+        
+        const [claimsData, wikidataData] = await Promise.all([
+          claimsRes.json(),
+          wikidataRes.json()
+        ]);
+        
+        setClaims(claimsData.claims || []);
+        setWikidataCache(wikidataData || {});
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      } finally {
+        setIsLoading(false);
+      }
+    }
+    
+    fetchData();
+  }, []);
   
   const handleBack = () => {
     if (fromPipeline && pipelineStage) {
@@ -36,6 +63,14 @@ export default function ClaimDetailPage() {
       router.push('/claims');
     }
   };
+
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-indigo-950 flex items-center justify-center">
+        <div className="text-white">Loading...</div>
+      </div>
+    );
+  }
 
   const claim = claims.find((c) => c.id === id);
 
@@ -88,7 +123,7 @@ export default function ClaimDetailPage() {
         <div className="flex items-center gap-4">
           <button
             onClick={goToPrevious}
-            className="bg-slate-800 hover:bg-slate-700 text-white px-4 py-2 rounded-lg transition-colors"
+            className="bg-slate-800 hover:bg-slate-700 text-white px-4 py-2 rounded-lg transition-colors cursor-pointer"
           >
             ← Previous
           </button>
@@ -98,7 +133,7 @@ export default function ClaimDetailPage() {
           </span>
           <button
             onClick={goToNext}
-            className="bg-slate-800 hover:bg-slate-700 text-white px-4 py-2 rounded-lg transition-colors"
+            className="bg-slate-800 hover:bg-slate-700 text-white px-4 py-2 rounded-lg transition-colors cursor-pointer"
           >
             Next →
           </button>
@@ -119,6 +154,7 @@ export default function ClaimDetailPage() {
             stative={claim.stative || false}
             frame={claim.frame || ''}
             evidence={claim.evidence || []}
+            wikidataCache={wikidataCache}
           />
         </div>
       </div>

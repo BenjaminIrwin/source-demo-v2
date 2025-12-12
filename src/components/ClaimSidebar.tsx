@@ -15,6 +15,9 @@ import {
   ArrowRightCircleIcon,
   CheckCircleIcon,
   TagIcon,
+  ListBulletIcon,
+  ChevronRightIcon,
+  CheckIcon,
 } from '@heroicons/react/24/solid';
 
 // Types matching the claim structure
@@ -50,6 +53,32 @@ interface Evidence {
   reasoning?: EvidenceReasoning[];
 }
 
+interface RecipeItem {
+  id: string;
+  text: string;
+  frame?: string;
+  verified?: boolean;
+  children?: RecipeItem[];
+}
+
+interface RecipeSection {
+  type: 'dated' | 'anyDate';
+  items: RecipeItem[];
+}
+
+interface MainRecipe {
+  sections: RecipeSection[];
+}
+
+interface RoleRecipe {
+  wikidata?: string;
+}
+
+interface Recipes {
+  mainRecipe?: MainRecipe;
+  roleRecipes?: Record<string, RoleRecipe>;
+}
+
 interface Claim {
   id: number;
   sentence: string;
@@ -60,6 +89,7 @@ interface Claim {
   frame?: string;
   roles: SemanticRole[];
   evidence?: Evidence[];
+  recipes?: Recipes;
 }
 
 // Role color mapping
@@ -260,6 +290,82 @@ function EvidenceCard({ evidence }: { evidence: Evidence }) {
   );
 }
 
+// Recipe item component with nested children
+function RecipeItemDisplay({ item, depth = 0, evidenceSupports }: { item: RecipeItem; depth?: number; evidenceSupports?: string[] }) {
+  const isSupported = evidenceSupports?.includes(item.id) || item.verified;
+  
+  return (
+    <div className={`${depth > 0 ? 'ml-4 border-l border-slate-700/50 pl-3' : ''}`}>
+      <div className="flex items-start gap-2 py-1.5">
+        {depth > 0 ? (
+          <ChevronRightIcon className="w-3 h-3 text-slate-600 shrink-0 mt-0.5" />
+        ) : (
+          <div className="w-3 h-3 shrink-0 mt-0.5" />
+        )}
+        <div className="flex-1 min-w-0">
+          <div className="flex items-start gap-2">
+            <p className={`text-xs leading-relaxed ${isSupported ? 'text-emerald-300' : 'text-slate-400'}`}>
+              {item.text}
+            </p>
+            {isSupported && (
+              <CheckIcon className="w-3.5 h-3.5 text-emerald-400 shrink-0 mt-0.5" />
+            )}
+          </div>
+          {item.frame && (
+            <span className="inline-block mt-1 px-1.5 py-0.5 bg-violet-500/15 border border-violet-500/25 rounded text-[9px] text-violet-400 font-medium uppercase tracking-wide">
+              {item.frame}
+            </span>
+          )}
+        </div>
+      </div>
+      {item.children && item.children.length > 0 && (
+        <div className="mt-1">
+          {item.children.map((child) => (
+            <RecipeItemDisplay key={child.id} item={child} depth={depth + 1} evidenceSupports={evidenceSupports} />
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
+
+// Recipe section component
+function RecipeDisplay({ recipes, evidence }: { recipes: Recipes; evidence?: Evidence[] }) {
+  // Collect all evidence supports to highlight verified recipe items
+  const evidenceSupports = evidence?.flatMap(e => e.supports) || [];
+  
+  return (
+    <div className="bg-slate-800/40 border border-slate-700/30 rounded-lg overflow-hidden">
+      <div className="px-3 py-2 border-b border-slate-700/30 bg-slate-800/60 flex items-center gap-2">
+        <ListBulletIcon className="w-4 h-4 text-violet-400" />
+        <h4 className="text-white text-xs font-semibold uppercase tracking-wide">Verification Recipe</h4>
+      </div>
+      <div className="p-3 space-y-3">
+        {recipes.mainRecipe?.sections.map((section, sectionIndex) => (
+          <div key={sectionIndex}>
+            <div className="flex items-center gap-2 mb-2">
+              <span className={`
+                px-1.5 py-0.5 rounded text-[9px] font-semibold uppercase tracking-wide
+                ${section.type === 'dated' 
+                  ? 'bg-cyan-500/15 text-cyan-400 border border-cyan-500/25' 
+                  : 'bg-amber-500/15 text-amber-400 border border-amber-500/25'
+                }
+              `}>
+                {section.type === 'dated' ? 'On Date' : 'Any Date'}
+              </span>
+            </div>
+            <div className="space-y-1">
+              {section.items.map((item) => (
+                <RecipeItemDisplay key={item.id} item={item} evidenceSupports={evidenceSupports} />
+              ))}
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 interface ClaimSidebarProps {
   claims: Claim[];
   isOpen: boolean;
@@ -322,7 +428,7 @@ export default function ClaimSidebar({ claims, isOpen, onClose, sentenceText }: 
           </h2>
           <button
             onClick={onClose}
-            className="p-1.5 rounded-lg hover:bg-slate-700/50 text-slate-400 hover:text-white transition-colors"
+            className="p-1.5 rounded-lg hover:bg-slate-700/50 text-slate-400 hover:text-white transition-colors cursor-pointer"
           >
             <XMarkIcon className="w-5 h-5" />
           </button>
@@ -398,6 +504,11 @@ export default function ClaimSidebar({ claims, isOpen, onClose, sentenceText }: 
                   );
                 })}
               </div>
+
+              {/* Recipe section */}
+              {claim.recipes && claim.recipes.mainRecipe && (
+                <RecipeDisplay recipes={claim.recipes} evidence={claim.evidence} />
+              )}
 
               {/* Evidence section */}
               {claim.evidence && claim.evidence.length > 0 && (

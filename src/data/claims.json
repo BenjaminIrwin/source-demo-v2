@@ -29,7 +29,7 @@
           "url": "https://www.youtube.com/watch?v=N74O67NSwKo",
           "source": "YouTube",
           "supports": [
-            "a7b8c9d0-5222-4000-8000-000000000001"
+            "a7b8c9d0-5222-4000-8000-000000000002"
           ],
           "sourceType": "primary",
           "evidenceCategory": "direct",
@@ -243,7 +243,8 @@
           "url": "https://www.youtube.com/watch?v=N74O67NSwKo",
           "source": "YouTube",
           "supports": [
-            "c3d4e5f6-3333-4000-8000-000000000001"
+            "c3d4e5f6-3333-4000-8000-000000000001",
+            "c3d4e5f6-3333-4000-8000-000000000002"
           ],
           "sourceType": "primary",
           "evidenceCategory": "direct",
@@ -1005,7 +1006,9 @@
           "url": "https://www.timesofisrael.com/jina-semiatiz-90-great-grandmother-was-happiest-holding-a-baby/",
           "source": "Times of Israel",
           "supports": [
-            "b8c9d0e1-6222-4000-8000-000000000002"
+            "b8c9d0e1-6222-4000-8000-000000000002",
+            "b8c9d0e1-6222-4000-8000-000000000003",
+            "b8c9d0e1-6222-4000-8000-000000000004"
           ],
           "sourceType": "secondary",
           "evidenceCategory": "direct",
@@ -1678,7 +1681,8 @@
           "url": "https://www.timesofisrael.com/thai-laborers-the-working-hands-of-israeli-farming-pay-with-blood/",
           "source": "Times of Israel",
           "supports": [
-            "e1f2a3b4-9222-4000-8000-000000000001"
+            "e1f2a3b4-9222-4000-8000-000000000001",
+            "e1f2a3b4-9222-4000-8000-000000000004"
           ],
           "sourceType": "secondary",
           "evidenceCategory": "circumstantial",
@@ -1903,7 +1907,8 @@
           "url": "https://www.nytimes.com/2023/12/27/world/middleeast/israel-beeri-hiram-hamas.html",
           "source": "New York Times",
           "supports": [
-            "c9d0e1f2-7222-4000-8000-000000000001"
+            "c9d0e1f2-7222-4000-8000-000000000001",
+            "c9d0e1f2-7222-4000-8000-000000000002"
           ],
           "sourceType": "secondary",
           "evidenceCategory": "circumstantial",
@@ -2138,7 +2143,8 @@
           "url": "https://apnews.com/article/israel-hamas-gaza-attack-intel-a5287a18773232f26ca171233be01721",
           "source": "AP News",
           "supports": [
-            "e5f6a7b8-3222-4000-8000-000000000001"
+            "e5f6a7b8-3222-4000-8000-000000000001",
+            "e5f6a7b8-3222-4000-8000-000000000002"
           ],
           "sourceType": "secondary",
           "evidenceCategory": "direct",
@@ -2312,7 +2318,8 @@
           "url": "https://x.com/i/status/1711416416522346740",
           "source": "X",
           "supports": [
-            "f6a7b8c9-4222-4000-8000-000000000001"
+            "f6a7b8c9-4222-4000-8000-000000000001",
+            "f6a7b8c9-4222-4000-8000-000000000005"
           ],
           "sourceType": "primary",
           "evidenceCategory": "direct",

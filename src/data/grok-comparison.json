@@ -19,10 +19,46 @@
   },
   "ourResponse": {
     "avatar": "source",
-    "recommendation": "Context-dependent based on evidence",
+    "recommendation": "Militants (Context-dependent based on evidence)",
     "confidence": "Evidence-based",
-    "summary": "The term 'militants' is supported by verifiable evidence chains. Alternative terms require additional semantic criteria to be met.",
+    "summary": "",
     "termAnalysis": [
+      {
+        "term": "fighters",
+        "verdict": "Supported",
+        "verdictColor": "green",
+        "explanation": "Evidence demonstrates individuals meet the basic definition of 'fighter': engaging in armed combat.",
+        "recipe": {
+          "frame": "BEING_A_FIGHTER",
+          "requirements": [
+            {
+              "id": "req-f1",
+              "text": "Engages in combat",
+              "frame": "COMBAT",
+              "verified": true,
+              "evidence": [
+                {
+                  "id": "ev-fight-1",
+                  "type": "video",
+                  "title": "Hamas terrorists fire into moving civilian car near Sderot",
+                  "source": "Wikimedia Commons",
+                  "subclaim": "The video shows armed individuals firing weapons",
+                  "reasoning": "Direct visual evidence of armed engagement"
+                },
+                {
+                  "id": "ev-fight-2",
+                  "type": "video",
+                  "title": "Hamas members attacking civilians in Kibbutz Mefalsim",
+                  "source": "Wikimedia Commons",
+                  "subclaim": "The video shows armed individuals in combat",
+                  "reasoning": "Visual evidence confirms combat activity"
+                }
+              ]
+            }
+          ]
+        },
+        "additionalNote": "'Fighter' is a neutral, minimally-loaded term. While accurate, it doesn't capture the political motivation evident in the source material, which more specific terms like 'militant' convey."
+      },
       {
         "term": "militants",
         "verdict": "Supported",
@@ -76,7 +112,7 @@
       },
       {
         "term": "terrorists",
-        "verdict": "Requires additional criteria",
+        "verdict": "Requires additional evidence",
         "verdictColor": "yellow",
         "explanation": "While 'terrorist' is a common label, it carries specific semantic requirements beyond those of 'militant'.",
         "recipe": {
@@ -84,13 +120,33 @@
           "requirements": [
             {
               "id": "req-t1",
-              "text": "Uses violence (same as militant)",
-              "frame": "VIOLENCE",
+              "text": "Uses violence against civilians",
+              "frame": "VIOLENCE_AGAINST_CIVILIANS",
               "verified": true,
               "evidence": [
                 {
-                  "id": "ev-terror-1",
-                  "note": "Same evidence as militant - violence is established"
+                  "id": "ev-terror-1a",
+                  "type": "video",
+                  "title": "Hamas terrorists fire into moving civilian car near Sderot",
+                  "source": "Wikimedia Commons",
+                  "subclaim": "The video shows armed individuals firing at a civilian vehicle with no military markings",
+                  "reasoning": "Direct visual evidence of violence targeting non-combatants"
+                },
+                {
+                  "id": "ev-terror-1b",
+                  "type": "video",
+                  "title": "Nova music festival attack footage",
+                  "source": "Israeli Government Press Office",
+                  "subclaim": "Footage shows armed attackers shooting at festival attendees fleeing on foot",
+                  "reasoning": "Festival was a civilian gathering with no military presence or objectives"
+                },
+                {
+                  "id": "ev-terror-1c",
+                  "type": "video",
+                  "title": "Hamas members attacking civilians in Kibbutz Mefalsim",
+                  "source": "Wikimedia Commons",
+                  "subclaim": "The video shows armed individuals entering residential areas and firing at inhabitants",
+                  "reasoning": "Kibbutz is a civilian settlement, not a military installation"
                 }
               ]
             },
@@ -101,55 +157,76 @@
               "verified": "partial",
               "evidence": [
                 {
-                  "id": "ev-terror-2",
+                  "id": "ev-terror-2a",
+                  "type": "video",
+                  "title": "Body camera footage from attackers",
+                  "source": "Israeli Defense Forces release",
+                  "subclaim": "Footage shows attackers filming their own actions and expressing intent to spread fear",
+                  "reasoning": "Self-documentation suggests purpose beyond tactical military objectives"
+                },
+                {
+                  "id": "ev-terror-2b",
                   "type": "inference",
-                  "note": "Civilian targeting suggests intent, but explicit communication of terrorizing intent requires additional evidence",
-                  "reasoning": "Attacking civilians is consistent with but not conclusive proof of terror intent vs. military objectives"
+                  "title": "Pattern of civilian targeting",
+                  "subclaim": "Multiple locations attacked were exclusively civilian (festival, kibbutzim, towns)",
+                  "reasoning": "Systematic targeting of soft civilian targets is consistent with terror intent, though could also indicate tactical opportunism"
+                },
+                {
+                  "id": "ev-terror-2c",
+                  "type": "document",
+                  "title": "Hamas statements post-attack",
+                  "source": "Hamas Telegram channels",
+                  "subclaim": "Statements reference 'sending a message' and 'making the enemy feel fear'",
+                  "reasoning": "Explicit communication suggests terrorizing intent, though post-hoc statements may differ from original operational intent"
                 }
               ]
             },
             {
               "id": "req-t3",
-              "text": "Political/ideological motivation (overlaps with militant)",
+              "text": "Political/ideological motivation",
               "frame": "POLITICAL_MOTIVATION",
               "verified": true,
               "evidence": [
                 {
-                  "id": "ev-terror-3",
-                  "note": "Same evidence as militant political cause"
+                  "id": "ev-terror-3a",
+                  "type": "video",
+                  "title": "Mohammad Deif speech announcing operation",
+                  "source": "YouTube / Al Jazeera",
+                  "subclaim": "The recording shows the speaker saying 'turn the land into flames beneath the feet of the occupiers'",
+                  "reasoning": "Speaker communicated intent tied to political cause (Palestinian liberation)"
+                },
+                {
+                  "id": "ev-terror-3b",
+                  "type": "document",
+                  "title": "Hamas charter and stated objectives",
+                  "source": "Hamas official documents",
+                  "subclaim": "Organization's founding documents establish political/territorial goals",
+                  "reasoning": "Violence is explicitly tied to political objectives in organizational doctrine"
                 }
               ]
-            }
-          ]
-        },
-        "additionalNote": "The term 'terrorist' often reflects a political/legal designation rather than a purely descriptive term. Different jurisdictions classify Hamas differently."
-      },
-      {
-        "term": "fighters",
-        "verdict": "Insufficient specificity",
-        "verdictColor": "yellow",
-        "explanation": "While technically accurate, 'fighters' lacks the political dimension that evidence supports.",
-        "recipe": {
-          "frame": "BEING_A_FIGHTER",
-          "requirements": [
+            },
             {
-              "id": "req-f1",
-              "text": "Engages in combat",
-              "frame": "COMBAT",
+              "id": "req-t4",
+              "text": "Non-state actor status",
+              "frame": "NON_STATE_ACTOR",
               "verified": true,
               "evidence": [
                 {
-                  "id": "ev-fight-1",
-                  "note": "Video evidence shows armed engagement"
+                  "id": "ev-terror-4a",
+                  "type": "factual",
+                  "title": "Hamas organizational status",
+                  "source": "Multiple international sources",
+                  "subclaim": "Hamas is a non-governmental organization, not a recognized state military",
+                  "reasoning": "Terrorism definitions typically distinguish non-state actors from state military forces"
                 }
               ]
             }
           ]
         },
-        "additionalNote": "'Fighter' is a neutral term that doesn't capture the political motivation evident in the source material."
+        "additionalNote": "The term 'terrorist' often reflects a political/legal designation rather than a purely descriptive term. While evidence supports most criteria, the 'intent to terrorize' requirement is partially evidenced - the pattern of civilian targeting is clear, but distinguishing terror intent from other tactical motivations requires interpretive judgment."
       }
     ],
-    "conclusion": "Based on the evidence chain, 'militants' is the most precisely supported term. It accurately captures both the violent actions (verified through video evidence) and political motivation (verified through speech recordings) without requiring the additional 'intent to terrorize' criterion that 'terrorist' implies."
+    "conclusion": "'Militants' is the most precise term the evidence supports. 'Terrorist' requires proving intent to terrorize—plausible, but not conclusively evidenced. 'Fighter' captures less information; it omits the political motivation that the source material clearly establishes."
   },
   "keyDifferences": [
     {
@@ -174,4 +251,5 @@
     }
   ]
 }
+
 

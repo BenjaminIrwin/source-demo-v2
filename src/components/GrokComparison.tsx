@@ -1,19 +1,12 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect, Fragment } from 'react';
 import {
   ChevronDownIcon,
   ChevronRightIcon,
   CheckCircleIcon,
   ExclamationTriangleIcon,
-  ArrowTopRightOnSquareIcon,
-  PlayCircleIcon,
-  LightBulbIcon,
-  ScaleIcon,
 } from '@heroicons/react/24/solid';
-
-// Import comparison data
-import comparisonData from '@/data/grok-comparison.json';
 
 interface EvidenceItem {
   id: string;
@@ -75,25 +68,26 @@ interface ComparisonData {
   }[];
 }
 
-// Expandable requirement card
-function RequirementCard({ requirement }: { requirement: Requirement }) {
+// Requirement row
+function RequirementRow({ requirement }: { requirement: Requirement }) {
   const [isExpanded, setIsExpanded] = useState(false);
   
   const isVerified = requirement.verified === true;
   const isPartial = requirement.verified === 'partial';
+  const hasEvidence = requirement.evidence && requirement.evidence.length > 0;
 
   return (
-    <div className="border border-slate-700/50 rounded-lg overflow-hidden">
+    <div className="border-b border-slate-700/30 last:border-b-0">
       <button
-        onClick={() => setIsExpanded(!isExpanded)}
-        className="w-full flex items-start gap-3 p-3 hover:bg-slate-800/30 transition-colors text-left"
+        onClick={() => hasEvidence && setIsExpanded(!isExpanded)}
+        className={`w-full flex items-center gap-3 py-2 text-left ${hasEvidence ? 'cursor-pointer hover:bg-slate-800/20' : 'cursor-default'}`}
       >
-        <div className={`w-5 h-5 rounded-full shrink-0 flex items-center justify-center mt-0.5 ${
+        <div className={`w-4 h-4 rounded-full shrink-0 flex items-center justify-center ${
           isVerified 
-            ? 'bg-emerald-500/20 border border-emerald-500/50' 
+            ? 'bg-emerald-500/20' 
             : isPartial
-              ? 'bg-amber-500/20 border border-amber-500/50'
-              : 'bg-slate-600/20 border border-slate-600/50'
+              ? 'bg-amber-500/20'
+              : 'bg-slate-600/20'
         }`}>
           {isVerified ? (
             <CheckCircleIcon className="w-3 h-3 text-emerald-400" />
@@ -103,110 +97,75 @@ function RequirementCard({ requirement }: { requirement: Requirement }) {
             <span className="w-1.5 h-1.5 rounded-full bg-slate-500" />
           )}
         </div>
-        <div className="flex-1 min-w-0">
-          <p className="text-sm text-slate-200">{requirement.text}</p>
-          <span className="text-[10px] uppercase tracking-wider text-slate-500 font-medium">
-            {requirement.frame}
-          </span>
-        </div>
-        {requirement.evidence && requirement.evidence.length > 0 && (
+        <span className="flex-1 text-sm text-slate-300">{requirement.text}</span>
+        {hasEvidence && (
           isExpanded 
             ? <ChevronDownIcon className="w-4 h-4 text-slate-500 shrink-0" />
             : <ChevronRightIcon className="w-4 h-4 text-slate-500 shrink-0" />
         )}
       </button>
 
-      {/* Evidence (expandable) */}
-      {isExpanded && requirement.evidence && requirement.evidence.length > 0 && (
-        <div className="px-3 pb-3 pt-0 ml-8">
-          <div className="space-y-2">
-            {requirement.evidence.map((ev) => (
-              <div key={ev.id} className="bg-slate-800/50 rounded-lg p-2.5 text-xs">
-                {ev.title && (
-                  <div className="flex items-start gap-2 mb-1">
-                    <PlayCircleIcon className="w-3.5 h-3.5 text-slate-400 shrink-0 mt-0.5" />
-                    <span className="text-slate-300 font-medium">{ev.title}</span>
-                  </div>
-                )}
-                {ev.source && (
-                  <p className="text-slate-500 text-[10px] ml-5">{ev.source}</p>
-                )}
-                {ev.subclaim && (
-                  <p className="text-slate-400 mt-1.5 italic">&ldquo;{ev.subclaim}&rdquo;</p>
-                )}
-                {ev.reasoning && (
-                  <p className="text-indigo-300 mt-1.5 flex items-start gap-1.5">
-                    <span className="text-indigo-400">→</span>
-                    {ev.reasoning}
-                  </p>
-                )}
-                {ev.note && (
-                  <p className="text-slate-500 mt-1">{ev.note}</p>
-                )}
-              </div>
-            ))}
-          </div>
+      {isExpanded && requirement.evidence && (
+        <div className="pl-7 pb-2 space-y-1.5">
+          {requirement.evidence.map((ev) => (
+            <div key={ev.id} className="text-xs text-slate-400 bg-slate-800/30 rounded px-2 py-1.5">
+              {ev.title && <p className="text-slate-300">{ev.title}</p>}
+              {ev.subclaim && <p className="italic mt-1">&ldquo;{ev.subclaim}&rdquo;</p>}
+              {ev.reasoning && <p className="text-indigo-300 mt-1">→ {ev.reasoning}</p>}
+              {ev.note && <p className="text-slate-500">{ev.note}</p>}
+            </div>
+          ))}
         </div>
       )}
     </div>
   );
 }
 
-// Term analysis card with expandable recipe
+// Term analysis card
 function TermAnalysisCard({ analysis }: { analysis: TermAnalysis }) {
-  const [isExpanded, setIsExpanded] = useState(analysis.verdict === 'Supported');
+  const [isExpanded, setIsExpanded] = useState(false);
 
-  const verdictColors: Record<string, string> = {
-    green: 'bg-emerald-500/20 text-emerald-400 border-emerald-500/30',
-    yellow: 'bg-amber-500/20 text-amber-400 border-amber-500/30',
-    red: 'bg-red-500/20 text-red-400 border-red-500/30',
+  const verdictStyles: Record<string, string> = {
+    green: 'text-emerald-400',
+    yellow: 'text-amber-400',
+    red: 'text-red-400',
   };
 
   return (
-    <div className="bg-slate-800/40 border border-slate-700/50 rounded-lg overflow-hidden">
+    <div className="border-b border-slate-700/50 last:border-b-0">
       <button
         onClick={() => setIsExpanded(!isExpanded)}
-        className="w-full flex items-center gap-3 p-4 hover:bg-slate-800/60 transition-colors text-left"
+        className="w-full flex items-center gap-3 py-3 hover:bg-slate-800/20 transition-colors text-left cursor-pointer"
       >
-        <div className="flex-1">
-          <div className="flex items-center gap-2 mb-1">
-            <h4 className="text-white font-semibold">&ldquo;{analysis.term}&rdquo;</h4>
-            <span className={`text-[10px] uppercase tracking-wider px-2 py-0.5 rounded border font-semibold ${verdictColors[analysis.verdictColor] || verdictColors.yellow}`}>
-              {analysis.verdict}
-            </span>
-          </div>
-          <p className="text-slate-400 text-sm">{analysis.explanation}</p>
-        </div>
+        <span className="text-white font-medium">&ldquo;{analysis.term}&rdquo;</span>
+        <span className={`text-xs ${verdictStyles[analysis.verdictColor] || verdictStyles.yellow}`}>
+          {analysis.verdict}
+        </span>
+        <span className="flex-1" />
         {isExpanded 
-          ? <ChevronDownIcon className="w-5 h-5 text-slate-500 shrink-0" />
-          : <ChevronRightIcon className="w-5 h-5 text-slate-500 shrink-0" />
+          ? <ChevronDownIcon className="w-4 h-4 text-slate-500" />
+          : <ChevronRightIcon className="w-4 h-4 text-slate-500" />
         }
       </button>
 
       {isExpanded && (
-        <div className="px-4 pb-4 pt-0 border-t border-slate-700/30">
-          <div className="pt-3">
-            <div className="flex items-center gap-2 mb-3">
-              <span className="text-[10px] uppercase tracking-wider text-slate-500 font-semibold">
-                Semantic Recipe
-              </span>
-              <span className="text-[10px] bg-slate-700/50 px-1.5 py-0.5 rounded text-slate-400">
-                {analysis.recipe.frame}
-              </span>
-            </div>
-
-            <div className="space-y-2">
-              {analysis.recipe.requirements.map((req) => (
-                <RequirementCard key={req.id} requirement={req} />
-              ))}
-            </div>
-
-            {analysis.additionalNote && (
-              <p className="mt-3 text-slate-500 text-xs italic bg-slate-800/30 px-3 py-2 rounded-lg">
-                {analysis.additionalNote}
-              </p>
-            )}
+        <div className="pb-3">
+          <p className="text-slate-400 text-sm mb-3">{analysis.explanation}</p>
+          
+          <div className="bg-slate-800/30 rounded-lg p-3">
+            <p className="text-[10px] uppercase tracking-wider text-slate-500 mb-2">
+              {analysis.recipe.frame}
+            </p>
+            {analysis.recipe.requirements.map((req) => (
+              <RequirementRow key={req.id} requirement={req} />
+            ))}
           </div>
+
+          {analysis.additionalNote && (
+            <p className="mt-2 text-slate-500 text-xs italic">
+              {analysis.additionalNote}
+            </p>
+          )}
         </div>
       )}
     </div>
@@ -214,139 +173,111 @@ function TermAnalysisCard({ analysis }: { analysis: TermAnalysis }) {
 }
 
 export default function GrokComparison() {
-  const data = comparisonData as ComparisonData;
+  const [data, setData] = useState<ComparisonData | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const res = await fetch('/api/data/grok-comparison');
+        const comparisonData = await res.json();
+        setData(comparisonData);
+      } catch (error) {
+        console.error('Error fetching comparison data:', error);
+      } finally {
+        setIsLoading(false);
+      }
+    }
+    
+    fetchData();
+  }, []);
+
+  if (isLoading || !data) {
+    return (
+      <div className="w-full max-w-6xl mx-auto flex items-center justify-center py-12">
+        <div className="text-white">Loading...</div>
+      </div>
+    );
+  }
 
   return (
-    <div className="w-full max-w-7xl mx-auto">
-      {/* Debate Question Header */}
+    <div className="w-full max-w-6xl mx-auto">
+      {/* Header */}
       <div className="text-center mb-8">
-        <div className="inline-flex items-center gap-2 px-4 py-2 bg-slate-800/60 border border-slate-700/50 rounded-full mb-4">
-          <ScaleIcon className="w-4 h-4 text-indigo-400" />
-          <span className="text-slate-400 text-sm">Term Debate</span>
-        </div>
-        <h2 className="text-xl font-bold text-white mb-2">{data.debate.question}</h2>
-        <p className="text-slate-400 text-sm max-w-2xl mx-auto">{data.debate.context}</p>
-        
-        {/* Terms being compared */}
-        <div className="flex items-center justify-center gap-3 mt-4">
-          <span className="px-3 py-1.5 bg-slate-700/50 border border-slate-600/50 rounded-lg text-white font-medium">
-            {data.debate.originalTerm}
-          </span>
-          <span className="text-slate-500">vs</span>
-          <span className="px-3 py-1.5 bg-slate-700/50 border border-slate-600/50 rounded-lg text-white font-medium">
-            {data.debate.proposedTerm}
-          </span>
+        <h2 className="text-lg font-medium text-white mb-2">{data.debate.question}</h2>
+        <p className="text-slate-500 text-sm mb-4">{data.debate.context}</p>
+        <div className="flex items-center justify-center gap-3 text-sm">
+          <code className="px-2 py-1 bg-slate-800 rounded text-slate-300">{data.debate.originalTerm}</code>
+          <span className="text-slate-600">→</span>
+          <code className="px-2 py-1 bg-slate-800 rounded text-slate-300">{data.debate.proposedTerm}</code>
         </div>
       </div>
 
       {/* Side by side comparison */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
         {/* Grok Response */}
-        <div className="bg-slate-900/60 border border-slate-700/50 rounded-xl overflow-hidden">
-          {/* Header */}
-          <div className="bg-slate-800/60 px-4 py-3 border-b border-slate-700/50 flex items-center gap-3">
-            <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-slate-600 to-slate-700 flex items-center justify-center">
-              <span className="text-white font-bold text-sm">G</span>
-            </div>
-            <div>
-              <h3 className="text-white font-semibold">Grok</h3>
-              <p className="text-slate-500 text-xs">Traditional AI Response</p>
-            </div>
+        <div className="bg-slate-900/50 rounded-xl p-5">
+          <div className="flex items-center gap-2 mb-4">
+            <span className="w-6 h-6 rounded bg-slate-700 flex items-center justify-center text-xs font-bold text-slate-300">G</span>
+            <span className="text-white font-medium">Grok</span>
+            <span className="text-slate-600 text-xs">Traditional AI</span>
           </div>
 
-          {/* Content */}
-          <div className="p-4 space-y-4">
-            {/* Recommendation */}
-            <div className="flex items-center gap-3">
-              <span className="text-slate-400 text-sm">Recommends:</span>
-              <span className="px-3 py-1 bg-slate-700/60 border border-slate-600/50 rounded-lg text-white font-semibold">
-                &ldquo;{data.grokResponse.recommendation}&rdquo;
-              </span>
-              <span className="text-xs bg-slate-600/40 px-2 py-0.5 rounded text-slate-400">
-                {data.grokResponse.confidence}
-              </span>
+          <div className="space-y-4">
+            <div>
+              <p className="text-slate-500 text-xs uppercase tracking-wider mb-1">Recommends</p>
+              <p className="text-white">&ldquo;{data.grokResponse.recommendation}&rdquo;</p>
             </div>
 
-            {/* Reasoning */}
-            <div className="bg-slate-800/40 rounded-lg p-4">
-              <h4 className="text-slate-400 text-xs font-semibold uppercase tracking-wider mb-2">
-                Reasoning
-              </h4>
+            <div>
+              <p className="text-slate-500 text-xs uppercase tracking-wider mb-1">Reasoning</p>
               <p className="text-slate-300 text-sm leading-relaxed">
                 {data.grokResponse.reasoning}
               </p>
             </div>
 
-            {/* Sources */}
             <div>
-              <h4 className="text-slate-400 text-xs font-semibold uppercase tracking-wider mb-2">
-                Sources
-              </h4>
-              <ul className="space-y-1">
+              <p className="text-slate-500 text-xs uppercase tracking-wider mb-1">Sources</p>
+              <ul className="text-slate-400 text-sm space-y-0.5">
                 {data.grokResponse.sources.map((source, idx) => (
-                  <li key={idx} className="flex items-center gap-2 text-slate-500 text-sm">
-                    <span className="w-1 h-1 rounded-full bg-slate-600" />
-                    {source}
-                  </li>
+                  <li key={idx}>• {source}</li>
                 ))}
               </ul>
             </div>
 
-            {/* Critique notice */}
-            <div className="bg-amber-500/5 border border-amber-500/20 rounded-lg p-3 mt-4">
-              <p className="text-amber-400/80 text-xs">
-                Note: Appeals to authority and consensus without verifiable evidence chains
-              </p>
-            </div>
+            <p className="text-amber-400/70 text-xs pt-2 border-t border-slate-700/50">
+              Note: Appeals to authority and consensus without verifiable evidence chains
+            </p>
           </div>
         </div>
 
         {/* Our Response */}
-        <div className="bg-slate-900/60 border border-indigo-500/30 rounded-xl overflow-hidden">
-          {/* Header */}
-          <div className="bg-indigo-500/10 px-4 py-3 border-b border-indigo-500/20 flex items-center gap-3">
-            <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center">
-              <LightBulbIcon className="w-4 h-4 text-white" />
-            </div>
-            <div>
-              <h3 className="text-white font-semibold">Our Method</h3>
-              <p className="text-indigo-300/60 text-xs">Recipe-Based Semantic Analysis</p>
-            </div>
+        <div className="bg-slate-900/50 rounded-xl p-5 ring-1 ring-indigo-500/20">
+          <div className="flex items-center gap-2 mb-4">
+            <span className="w-6 h-6 rounded bg-indigo-500/20 flex items-center justify-center text-xs font-bold text-indigo-400">S</span>
+            <span className="text-white font-medium">Our Method</span>
+            <span className="text-indigo-400/60 text-xs">Semantic Analysis</span>
           </div>
 
-          {/* Content */}
-          <div className="p-4 space-y-4">
-            {/* Recommendation */}
-            <div className="flex items-center gap-3">
-              <span className="text-slate-400 text-sm">Recommends:</span>
-              <span className="px-3 py-1 bg-indigo-500/20 border border-indigo-500/30 rounded-lg text-indigo-300 font-semibold">
-                {data.ourResponse.recommendation}
-              </span>
-              <span className="text-xs bg-indigo-500/20 px-2 py-0.5 rounded text-indigo-300">
-                {data.ourResponse.confidence}
-              </span>
+          <div className="space-y-4">
+            <div>
+              <p className="text-slate-500 text-xs uppercase tracking-wider mb-1">Recommends</p>
+              <p className="text-indigo-300">{data.ourResponse.recommendation}</p>
             </div>
 
-            {/* Summary */}
-            <p className="text-slate-300 text-sm">
-              {data.ourResponse.summary}
-            </p>
+            {data.ourResponse.summary && (
+              <p className="text-slate-300 text-sm">{data.ourResponse.summary}</p>
+            )}
 
-            {/* Term Analysis Cards */}
-            <div className="space-y-3">
-              <h4 className="text-slate-400 text-xs font-semibold uppercase tracking-wider">
-                Term Analysis
-              </h4>
+            <div>
+              <p className="text-slate-500 text-xs uppercase tracking-wider">Term Analysis</p>
               {data.ourResponse.termAnalysis.map((analysis) => (
                 <TermAnalysisCard key={analysis.term} analysis={analysis} />
               ))}
             </div>
 
-            {/* Conclusion */}
-            <div className="bg-indigo-500/5 border border-indigo-500/20 rounded-lg p-3">
-              <h4 className="text-indigo-400 text-xs font-semibold uppercase tracking-wider mb-1.5">
-                Conclusion
-              </h4>
+            <div className="pt-2 border-t border-slate-700/50">
+              <p className="text-slate-500 text-xs uppercase tracking-wider mb-1">Conclusion</p>
               <p className="text-slate-300 text-sm leading-relaxed">
                 {data.ourResponse.conclusion}
               </p>
@@ -355,37 +286,24 @@ export default function GrokComparison() {
         </div>
       </div>
 
-      {/* Key Differences Table */}
-      <div className="mt-8">
-        <h3 className="text-white font-semibold mb-4 text-center">Key Differences</h3>
-        <div className="bg-slate-800/40 border border-slate-700/50 rounded-xl overflow-hidden">
-          <div className="grid grid-cols-3 gap-px bg-slate-700/50">
-            <div className="bg-slate-800/80 px-4 py-3">
-              <span className="text-slate-400 text-xs font-semibold uppercase tracking-wider">Aspect</span>
-            </div>
-            <div className="bg-slate-800/80 px-4 py-3">
-              <span className="text-slate-400 text-xs font-semibold uppercase tracking-wider">Grok</span>
-            </div>
-            <div className="bg-slate-800/80 px-4 py-3">
-              <span className="text-indigo-400 text-xs font-semibold uppercase tracking-wider">Our Method</span>
-            </div>
+      {/* Key Differences */}
+      <div className="flex justify-center">
+        <div>
+          <h3 className="text-slate-400 text-xs uppercase tracking-wider text-center mb-4">Key Differences</h3>
+          <div className="grid grid-cols-[auto_auto_auto] gap-x-4 gap-y-2 text-sm">
+            <div className="text-slate-500 font-medium">Aspect</div>
+            <div className="text-slate-500 font-medium">Grok</div>
+            <div className="text-indigo-400/80 font-medium">Our Method</div>
+            {data.keyDifferences.map((diff, idx) => (
+              <Fragment key={idx}>
+                <div className="text-slate-300">{diff.aspect}</div>
+                <div className="text-slate-500">{diff.grok}</div>
+                <div className="text-indigo-300/80">{diff.ours}</div>
+              </Fragment>
+            ))}
           </div>
-          {data.keyDifferences.map((diff, idx) => (
-            <div key={idx} className="grid grid-cols-3 gap-px bg-slate-700/30">
-              <div className="bg-slate-900/60 px-4 py-3">
-                <span className="text-white text-sm font-medium">{diff.aspect}</span>
-              </div>
-              <div className="bg-slate-900/60 px-4 py-3">
-                <span className="text-slate-400 text-sm">{diff.grok}</span>
-              </div>
-              <div className="bg-slate-900/60 px-4 py-3">
-                <span className="text-indigo-300 text-sm">{diff.ours}</span>
-              </div>
-            </div>
-          ))}
         </div>
       </div>
     </div>
   );
 }
-
