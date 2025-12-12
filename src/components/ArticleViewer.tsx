@@ -96,7 +96,7 @@ export default function ArticleViewer({
   }, [article, claims]);
 
   return (
-    <div className="bg-slate-800/50 backdrop-blur-sm border border-slate-700/50 rounded-2xl p-6 h-full overflow-y-auto" style={{ backfaceVisibility: 'hidden' }}>
+    <div className="bg-slate-800/50 backdrop-blur-sm border border-slate-700/50 rounded-2xl p-6" style={{ backfaceVisibility: 'hidden' }}>
       <div className="prose prose-invert max-w-none">
         {parsedArticle.map((paragraphSegments, pIndex) => (
           <p key={pIndex} className="text-slate-300 leading-relaxed mb-4 last:mb-0">

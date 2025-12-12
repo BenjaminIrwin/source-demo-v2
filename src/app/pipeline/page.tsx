@@ -432,8 +432,8 @@ export default function PipelinePage() {
   const showArticle = currentStage <= 1 || (isStage2 && isTransitioning);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-indigo-950 py-8 px-6">
-      <div className="max-w-7xl mx-auto h-full flex flex-col">
+    <div className="bg-gradient-to-br from-slate-950 via-slate-900 to-indigo-950 py-8 px-6">
+      <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="text-center mb-6">
           <h1 className="text-3xl font-bold text-white mb-2 tracking-tight">
@@ -445,23 +445,19 @@ export default function PipelinePage() {
         </div>
 
         {/* Stage Content */}
-        <div className="flex-1 relative min-h-0">
-          <div className={`flex h-full justify-center transition-[gap] duration-700 ${currentStage === 0 ? 'gap-0' : 'gap-6'}`}>
+        <div>
+          <div className={`flex items-start justify-center transition-[gap] duration-700 ${currentStage === 0 ? 'gap-0' : 'gap-6'}`}>
             {/* Spacer for centering in stage 0 */}
-            <div 
-              className={`transition-[flex] duration-700 ease-out ${
-                currentStage === 0 ? 'flex-1' : 'flex-[0]'
-              }`}
-            />
+            {currentStage === 0 && <div className="flex-1" />}
             
             {/* Article Section - only in stages 0-1, fades out for stage 2 */}
             <div 
               className={`flex flex-col transition-all duration-600 ease-out ${
                 isStage2
-                  ? 'flex-[0] w-0 opacity-0 overflow-hidden' 
+                  ? 'flex-[0] w-0 h-0 opacity-0 overflow-hidden' 
                   : currentStage === 0 
-                    ? 'flex-[2] max-w-4xl min-h-0 opacity-100' 
-                    : 'flex-[2] min-w-0 min-h-0 opacity-100'
+                    ? 'flex-[2] max-w-4xl opacity-100' 
+                    : 'flex-[2] min-w-0 opacity-100'
               }`}
               style={{ transform: 'translateZ(0)' }}
             >
@@ -471,7 +467,7 @@ export default function PipelinePage() {
                 <DocumentTextIcon className="w-5 h-5 text-indigo-400" />
                 <h2 className="text-lg font-semibold text-white">Source Article</h2>
               </div>
-              <div className="flex-1 min-h-0 overflow-y-auto">
+              <div>
                 <ArticleViewer
                   article={articleData.content}
                   claims={currentStage >= 1 ? vagueClaims : []}
@@ -484,10 +480,10 @@ export default function PipelinePage() {
             <div 
               className={`flex flex-col transition-all duration-700 ease-out ${
                 isStage2
-                  ? 'flex-1 min-w-0 min-h-0'
+                  ? 'flex-1 min-w-0'
                   : currentStage === 0
-                    ? 'flex-[0] w-0 opacity-0 overflow-hidden'
-                    : 'flex-1 min-w-0 min-h-0 opacity-100 translate-x-0'
+                    ? 'flex-[0] w-0 h-0 opacity-0 overflow-hidden'
+                    : 'flex-1 min-w-0 opacity-100 translate-x-0'
               }`}
               style={{ transform: 'translateZ(0)' }}
             >
@@ -497,7 +493,7 @@ export default function PipelinePage() {
                   {isStage2 ? 'Extracted' : 'Identified Claims'}
                 </h2>
               </div>
-              <div className="flex-1 min-h-0 overflow-y-auto pr-2">
+              <div>
                 <ClaimsList
                   claims={vagueClaims}
                   onHoverClaim={isStage2 ? () => {} : setHighlightedClaimIndex}
@@ -512,7 +508,7 @@ export default function PipelinePage() {
             {/* Arrow column - only in stage 2 */}
             <div 
               className={`flex flex-col transition-all duration-500 ${
-                isStage2 && showEnrichedColumn ? 'w-12 opacity-100' : 'w-0 opacity-0 overflow-hidden'
+                isStage2 && showEnrichedColumn ? 'w-12 opacity-100' : 'w-0 h-0 opacity-0 overflow-hidden'
               }`}
             >
               {/* Spacer to match header height + mb-3 of other columns */}
@@ -537,7 +533,7 @@ export default function PipelinePage() {
             {/* Enriched Claims Column - slides in from right for stage 2 */}
             <div 
               className={`flex flex-col transition-all duration-700 ease-out ${
-                isStage2 ? 'flex-1 min-w-0 min-h-0' : 'flex-[0] w-0 opacity-0 overflow-hidden'
+                isStage2 ? 'flex-1 min-w-0' : 'flex-[0] w-0 h-0 opacity-0 overflow-hidden'
               }`}
               style={{ transform: 'translateZ(0)' }}
             >
@@ -547,7 +543,7 @@ export default function PipelinePage() {
                 <SparklesIcon className="w-5 h-5 text-indigo-400" />
                 <h2 className="text-lg font-semibold text-white">Enriched</h2>
               </div>
-              <div className="flex-1 min-h-0 overflow-y-auto pr-2">
+              <div>
                 <EnrichedClaimsList
                   claims={enrichedClaims}
                   isVisible={showEnrichedColumn}
@@ -557,11 +553,7 @@ export default function PipelinePage() {
             </div>
 
             {/* Right spacer for stage 0 centering */}
-            <div 
-              className={`transition-[flex] duration-700 ease-out ${
-                currentStage === 0 ? 'flex-1' : 'flex-[0]'
-              }`}
-            />
+            {currentStage === 0 && <div className="flex-1" />}
           </div>
         </div>
 
