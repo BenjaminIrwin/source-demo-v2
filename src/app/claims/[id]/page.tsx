@@ -1,7 +1,7 @@
 'use client';
 
 import { useParams, useRouter, useSearchParams } from 'next/navigation';
-import SemanticLabeling, { SemanticRole, ClaimRecipes } from '@/components/SemanticLabeling';
+import SemanticLabeling, { SemanticRole, ClaimRecipes, Evidence } from '@/components/SemanticLabeling';
 import claimsData from '@/data/claims.json';
 
 interface Claim {
@@ -14,6 +14,7 @@ interface Claim {
   frame?: string;
   roles: SemanticRole[];
   recipes?: ClaimRecipes;
+  evidence?: Evidence[];
 }
 
 const claims = claimsData.claims as Claim[];
@@ -117,6 +118,7 @@ export default function ClaimDetailPage() {
             location={claim.location || ''}
             stative={claim.stative || false}
             frame={claim.frame || ''}
+            evidence={claim.evidence || []}
           />
         </div>
       </div>

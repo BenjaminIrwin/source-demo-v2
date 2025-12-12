@@ -1,0 +1,177 @@
+{
+  "debate": {
+    "question": "What term should be used to describe the armed individuals who attacked Israel on October 7th?",
+    "context": "An editor proposes changing 'Hamas militants' to 'Hamas terrorists' in the article.",
+    "originalTerm": "Hamas militants",
+    "proposedTerm": "Hamas terrorists",
+    "alternatives": ["Hamas fighters", "Hamas operatives", "Hamas attackers"]
+  },
+  "grokResponse": {
+    "avatar": "grok",
+    "recommendation": "Hamas terrorists",
+    "confidence": "High",
+    "reasoning": "The term 'terrorists' is commonly used by Western media outlets, governments including the US, EU, and Israel, to describe groups that deliberately target civilians. Given that the October 7th attacks specifically targeted civilian populations at music festivals and kibbutzim, the term 'terrorists' is appropriate and widely accepted. Major news organizations including CNN, BBC, and Reuters have used this terminology when describing the attacks.",
+    "sources": [
+      "Common usage in Western media",
+      "US State Department designation",
+      "EU terrorist organization list"
+    ]
+  },
+  "ourResponse": {
+    "avatar": "source",
+    "recommendation": "Context-dependent based on evidence",
+    "confidence": "Evidence-based",
+    "summary": "The term 'militants' is supported by verifiable evidence chains. Alternative terms require additional semantic criteria to be met.",
+    "termAnalysis": [
+      {
+        "term": "militants",
+        "verdict": "Supported",
+        "verdictColor": "green",
+        "explanation": "Evidence demonstrates individuals meet the definition of 'militant': using violence in support of a political cause.",
+        "recipe": {
+          "frame": "BEING_A_MILITANT",
+          "requirements": [
+            {
+              "id": "req-1",
+              "text": "Supports a political cause",
+              "frame": "SUPPORTING",
+              "verified": true,
+              "evidence": [
+                {
+                  "id": "ev-militant-1",
+                  "type": "video",
+                  "title": "Mohammad Deif speech announcing operation",
+                  "source": "YouTube / Al Jazeera",
+                  "subclaim": "The recording shows the speaker saying 'turn the land into flames beneath the feet of the occupiers'",
+                  "reasoning": "Speaker communicated intent tied to political cause (Palestinian liberation)"
+                }
+              ]
+            },
+            {
+              "id": "req-2",
+              "text": "Uses violence",
+              "frame": "VIOLENCE",
+              "verified": true,
+              "evidence": [
+                {
+                  "id": "ev-militant-2",
+                  "type": "video",
+                  "title": "Hamas terrorists fire into moving civilian car near Sderot",
+                  "source": "Wikimedia Commons",
+                  "subclaim": "The video shows armed individuals firing at a vehicle",
+                  "reasoning": "Direct visual evidence of violent action being performed"
+                },
+                {
+                  "id": "ev-militant-3",
+                  "type": "video",
+                  "title": "Hamas members attacking civilians in Kibbutz Mefalsim",
+                  "source": "Wikimedia Commons",
+                  "subclaim": "The video shows armed individuals shooting at people",
+                  "reasoning": "Direct visual evidence of violent action against civilians"
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "term": "terrorists",
+        "verdict": "Requires additional criteria",
+        "verdictColor": "yellow",
+        "explanation": "While 'terrorist' is a common label, it carries specific semantic requirements beyond those of 'militant'.",
+        "recipe": {
+          "frame": "BEING_A_TERRORIST",
+          "requirements": [
+            {
+              "id": "req-t1",
+              "text": "Uses violence (same as militant)",
+              "frame": "VIOLENCE",
+              "verified": true,
+              "evidence": [
+                {
+                  "id": "ev-terror-1",
+                  "note": "Same evidence as militant - violence is established"
+                }
+              ]
+            },
+            {
+              "id": "req-t2",
+              "text": "Intent to create terror/fear in civilian population",
+              "frame": "INTENT_TO_TERRORIZE",
+              "verified": "partial",
+              "evidence": [
+                {
+                  "id": "ev-terror-2",
+                  "type": "inference",
+                  "note": "Civilian targeting suggests intent, but explicit communication of terrorizing intent requires additional evidence",
+                  "reasoning": "Attacking civilians is consistent with but not conclusive proof of terror intent vs. military objectives"
+                }
+              ]
+            },
+            {
+              "id": "req-t3",
+              "text": "Political/ideological motivation (overlaps with militant)",
+              "frame": "POLITICAL_MOTIVATION",
+              "verified": true,
+              "evidence": [
+                {
+                  "id": "ev-terror-3",
+                  "note": "Same evidence as militant political cause"
+                }
+              ]
+            }
+          ]
+        },
+        "additionalNote": "The term 'terrorist' often reflects a political/legal designation rather than a purely descriptive term. Different jurisdictions classify Hamas differently."
+      },
+      {
+        "term": "fighters",
+        "verdict": "Insufficient specificity",
+        "verdictColor": "yellow",
+        "explanation": "While technically accurate, 'fighters' lacks the political dimension that evidence supports.",
+        "recipe": {
+          "frame": "BEING_A_FIGHTER",
+          "requirements": [
+            {
+              "id": "req-f1",
+              "text": "Engages in combat",
+              "frame": "COMBAT",
+              "verified": true,
+              "evidence": [
+                {
+                  "id": "ev-fight-1",
+                  "note": "Video evidence shows armed engagement"
+                }
+              ]
+            }
+          ]
+        },
+        "additionalNote": "'Fighter' is a neutral term that doesn't capture the political motivation evident in the source material."
+      }
+    ],
+    "conclusion": "Based on the evidence chain, 'militants' is the most precisely supported term. It accurately captures both the violent actions (verified through video evidence) and political motivation (verified through speech recordings) without requiring the additional 'intent to terrorize' criterion that 'terrorist' implies."
+  },
+  "keyDifferences": [
+    {
+      "aspect": "Methodology",
+      "grok": "Appeals to common usage and authority",
+      "ours": "Breaks down terms into verifiable semantic components"
+    },
+    {
+      "aspect": "Evidence",
+      "grok": "References general media consensus",
+      "ours": "Cites specific videos, documents, and subclaims"
+    },
+    {
+      "aspect": "Transparency",
+      "grok": "Conclusion-first reasoning",
+      "ours": "Shows the full reasoning chain from evidence to conclusion"
+    },
+    {
+      "aspect": "Nuance",
+      "grok": "Binary recommendation",
+      "ours": "Explains what additional evidence would support alternative terms"
+    }
+  ]
+}
+

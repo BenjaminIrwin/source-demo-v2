@@ -1,7 +1,22 @@
 'use client';
 
 import { useRef, useEffect, useState, useMemo } from 'react';
-import { CheckCircleIcon, ChevronDownIcon, ChevronRightIcon, ArrowRightCircleIcon, MapPinIcon, CalendarIcon } from '@heroicons/react/24/solid';
+import { 
+  CheckCircleIcon, 
+  ChevronDownIcon, 
+  ChevronRightIcon, 
+  ArrowRightCircleIcon, 
+  MapPinIcon, 
+  CalendarIcon,
+  PlayCircleIcon,
+  DocumentTextIcon,
+  NewspaperIcon,
+  FolderIcon,
+  Square3Stack3DIcon,
+  LightBulbIcon,
+  ArrowTopRightOnSquareIcon
+} from '@heroicons/react/24/solid';
+import { ChatBubbleLeftIcon } from '@heroicons/react/24/outline';
 import dynamic from 'next/dynamic';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import wikidataCache from '@/data/wikidata-cache.json';
@@ -130,7 +145,6 @@ export interface TreeNode {
   id: string;
   text: string;
   children?: TreeNode[];
-  verified?: boolean;
   frame?: string;
 }
 
@@ -145,12 +159,13 @@ export interface ClaimRecipes {
   mainRecipe: {
     sections: {
       type: 'dated' | 'anyDate';
+      title?: string;
       items: TreeNode[];
     }[];
     relationships?: RecipeRelationship[];
   };
   roleRecipes?: {
-    [roleName: string]: RoleRecipe | RoleRecipe[];
+    [roleName: string]: RoleRecipe | RoleRecipe[] | undefined;
   };
 }
 
@@ -167,6 +182,34 @@ export interface RoleRecipe {
   wikidata?: string;
 }
 
+// Evidence types
+export interface EvidenceSubclaim {
+  id: string;
+  text: string;
+  frame?: string;
+}
+
+export interface EvidenceReasoning {
+  recipeItemId: string;
+  recipeText: string;
+  points: string[];
+}
+
+export interface Evidence {
+  id: string;
+  type: 'video' | 'article' | 'document' | 'multimedia' | 'archive' | 'reasoning' | 'tweet';
+  title?: string;
+  description?: string;
+  url?: string;
+  tweetId?: string;
+  source?: string;
+  supports: string[];
+  sourceType?: 'primary' | 'secondary';
+  evidenceCategory?: 'direct' | 'circumstantial';
+  subclaims?: EvidenceSubclaim[];
+  reasoning?: EvidenceReasoning[];
+}
+
 interface SemanticLabelingProps {
   sentence: string;
   roles: SemanticRole[];
@@ -176,6 +219,7 @@ interface SemanticLabelingProps {
   location: string;
   stative?: boolean;
   frame?: string;
+  evidence?: Evidence[];
 }
 
 interface RecipeSection {
@@ -422,6 +466,21 @@ function getMainRecipeData(
   });
 }
 
+// Helper function to check if a node or any of its descendants are supported by evidence
+function isNodeOrDescendantsSupported(node: TreeNode, supportedIds: Set<string>): boolean {
+  // Check if this node is directly supported
+  if (supportedIds.has(node.id)) return true;
+  
+  // Recursively check children
+  if (node.children) {
+    for (const child of node.children) {
+      if (isNodeOrDescendantsSupported(child, supportedIds)) return true;
+    }
+  }
+  
+  return false;
+}
+
 // Tree node component with expand/collapse
 function TreeNodeItem({ 
   node, 
@@ -429,7 +488,9 @@ function TreeNodeItem({
   roleWords = [], 
   showCheckboxes = true,
   relationshipMap = new Map(),
-  isInCausedSubtree = false
+  isInCausedSubtree = false,
+  highlightedIds = new Set(),
+  supportedIds = new Set()
 }: { 
   node: TreeNode; 
   depth?: number; 
@@ -437,6 +498,8 @@ function TreeNodeItem({
   showCheckboxes?: boolean;
   relationshipMap?: Map<string, RecipeRelationship['type']>;
   isInCausedSubtree?: boolean;
+  highlightedIds?: Set<string>;
+  supportedIds?: Set<string>;
 }) {
   const [isExpanded, setIsExpanded] = useState(false);
   const hasChildren = node.children && node.children.length > 0;
@@ -444,8 +507,11 @@ function TreeNodeItem({
   // Check if this node is a consequence (target of a 'causes' relationship)
   const isCaused = relationshipMap.get(node.id) === 'causes';
   
-  // Use verified field to determine icon color (defaults to false/grey if not specified)
-  const isVerified = node.verified === true;
+  // Check if this node is highlighted by evidence selection
+  const isHighlighted = highlightedIds.has(node.id);
+  
+  // Check if this node or any of its children are supported by evidence
+  const isVerified = isNodeOrDescendantsSupported(node, supportedIds);
   const iconColor = isVerified ? 'text-emerald-500' : 'text-slate-500';
   
   // Hide ellipsis for caused items and their children
@@ -457,7 +523,11 @@ function TreeNodeItem({
   return (
     <li className="list-none">
       <div 
-        className={`relative flex items-start gap-1.5 py-1.5 ${hasChildren ? 'cursor-pointer hover:bg-slate-700/30 rounded' : ''}`}
+        className={`
+          relative flex items-start gap-1.5 py-1.5 rounded
+          ${hasChildren ? 'cursor-pointer hover:bg-slate-700/30' : ''}
+          ${isHighlighted ? 'ring-2 ring-indigo-500/60 bg-indigo-500/10' : ''}
+        `}
         onClick={hasChildren ? () => setIsExpanded(!isExpanded) : undefined}
         style={{ paddingLeft: `${depth * 20 + consequenceIndent}px` }}
       >
@@ -488,7 +558,7 @@ function TreeNodeItem({
           )
         )}
         
-        <span className="text-white text-sm font-medium">
+        <span className="text-sm font-medium text-white">
           {!hideEllipsis && <span className="text-slate-400">...</span>}
           {highlightRoles(hideEllipsis ? node.text : node.text.charAt(0).toLowerCase() + node.text.slice(1), roleWords)}
         </span>
@@ -509,6 +579,8 @@ function TreeNodeItem({
               showCheckboxes={showCheckboxes}
               relationshipMap={relationshipMap}
               isInCausedSubtree={isCaused || isInCausedSubtree}
+              highlightedIds={highlightedIds}
+              supportedIds={supportedIds}
             />
           ))}
         </ul>
@@ -522,12 +594,16 @@ function RecipeTree({
   sections, 
   roleWords = [], 
   showCheckboxes = true,
-  relationships = []
+  relationships = [],
+  highlightedIds = new Set(),
+  supportedIds = new Set()
 }: { 
   sections: RecipeSection[]; 
   roleWords?: string[]; 
   showCheckboxes?: boolean;
   relationships?: RecipeRelationship[];
+  highlightedIds?: Set<string>;
+  supportedIds?: Set<string>;
 }) {
   // Build a map of node ID -> incoming relationship type
   const relationshipMap = useMemo(() => {
@@ -552,6 +628,8 @@ function RecipeTree({
                 roleWords={roleWords} 
                 showCheckboxes={showCheckboxes}
                 relationshipMap={relationshipMap}
+                highlightedIds={highlightedIds}
+                supportedIds={supportedIds}
               />
             ))}
           </ul>
@@ -576,8 +654,184 @@ function getFontSize(roles: SemanticRole[]): string {
   }
 }
 
-export default function SemanticLabeling({ sentence, roles, recipes, startDate, endDate, location, stative = false, frame = '' }: SemanticLabelingProps) {
+// Get icon component for evidence type
+function getEvidenceIcon(type: Evidence['type']) {
+  switch (type) {
+    case 'video':
+      return PlayCircleIcon;
+    case 'article':
+      return NewspaperIcon;
+    case 'document':
+      return DocumentTextIcon;
+    case 'tweet':
+      return ChatBubbleLeftIcon;
+    case 'multimedia':
+      return Square3Stack3DIcon;
+    case 'archive':
+      return FolderIcon;
+    case 'reasoning':
+      return LightBulbIcon;
+    default:
+      return DocumentTextIcon;
+  }
+}
+
+// Evidence card component
+function EvidenceCard({ 
+  evidence, 
+  isSelected, 
+  onSelect 
+}: { 
+  evidence: Evidence; 
+  isSelected: boolean;
+  onSelect: (id: string, supports: string[]) => void;
+}) {
+  const Icon = getEvidenceIcon(evidence.type);
+  
+  return (
+    <div 
+      className={`
+        relative overflow-hidden rounded-xl border cursor-pointer
+        ${isSelected 
+          ? 'border-indigo-500 bg-slate-800/30' 
+          : 'border-slate-700/50 bg-slate-800/20 hover:border-slate-600/70'
+        }
+      `}
+      onClick={() => onSelect(evidence.id, evidence.supports)}
+    >
+      {/* Header */}
+      <div className="p-4 pb-3">
+        <div className="flex items-start justify-between gap-3">
+          <div className="flex items-start gap-3 min-w-0 flex-1">
+            <div className="shrink-0 w-9 h-9 rounded-lg flex items-center justify-center bg-slate-700/50">
+              <Icon className="w-5 h-5 text-slate-400" />
+            </div>
+            <div className="min-w-0 flex-1">
+              <h4 className="text-white font-medium text-sm leading-tight line-clamp-2">
+                {evidence.title || evidence.description || 'Evidence'}
+              </h4>
+              {evidence.source && (
+                <p className="text-slate-400 text-xs mt-1">{evidence.source}</p>
+              )}
+            </div>
+          </div>
+          
+          {/* Badges */}
+          <div className="flex flex-col items-end gap-1.5 shrink-0">
+            {evidence.sourceType && (
+              <span className={`
+                px-2 py-0.5 rounded text-[10px] font-semibold uppercase tracking-wide
+                ${evidence.sourceType === 'primary' 
+                  ? 'bg-teal-500/20 text-teal-400 border border-teal-500/30' 
+                  : 'bg-slate-600/30 text-slate-400 border border-slate-500/30'
+                }
+              `}>
+                {evidence.sourceType}
+              </span>
+            )}
+            {evidence.evidenceCategory && (
+              <span className={`
+                px-2 py-0.5 rounded text-[10px] font-semibold uppercase tracking-wide
+                ${evidence.evidenceCategory === 'direct' 
+                  ? 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/30' 
+                  : 'bg-amber-500/20 text-amber-400 border border-amber-500/30'
+                }
+              `}>
+                {evidence.evidenceCategory}
+              </span>
+            )}
+          </div>
+        </div>
+        
+        {/* External link */}
+        {evidence.url && (
+          <a 
+            href={evidence.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-1 text-indigo-400 hover:text-indigo-300 text-xs mt-2 transition-colors"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <span className="truncate max-w-[200px]">{new URL(evidence.url).hostname}</span>
+            <ArrowTopRightOnSquareIcon className="w-3 h-3 shrink-0" />
+          </a>
+        )}
+      </div>
+      
+      {/* Subclaims Section */}
+      {evidence.subclaims && evidence.subclaims.length > 0 && (
+        <div className="px-4 py-3 border-t border-slate-700/30 bg-slate-900/30">
+          <h5 className="text-slate-400 text-[10px] font-semibold uppercase tracking-wider mb-2">
+            Subclaims
+          </h5>
+          <ul className="space-y-1.5">
+            {evidence.subclaims.map((subclaim) => (
+              <li key={subclaim.id} className="flex items-start gap-2">
+                <span className="text-slate-500 mt-0.5">•</span>
+                <span className="text-slate-300 text-xs flex-1">{subclaim.text}</span>
+                {subclaim.frame && (
+                  <span className="text-slate-500 text-[9px] font-medium uppercase tracking-wide shrink-0 bg-slate-800/50 px-1.5 py-0.5 rounded">
+                    {subclaim.frame}
+                  </span>
+                )}
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
+      
+      {/* Reasoning Section */}
+      {evidence.reasoning && evidence.reasoning.length > 0 && (
+        <div className="px-4 py-3 border-t border-slate-700/30 bg-slate-900/50">
+          <h5 className="text-slate-400 text-[10px] font-semibold uppercase tracking-wider mb-2">
+            Reasoning
+          </h5>
+          <div className="space-y-3">
+            {evidence.reasoning.map((reason, idx) => (
+              <div key={idx} className="space-y-1.5">
+                <div className="flex items-start gap-2">
+                  <ArrowRightCircleIcon className="w-3.5 h-3.5 text-indigo-400 shrink-0 mt-0.5" />
+                  <span className="text-indigo-300 text-xs font-medium italic">
+                    &ldquo;{reason.recipeText}&rdquo;
+                  </span>
+                </div>
+                <ul className="ml-5 space-y-1">
+                  {reason.points.map((point, pointIdx) => (
+                    <li key={pointIdx} className="flex items-start gap-2">
+                      <span className="text-slate-600 mt-0.5">○</span>
+                      <span className="text-slate-400 text-xs">{point}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+      
+    </div>
+  );
+}
+
+export default function SemanticLabeling({ sentence, roles, recipes, startDate, endDate, location, stative = false, frame = '', evidence = [] }: SemanticLabelingProps) {
   const fontSize = getFontSize(roles);
+  
+  // State for tracking which recipe items should be highlighted
+  const [highlightedIds, setHighlightedIds] = useState<Set<string>>(new Set());
+  const [selectedEvidenceId, setSelectedEvidenceId] = useState<string | null>(null);
+  
+  // Handler for evidence selection - toggles highlight on supported recipe items
+  const handleEvidenceSelect = (evidenceId: string, supports: string[]) => {
+    if (selectedEvidenceId === evidenceId) {
+      // Deselect if clicking the same card
+      setSelectedEvidenceId(null);
+      setHighlightedIds(new Set());
+    } else {
+      // Select and highlight supported items
+      setSelectedEvidenceId(evidenceId);
+      setHighlightedIds(new Set(supports));
+    }
+  };
   
   // Refs for measuring positions
   const containerRef = useRef<HTMLDivElement>(null);
@@ -603,6 +857,15 @@ export default function SemanticLabeling({ sentence, roles, recipes, startDate, 
         return Boolean(recipes.roleRecipes?.[roleName]);
       });
   }, [roles, recipes]);
+  
+  // Collect all IDs supported by any evidence item (for verification status)
+  const supportedIds = useMemo(() => {
+    const ids = new Set<string>();
+    evidence.forEach(ev => {
+      ev.supports.forEach(id => ids.add(id));
+    });
+    return ids;
+  }, [evidence]);
   
   // Calculate line positions after render
   useEffect(() => {
@@ -859,6 +1122,8 @@ export default function SemanticLabeling({ sentence, roles, recipes, startDate, 
                               }
                               return roleRecipeData.relationships || [];
                             })()}
+                            highlightedIds={highlightedIds}
+                            supportedIds={supportedIds}
                           />
                         </div>
                       )}
@@ -882,17 +1147,43 @@ export default function SemanticLabeling({ sentence, roles, recipes, startDate, 
               sections={getMainRecipeData(roles[agentIndex]?.word || 'Agent', recipes, startDate, endDate, location, stative)} 
               roleWords={roles.map(r => r.word)}
               relationships={recipes.mainRecipe?.relationships || []}
+              highlightedIds={highlightedIds}
+              supportedIds={supportedIds}
             />
           </div>
         </div>
 
         {/* Evidence Section */}
-        <div className="flex flex-col gap-2 mt-4">
-          <span className="text-slate-400 text-[10px] font-medium uppercase tracking-wider">Evidence</span>
-          <div className="bg-slate-800/30 backdrop-blur-sm border border-slate-700/50 rounded-xl p-4">
-            {/* Evidence content will go here */}
+        {evidence && evidence.length > 0 && (
+          <div className="flex flex-col gap-2 mt-4">
+            <div className="flex items-center justify-between">
+              <span className="text-slate-400 text-[10px] font-medium uppercase tracking-wider">
+                Evidence ({evidence.length})
+              </span>
+              {selectedEvidenceId && (
+                <button
+                  onClick={() => {
+                    setSelectedEvidenceId(null);
+                    setHighlightedIds(new Set());
+                  }}
+                  className="text-indigo-400 hover:text-indigo-300 text-xs transition-colors"
+                >
+                  Clear selection
+                </button>
+              )}
+            </div>
+            <div className="grid gap-3 md:grid-cols-2">
+              {evidence.map((item) => (
+                <EvidenceCard
+                  key={item.id}
+                  evidence={item}
+                  isSelected={selectedEvidenceId === item.id}
+                  onSelect={handleEvidenceSelect}
+                />
+              ))}
+            </div>
           </div>
-        </div>
+        )}
 
         {/* Legend */}
         <div className="mt-3 flex items-center justify-center gap-4 text-[10px] text-slate-400">

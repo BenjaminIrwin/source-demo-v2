@@ -1,0 +1,42 @@
+{
+  "title": "October 7, 2023: The Hamas Attack on Israel",
+  "paragraph": "On October 7, 2023, Mohammed Deif announced the start of Operation Al-Aqsa Flood, marking the beginning of an unprecedented assault on Israeli territory. Hamas militants attacked Israel across multiple fronts, while militants simultaneously fired thousands of missiles from the Gaza Strip over Southern Israel toward Tel Aviv. In the violence that followed, 10 civilians were killed at Kibbutz Kissufim alone, where Hamas fighters fought against armed residents defending their community. The attack impacted not only Israelis but also 41 foreign workers employed by Kibbutz Alumim, highlighting the international dimensions of the tragedy. In a controversial military response, Barak Hiram authorized his tank unit to shell an Israeli home where hostages were being held. In the aftermath, an Egyptian official revealed that warnings had been issued, stating \"We have warned them an explosion of the situation is coming, and very soon, and it would be big. But they underestimated such warnings.\" However, Benjamin Netanyahu's Office denied that Israel had received prior warning of the October 7th attacks.",
+  "sentences": [
+    {
+      "id": "s1",
+      "text": "On October 7, 2023, Mohammed Deif announced the start of Operation Al-Aqsa Flood, marking the beginning of an unprecedented assault on Israeli territory.",
+      "claimIds": [1]
+    },
+    {
+      "id": "s2",
+      "text": "Hamas militants attacked Israel across multiple fronts, while militants simultaneously fired thousands of missiles from the Gaza Strip over Southern Israel toward Tel Aviv.",
+      "claimIds": [2, 3]
+    },
+    {
+      "id": "s3",
+      "text": "In the violence that followed, 10 civilians were killed at Kibbutz Kissufim alone, where Hamas fighters fought against armed residents defending their community.",
+      "claimIds": [4, 5]
+    },
+    {
+      "id": "s4",
+      "text": "The attack impacted not only Israelis but also 41 foreign workers employed by Kibbutz Alumim, highlighting the international dimensions of the tragedy.",
+      "claimIds": [6]
+    },
+    {
+      "id": "s5",
+      "text": "In a controversial military response, Barak Hiram authorized his tank unit to shell an Israeli home where hostages were being held.",
+      "claimIds": [7]
+    },
+    {
+      "id": "s6",
+      "text": "In the aftermath, an Egyptian official revealed that warnings had been issued, stating \"We have warned them an explosion of the situation is coming, and very soon, and it would be big. But they underestimated such warnings.\"",
+      "claimIds": [8]
+    },
+    {
+      "id": "s7",
+      "text": "However, Benjamin Netanyahu's Office denied that Israel had received prior warning of the October 7th attacks.",
+      "claimIds": [9]
+    }
+  ]
+}
+

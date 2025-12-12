@@ -1,16 +1,18 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { DocumentTextIcon, SparklesIcon, BeakerIcon, ArrowLeftIcon, ChevronLeftIcon, ChevronRightIcon, ArrowRightIcon, CalendarIcon, MapPinIcon, DocumentCheckIcon, VideoCameraIcon, ArchiveBoxIcon, LightBulbIcon, PhotoIcon, TagIcon } from '@heroicons/react/24/solid';
+import { DocumentTextIcon, SparklesIcon, BeakerIcon, ArrowLeftIcon, ChevronLeftIcon, ChevronRightIcon, ArrowRightIcon, CalendarIcon, MapPinIcon, DocumentCheckIcon, VideoCameraIcon, ArchiveBoxIcon, LightBulbIcon, PhotoIcon, TagIcon, NewspaperIcon, ScaleIcon } from '@heroicons/react/24/solid';
 import ArticleViewer from '@/components/ArticleViewer';
+import ExplainableNews from '@/components/ExplainableNews';
+import GrokComparison from '@/components/GrokComparison';
 
 // Import data
 import articleData from '@/data/article.json';
 import vagueClaimsData from '@/data/claims_vague.json';
 import enrichedClaimsData from '@/data/claims.json';
 
-const STAGES = ['Source', 'Identify', 'Enrich'];
+const STAGES = ['Source', 'Identify', 'Enrich', 'Explain', 'Compare'];
 
 // Types for enriched claims
 interface Role {
@@ -250,10 +252,10 @@ function AnnotatedSentence({ sentence, roles }: { sentence: string; roles: Role[
   const sortedRoles = [...roles].sort((a, b) => b.word.length - a.word.length);
   
   // Create a map of positions to roles
-  let result: (string | JSX.Element)[] = [sentence];
+  let result: (string | React.ReactNode)[] = [sentence];
   
   sortedRoles.forEach((role, roleIndex) => {
-    const newResult: (string | JSX.Element)[] = [];
+    const newResult: (string | React.ReactNode)[] = [];
     
     result.forEach((part, partIndex) => {
       if (typeof part !== 'string') {
@@ -436,6 +438,9 @@ export default function PipelinePage() {
         setTimeout(() => {
           setTransitionPhase(0);
         }, 150);
+      } else if (currentStage === 3) {
+        // Going from Explain back to Enrich
+        setCurrentStage(2);
       } else {
         setCurrentStage(currentStage - 1);
       }
@@ -480,6 +485,8 @@ export default function PipelinePage() {
       case 0: return 'Start with a source article containing claims to verify';
       case 1: return 'Hover over claims to see them highlighted in the article';
       case 2: return 'Compare extracted claims with their enriched versions';
+      case 3: return 'See how claims become explainable news content';
+      case 4: return 'Compare recipe-based editing vs traditional AI approaches';
       default: return '';
     }
   };
@@ -502,8 +509,8 @@ export default function PipelinePage() {
         </div>
 
         {/* Stage Content */}
-        <div>
-          <div className={`flex items-start justify-center transition-[gap] duration-700 gap-6`}>
+        <div className="relative min-h-[500px]">
+          <div className={`flex items-start justify-center transition-[gap] duration-700 gap-6 ${currentStage >= 3 ? 'hidden' : ''}`}>
             {/* Article Section - only in stages 0-1, fades out during phase 1 */}
             <div 
               className={`flex flex-col transition-all duration-150 ease-out ${
@@ -601,6 +608,32 @@ export default function PipelinePage() {
               )}
             </div>
 
+          </div>
+
+          {/* Stage 3: Explainable News */}
+          <div 
+            className={`w-full transition-all duration-300 ease-out ${
+              currentStage === 3
+                ? 'opacity-100' 
+                : 'hidden'
+            }`}
+          >
+            {currentStage === 3 && (
+              <ExplainableNews />
+            )}
+          </div>
+
+          {/* Stage 4: Grok Comparison */}
+          <div 
+            className={`w-full transition-all duration-300 ease-out ${
+              currentStage === 4
+                ? 'opacity-100' 
+                : 'hidden'
+            }`}
+          >
+            {currentStage === 4 && (
+              <GrokComparison />
+            )}
           </div>
         </div>
 
