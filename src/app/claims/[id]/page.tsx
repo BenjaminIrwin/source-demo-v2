@@ -11,6 +11,7 @@ interface Claim {
   endDate?: string;
   location?: string;
   stative?: boolean;
+  frame?: string;
   roles: SemanticRole[];
   recipes?: ClaimRecipes;
 }
@@ -115,6 +116,7 @@ export default function ClaimDetailPage() {
             endDate={claim.endDate || ''}
             location={claim.location || ''}
             stative={claim.stative || false}
+            frame={claim.frame || ''}
           />
         </div>
       </div>

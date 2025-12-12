@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { DocumentTextIcon, SparklesIcon, BeakerIcon, ArrowLeftIcon, ChevronLeftIcon, ChevronRightIcon, ArrowRightIcon, CalendarIcon, MapPinIcon, DocumentCheckIcon, VideoCameraIcon, ArchiveBoxIcon, LightBulbIcon, PhotoIcon } from '@heroicons/react/24/solid';
+import { DocumentTextIcon, SparklesIcon, BeakerIcon, ArrowLeftIcon, ChevronLeftIcon, ChevronRightIcon, ArrowRightIcon, CalendarIcon, MapPinIcon, DocumentCheckIcon, VideoCameraIcon, ArchiveBoxIcon, LightBulbIcon, PhotoIcon, TagIcon } from '@heroicons/react/24/solid';
 import ArticleViewer from '@/components/ArticleViewer';
 
 // Import data
@@ -33,6 +33,7 @@ interface EnrichedClaim {
   endDate?: string;
   location?: string;
   stative?: boolean;
+  frame?: string;
   roles: Role[];
   evidence: Evidence[];
 }
@@ -368,6 +369,13 @@ function AlignedClaimsGrid({
                     <MapPinIcon className="w-3 h-3" />
                     <span className="font-medium">{enrichedClaim.location || '???'}</span>
                   </div>
+
+                  {enrichedClaim.frame && (
+                    <div className="flex items-center gap-1 text-amber-400">
+                      <TagIcon className="w-3 h-3" />
+                      <span className="font-medium uppercase">{enrichedClaim.frame}</span>
+                    </div>
+                  )}
                   
                   <div className="flex items-center gap-1.5 ml-auto">
                     {evidenceSummary.map(({ type, count, icon: Icon }) => (

@@ -1,0 +1,862 @@
+{
+  "claims": [
+    {
+      "id": 1,
+      "sentence": "Mohammed Deif announced the start of Operation Al-Aqsa Flood",
+      "stative": false,
+      "startDate": "2023-10-07T06:25",
+      "endDate": "2023-10-07T06:30",
+      "roles": [
+        { "word": "Mohammed Deif", "role": "Agent" },
+        { "word": "announced", "role": "Action", "isAction": true },
+        { "word": "the start of Operation Al-Aqsa Flood", "role": "Content.entity" }
+      ],
+      "evidence": [
+        {
+          "id": "ev-5-001",
+          "type": "video",
+          "title": "Mohammad Deif speech announcing Operation Al-Aqsa Flood",
+          "url": "https://www.youtube.com/watch?v=N74O67NSwKo",
+          "source": "YouTube",
+          "supports": ["a7b8c9d0-5222-4000-8000-000000000001"],
+          "sourceType": "primary",
+          "evidenceCategory": "direct"
+        }
+      ],
+      "recipes": {
+        "mainRecipe": {
+          "sections": [
+            {
+              "type": "dated",
+              "items": [
+                {
+                  "id": "a7b8c9d0-5222-4000-8000-000000000001",
+                  "text": "communicated that Operation Al-Aqsa Flood had started",
+                  "children": [
+                    { "id": "a7b8c9d0-5222-4000-8000-000000000002", "text": "said that Operation Al-Aqsa Flood had started" },
+                    { "id": "a7b8c9d0-5222-4000-8000-000000000003", "text": "signed that Operation Al-Aqsa Flood had started" },
+                    { "id": "a7b8c9d0-5222-4000-8000-000000000004", "text": "signalled that Operation Al-Aqsa Flood had started" },
+                    { "id": "a7b8c9d0-5222-4000-8000-000000000005", "text": "messaged that Operation Al-Aqsa Flood had started" }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        "roleRecipes": {
+          "Agent": {
+            "wikidata": "Q94839"
+          }
+        }
+      }
+    },
+    {
+      "id": 2,
+      "sentence": "Hamas militants attacked Israel",
+      "stative": false,
+      "startDate": "2023-10-07T00:00",
+      "endDate": "2023-10-07T23:59",
+      "location": "Israel",
+      "roles": [
+        { "word": "Hamas militants", "role": "Agent" },
+        { "word": "attacked", "role": "Action", "isAction": true },
+        { "word": "Israel", "role": "Patient" }
+      ],
+      "evidence": [
+        {
+          "id": "ev-1-001",
+          "type": "video",
+          "title": "Hamas terrorists fire into moving civilian car near Sderot police station",
+          "url": "https://commons.wikimedia.org/wiki/File:Hamas_terrorists_fire_into_moving_civilian_car_near_Sderot_police_station_during_October_7_attacks.webm",
+          "source": "Wikimedia Commons",
+          "supports": ["b2c3d4e5-2222-4000-8000-000000000001"],
+          "sourceType": "primary",
+          "evidenceCategory": "direct"
+        },
+        {
+          "id": "ev-1-002",
+          "type": "video",
+          "title": "Hamas members attacking civilians in Kibbutz Mefalsim",
+          "url": "https://commons.wikimedia.org/wiki/File:Hamas_members_attacking_civilians_in_Kibbutz_Mefalsim,_Israel_(October_2023).webm",
+          "source": "Wikimedia Commons",
+          "supports": ["b2c3d4e5-2222-4000-8000-000000000001"],
+          "sourceType": "primary",
+          "evidenceCategory": "direct"
+        },
+        {
+          "id": "ev-1-003",
+          "type": "multimedia",
+          "title": "Bearing Witness to the October 7th Massacre",
+          "url": "https://oct7.treedis.com",
+          "description": "Interactive 3D documentation of attack sites",
+          "supports": ["b2c3d4e5-2222-4000-8000-000000000001"],
+          "sourceType": "primary",
+          "evidenceCategory": "direct"
+        },
+        {
+          "id": "ev-1-004",
+          "type": "video",
+          "title": "Mohammad Deif speech announcing operation",
+          "url": "https://www.youtube.com/watch?v=N74O67NSwKo",
+          "source": "YouTube",
+          "supports": ["c3d4e5f6-3333-4000-8000-000000000001"],
+          "sourceType": "primary",
+          "evidenceCategory": "direct"
+        },
+        {
+          "id": "ev-1-005",
+          "type": "archive",
+          "title": "2023 Hamas attack on Israel - Media Collection",
+          "url": "https://commons.wikimedia.org/wiki/Category:2023_Hamas_attack_on_Israel",
+          "source": "Wikimedia Commons",
+          "supports": ["c3d4e5f6-3333-4000-8000-000000000001"],
+          "sourceType": "secondary",
+          "evidenceCategory": "circumstantial"
+        },
+        {
+          "id": "ev-1-006",
+          "type": "reasoning",
+          "description": "Repeated, protracted violence demonstrates intent",
+          "supports": ["c3d4e5f6-3333-4000-8000-000000000001"]
+        }
+      ],
+      "recipes": {
+        "mainRecipe": {
+          "sections": [
+            {
+              "type": "dated",
+              "items": [
+                {
+                  "id": "b2c3d4e5-2222-4000-8000-000000000001",
+                  "text": "performed some violent action(s) against Israel",
+                  "verified": true
+                }
+              ]
+            },
+            {
+              "type": "anyDate",
+              "items": [
+                {
+                  "id": "c3d4e5f6-3333-4000-8000-000000000001",
+                  "text": "communicated intent to cause harm to Israel on October 7th 2023",
+                  "children": [
+                    { "id": "c3d4e5f6-3333-4000-8000-000000000002", "text": "said that they were going to harm Israel on October 7th 2023" },
+                    { "id": "c3d4e5f6-3333-4000-8000-000000000003", "text": "signalled that they were going to harm Israel on October 7th 2023" },
+                    { "id": "c3d4e5f6-3333-4000-8000-000000000004", "text": "messaged that they were going to harm Israel on October 7th 2023" },
+                    { "id": "c3d4e5f6-3333-4000-8000-000000000005", "text": "signed that they were going to harm Israel on October 7th 2023" }
+                  ]
+                }
+              ]
+            }
+          ],
+          "relationships": [
+            { "from": "b2c3d4e5-2222-4000-8000-000000000020", "to": "b2c3d4e5-2222-4000-8000-000000000021", "type": "causes" },
+            { "from": "b2c3d4e5-2222-4000-8000-000000000022", "to": "b2c3d4e5-2222-4000-8000-000000000023", "type": "causes" },
+            { "from": "b2c3d4e5-2222-4000-8000-000000000024", "to": "b2c3d4e5-2222-4000-8000-000000000025", "type": "before" }
+          ]
+        },
+        "roleRecipes": {
+          "Agent": [
+            {
+              "name": "Hamas",
+              "wikidata": "Q38799"
+            },
+            {
+              "name": "Hamas militants",
+              "isGroup": true,
+              "items": [
+                {
+                  "id": "a1b2c3d4-1111-4000-8000-000000000002",
+                  "text": "Is a militant",
+                  "children": [
+                    {
+                      "id": "a1b2c3d4-1111-4000-8000-000000000003",
+                      "text": "Supports a political cause",
+                      "children": [
+                        { "id": "a1b2c3d4-1111-4000-8000-000000000004", "text": "Communicates that they support a political cause" }
+                      ]
+                    },
+                    { "id": "a1b2c3d4-1111-4000-8000-000000000005", "text": "Uses violence" }
+                  ]
+                },
+                {
+                  "id": "a1b2c3d4-1111-4000-8000-000000000006",
+                  "text": "Is a member of Hamas",
+                  "children": [
+                    { "id": "a1b2c3d4-1111-4000-8000-000000000007", "text": "inherits \"Hamas\" membership" },
+                    { "id": "a1b2c3d4-1111-4000-8000-000000000008", "text": "wears \"Hamas\" clothing or attire" },
+                    { "id": "a1b2c3d4-1111-4000-8000-000000000009", "text": "has official membership of \"Hamas\"" },
+                    { "id": "a1b2c3d4-1111-4000-8000-000000000010", "text": "communicates that they are members of \"Hamas\"" }
+                  ]
+                }
+              ]
+            }
+          ],
+          "Patient": {
+            "location": {
+              "lat": 31.0461,
+              "lng": 34.8516
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": 3,
+      "sentence": "Militants fired missiles from the Gaza Strip over Southern Israel to Tel Aviv",
+      "stative": false,
+      "startDate": "2023-10-07T08:00",
+      "endDate": "2023-10-07T08:30",
+      "location": "Gaza Strip",
+      "roles": [
+        { "word": "Militants", "role": "Agent" },
+        { "word": "fired", "role": "Action", "isAction": true },
+        { "word": "missiles", "role": "Theme" },
+        { "word": "from the Gaza Strip", "role": "Init_location" },
+        { "word": "over Southern Israel", "role": "Path" },
+        { "word": "to Tel Aviv", "role": "Final_location" }
+      ],
+      "evidence": [
+        {
+          "id": "ev-2-001",
+          "type": "article",
+          "title": "Timeline of surprise rocket attack from Hamas on Israel",
+          "url": "https://abcnews.go.com/International/timeline-surprise-rocket-attack-hamas-israel/story?id=103816006",
+          "source": "ABC News",
+          "supports": ["d4e5f6a7-2222-4000-8000-000000000001", "d4e5f6a7-2222-4000-8000-000000000002"],
+          "sourceType": "secondary",
+          "evidenceCategory": "circumstantial"
+        },
+        {
+          "id": "ev-2-002",
+          "type": "document",
+          "title": "UN Commission report (IDF spokesperson 2,200-rocket figure at 10:26)",
+          "url": "https://www.ohchr.org/sites/default/files/documents/hrbodies/hrcouncil/sessions-regular/session56/a-hrc-56-crp-3.pdf",
+          "source": "UN OHCHR",
+          "supports": ["d4e5f6a7-2222-4000-8000-000000000002"],
+          "sourceType": "secondary",
+          "evidenceCategory": "direct"
+        },
+        {
+          "id": "ev-2-003",
+          "type": "article",
+          "title": "Questions and Answers: Hamas-led Armed Groups October 7, 2023 Assault on Israel",
+          "url": "https://www.hrw.org/news/2024/07/17/questions-and-answers-hamas-led-armed-groups-october-7-2023-assault-israel",
+          "source": "Human Rights Watch",
+          "supports": ["d4e5f6a7-2222-4000-8000-000000000001", "d4e5f6a7-2222-4000-8000-000000000002"],
+          "sourceType": "secondary",
+          "evidenceCategory": "circumstantial"
+        },
+        {
+          "id": "ev-2-004",
+          "type": "article",
+          "title": "Black Sabbath at Kibbutz Alumim",
+          "url": "https://www.tabletmag.com/sections/israel-middle-east/articles/black-sabbath-kibbutz-alumim-hamas",
+          "source": "Tablet Magazine",
+          "supports": ["d4e5f6a7-2222-4000-8000-000000000001", "d4e5f6a7-2222-4000-8000-000000000002"],
+          "sourceType": "secondary",
+          "evidenceCategory": "circumstantial"
+        }
+      ],
+      "recipes": {
+        "mainRecipe": {
+          "sections": [
+            {
+              "type": "dated",
+              "items": [
+                { "id": "d4e5f6a7-2222-4000-8000-000000000001", "text": "performed some action" },
+                { "id": "d4e5f6a7-2222-4000-8000-000000000002", "text": "Missiles moved from the Gaza Strip to Tel Aviv" }
+              ]
+            }
+          ],
+          "relationships": [
+            { "from": "d4e5f6a7-2222-4000-8000-000000000001", "to": "d4e5f6a7-2222-4000-8000-000000000002", "type": "causes" }
+          ]
+        },
+        "roleRecipes": {
+          "Agent": {
+            "isGroup": true,
+            "items": [
+              {
+                "id": "d4e5f6a7-2111-4000-8000-000000000002",
+                "text": "Is a militant",
+                "children": [
+                  {
+                    "id": "d4e5f6a7-2111-4000-8000-000000000003",
+                    "text": "Supports a political cause",
+                    "children": [
+                      { "id": "d4e5f6a7-2111-4000-8000-000000000004", "text": "Communicates that they support a political cause" }
+                    ]
+                  },
+                  { "id": "d4e5f6a7-2111-4000-8000-000000000005", "text": "Uses violence" }
+                ]
+              }
+            ]
+          },
+          "Theme": {
+            "isGroup": true,
+            "items": [
+              { "id": "d4e5f6a7-2112-4000-8000-000000000005", "text": "Contains a propulsion system" },
+              { "id": "d4e5f6a7-2112-4000-8000-000000000006", "text": "Contains an explosive payload" },
+              { "id": "d4e5f6a7-2112-4000-8000-000000000007", "text": "Is man-made" }
+            ]
+          },
+          "Init_location": {
+            "location": {
+              "lat": 31.3547,
+              "lng": 34.3088
+            }
+          },
+          "Path": {
+            "location": {
+              "lat": 31.6688,
+              "lng": 34.5743
+            }
+          },
+          "Final_location": {
+            "location": {
+              "lat": 32.0853,
+              "lng": 34.7818
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": 4,
+      "sentence": "10 civilians were killed",
+      "stative": false,
+      "startDate": "2023-10-07T06:30",
+      "endDate": "2023-10-09T23:59",
+      "location": "Kibbutz Kissufim, Israel",
+      "roles": [
+        { "word": "10 civilians", "role": "Patient" },
+        { "word": "were killed", "role": "Action", "isAction": true }
+      ],
+      "evidence": [
+        {
+          "id": "ev-6-001",
+          "type": "article",
+          "title": "IDF rushed to Kibbutz Kissufim as Hamas invaded, but some attackers stayed for days",
+          "url": "https://www.timesofisrael.com/idf-rushed-to-kibbutz-kissufim-as-hamas-invaded-but-some-attackers-stayed-for-days/",
+          "source": "Times of Israel",
+          "supports": ["b8c9d0e1-6222-4000-8000-000000000001", "b8c9d0e1-6222-4000-8000-000000000002"],
+          "sourceType": "secondary",
+          "evidenceCategory": "circumstantial"
+        },
+        {
+          "id": "ev-6-002",
+          "type": "article",
+          "title": "Jina Semiatiz, 90: Great-grandmother was happiest holding a baby",
+          "url": "https://www.timesofisrael.com/jina-semiatiz-90-great-grandmother-was-happiest-holding-a-baby/",
+          "source": "Times of Israel",
+          "supports": ["b8c9d0e1-6222-4000-8000-000000000002"],
+          "sourceType": "secondary",
+          "evidenceCategory": "direct"
+        },
+        {
+          "id": "ev-6-003",
+          "type": "article",
+          "title": "Ofer Ron, 70: Gentle kibbutznik who enjoyed cooking for his community",
+          "url": "https://www.timesofisrael.com/ofer-ron-70-gentle-kibbutznik-who-enjoyed-cooking-for-his-community/",
+          "source": "Times of Israel",
+          "supports": ["b8c9d0e1-6222-4000-8000-000000000002"],
+          "sourceType": "secondary",
+          "evidenceCategory": "direct"
+        },
+        {
+          "id": "ev-6-004",
+          "type": "article",
+          "title": "Ivan Illarramendi, 46; Dafna Pamela Garcovich, 47: ID'd after a month",
+          "url": "https://www.timesofisrael.com/ivan-illarramendi-46-dafna-pamela-garcovich-47-idd-after-a-month/",
+          "source": "Times of Israel",
+          "supports": ["b8c9d0e1-6222-4000-8000-000000000002"],
+          "sourceType": "secondary",
+          "evidenceCategory": "direct"
+        },
+        {
+          "id": "ev-6-005",
+          "type": "article",
+          "title": "Itay, Etti and Sagi Zak, 53, 50, 15: Died in each other's arms",
+          "url": "https://www.timesofisrael.com/itay-etti-and-sagi-zak-53-50-15-died-in-each-others-arms/",
+          "source": "Times of Israel",
+          "supports": ["b8c9d0e1-6222-4000-8000-000000000002"],
+          "sourceType": "secondary",
+          "evidenceCategory": "direct"
+        },
+        {
+          "id": "ev-6-006",
+          "type": "article",
+          "title": "Menuha Chulati, 75: Beloved teacher and grandmother",
+          "url": "https://www.timesofisrael.com/menuha-chulati-75-beloved-teacher-and-grandmother/",
+          "source": "Times of Israel",
+          "supports": ["b8c9d0e1-6222-4000-8000-000000000002"],
+          "sourceType": "secondary",
+          "evidenceCategory": "direct"
+        },
+        {
+          "id": "ev-6-007",
+          "type": "article",
+          "title": "Tom Godo, 52: Dad of three girls with a talent for music",
+          "url": "https://www.timesofisrael.com/tom-godo-52-dad-of-three-girls-with-a-talent-for-music/",
+          "source": "Times of Israel",
+          "supports": ["b8c9d0e1-6222-4000-8000-000000000002"],
+          "sourceType": "secondary",
+          "evidenceCategory": "direct"
+        },
+        {
+          "id": "ev-6-008",
+          "type": "article",
+          "title": "Reuven Heinik, 56: Lifelong dairy farmer wouldn't abandon his cows",
+          "url": "https://www.timesofisrael.com/reuven-heinik-56-lifelong-dairy-farmer-wouldnt-abandon-his-cows/",
+          "source": "Times of Israel",
+          "supports": ["b8c9d0e1-6222-4000-8000-000000000002"],
+          "sourceType": "secondary",
+          "evidenceCategory": "direct"
+        }
+      ],
+      "recipes": {
+        "mainRecipe": {
+          "sections": [
+            {
+              "type": "dated",
+              "items": [
+                { "id": "b8c9d0e1-6222-4000-8000-000000000001", "text": "performed some action" },
+                {
+                  "id": "b8c9d0e1-6222-4000-8000-000000000002",
+                  "text": "10 civilians died",
+                  "children": [
+                    { "id": "b8c9d0e1-6222-4000-8000-000000000003", "text": "10 civilians were alive" },
+                    { "id": "b8c9d0e1-6222-4000-8000-000000000004", "text": "10 civilians were dead" }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        "roleRecipes": {
+          "Patient": {
+            "isGroup": true,
+            "aggregateCount": 10,
+            "items": [
+              {
+                "id": "b8c9d0e1-6111-4000-8000-000000000005",
+                "text": "Is civilian",
+                "children": [
+                  { "id": "b8c9d0e1-6111-4000-8000-000000000007", "text": "Is not an armed combatant" }
+                ]
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": 5,
+      "sentence": "Hamas fighters fought against armed residents",
+      "stative": false,
+      "startDate": "2023-10-07T07:00",
+      "endDate": "2023-10-07T23:00",
+      "location": "Kibbutz Nir Am, Israel",
+      "roles": [
+        { "word": "Hamas fighters", "role": "Agent" },
+        { "word": "fought", "role": "Action", "isAction": true },
+        { "word": "armed residents", "role": "Co_agent" }
+      ],
+      "evidence": [
+        {
+          "id": "ev-8-001",
+          "type": "article",
+          "title": "Israel Gaza war: Satellite imagery shows severe damage at Kibbutz Be'eri",
+          "url": "https://www.bbc.co.uk/news/world-middle-east-67089113",
+          "source": "BBC",
+          "supports": ["d0e1f2a3-8222-4000-8000-000000000001", "d0e1f2a3-8222-4000-8000-000000000010"],
+          "sourceType": "secondary",
+          "evidenceCategory": "circumstantial"
+        },
+        {
+          "id": "ev-8-002",
+          "type": "article",
+          "title": "How one kibbutz defended itself from Hamas",
+          "url": "https://www.economist.com/1843/2023/10/13/how-one-kibbutz-defended-itself-from-hamas",
+          "source": "The Economist",
+          "supports": ["d0e1f2a3-8222-4000-8000-000000000001", "d0e1f2a3-8222-4000-8000-000000000010"],
+          "sourceType": "secondary",
+          "evidenceCategory": "circumstantial"
+        }
+      ],
+      "recipes": {
+        "mainRecipe": {
+          "sections": [
+            {
+              "type": "dated",
+              "title": "Hamas fighters → armed residents",
+              "items": [
+                {
+                  "id": "d0e1f2a3-8222-4000-8000-000000000001",
+                  "text": "performed violent action(s) against armed residents"
+                }
+              ]
+            },
+            {
+              "type": "dated",
+              "title": "armed residents → Hamas fighters",
+              "items": [
+                {
+                  "id": "d0e1f2a3-8222-4000-8000-000000000010",
+                  "text": "performed violent action(s) against Hamas fighters"
+                }
+              ]
+            }
+          ]
+        },
+        "roleRecipes": {
+          "Agent": {
+            "isGroup": true,
+            "items": [
+              {
+                "id": "d0e1f2a3-8111-4000-8000-000000000002",
+                "text": "Is a fighter",
+                "children": [
+                  { "id": "d0e1f2a3-8111-4000-8000-000000000003", "text": "Engages in combat" },
+                  { "id": "d0e1f2a3-8111-4000-8000-000000000004", "text": "Uses violence" }
+                ]
+              },
+              {
+                "id": "d0e1f2a3-8111-4000-8000-000000000005",
+                "text": "Is a member of Hamas",
+                "children": [
+                  { "id": "d0e1f2a3-8111-4000-8000-000000000006", "text": "inherits \"Hamas\" membership" },
+                  { "id": "d0e1f2a3-8111-4000-8000-000000000007", "text": "wears \"Hamas\" clothing or attire" },
+                  { "id": "d0e1f2a3-8111-4000-8000-000000000008", "text": "has official membership of \"Hamas\"" },
+                  { "id": "d0e1f2a3-8111-4000-8000-000000000009", "text": "communicates that they are members of \"Hamas\"" }
+                ]
+              }
+            ]
+          },
+          "Co_agent": {
+            "isGroup": true,
+            "items": [
+              {
+                "id": "d0e1f2a3-8112-4000-8000-000000000002",
+                "text": "Is a resident",
+                "children": [
+                  { "id": "d0e1f2a3-8112-4000-8000-000000000003", "text": "Lives in the area" }
+                ]
+              },
+              {
+                "id": "d0e1f2a3-8112-4000-8000-000000000005",
+                "text": "Is armed",
+                "children": [
+                  { "id": "d0e1f2a3-8112-4000-8000-000000000006", "text": "Possesses a weapon" },
+                  { "id": "d0e1f2a3-8112-4000-8000-000000000007", "text": "Has access to a weapon" }
+                ]
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": 6,
+      "sentence": "41 foreign workers were employed by Kibbutz Alumim",
+      "stative": true,
+      "startDate": "2023-10-07T00:00",
+      "endDate": "2023-10-07T23:59",
+      "location": "Kibbutz Alumim, Israel",
+      "frame": "BEING_EMPLOYED",
+      "roles": [
+        { "word": "41 foreign workers", "role": "Employee" },
+        { "word": "were employed", "role": "Action", "isAction": true },
+        { "word": "Kibbutz Alumim", "role": "Employer" }
+      ],
+      "evidence": [
+        {
+          "id": "ev-9-001",
+          "type": "article",
+          "title": "Thai laborers, the working hands of Israeli farming, pay with blood",
+          "url": "https://www.timesofisrael.com/thai-laborers-the-working-hands-of-israeli-farming-pay-with-blood/",
+          "source": "Times of Israel",
+          "supports": ["e1f2a3b4-9222-4000-8000-000000000001"],
+          "sourceType": "secondary",
+          "evidenceCategory": "circumstantial"
+        }
+      ],
+      "recipes": {
+        "mainRecipe": {
+          "sections": [
+            {
+              "type": "dated",
+              "items": [
+                {
+                  "id": "e1f2a3b4-9222-4000-8000-000000000001",
+                  "text": "had an employment relationship with Kibbutz Alumim",
+                  "children": [
+                    { "id": "e1f2a3b4-9222-4000-8000-000000000002", "text": "had a contract to work for Kibbutz Alumim" },
+                    { "id": "e1f2a3b4-9222-4000-8000-000000000003", "text": "had a verbal agreement to work for Kibbutz Alumim" },
+                    { "id": "e1f2a3b4-9222-4000-8000-000000000004", "text": "performed work for Kibbutz Alumim" },
+                    { "id": "e1f2a3b4-9222-4000-8000-000000000005", "text": "received compensation from Kibbutz Alumim" }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        "roleRecipes": {
+          "Employee": {
+            "isGroup": true,
+            "aggregateCount": 41,
+            "items": [
+              {
+                "id": "e1f2a3b4-9111-4000-8000-000000000002",
+                "text": "Is a worker",
+                "children": [
+                  { "id": "e1f2a3b4-9111-4000-8000-000000000003", "text": "Performs labor" },
+                  { "id": "e1f2a3b4-9111-4000-8000-000000000004", "text": "Receives compensation for labor" }
+                ]
+              },
+              {
+                "id": "e1f2a3b4-9111-4000-8000-000000000005",
+                "text": "Is foreign",
+                "children": [
+                  { "id": "e1f2a3b4-9111-4000-8000-000000000006", "text": "Is not a citizen of Israel" },
+                  { "id": "e1f2a3b4-9111-4000-8000-000000000007", "text": "Is from another country" },
+                  { "id": "e1f2a3b4-9111-4000-8000-000000000008", "text": "Has a foreign passport" }
+                ]
+              }
+            ]
+          },
+          "Employer": {
+            "location": {
+              "lat": 31.3833,
+              "lng": 34.4667
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": 7,
+      "sentence": "Barak Hiram authorized his tank unit to shell an Israeli home",
+      "stative": false,
+      "startDate": "2023-10-07T17:57",
+      "endDate": "2023-10-07T18:03",
+      "location": "Kibbutz Be'eri, Israel",
+      "roles": [
+        { "word": "Barak Hiram", "role": "Agent" },
+        { "word": "authorized", "role": "Action", "isAction": true },
+        { "word": "his tank unit", "role": "Patient" },
+        { "word": "to shell an Israeli home", "role": "Scope" }
+      ],
+      "evidence": [
+        {
+          "id": "ev-7-001",
+          "type": "article",
+          "title": "Israeli General Ordered Tank to Fire on House Where Hostages Were Held",
+          "url": "https://www.nytimes.com/2023/12/27/world/middleeast/israel-beeri-hiram-hamas.html",
+          "source": "New York Times",
+          "supports": ["c9d0e1f2-7222-4000-8000-000000000001"],
+          "sourceType": "secondary",
+          "evidenceCategory": "circumstantial"
+        }
+      ],
+      "recipes": {
+        "mainRecipe": {
+          "sections": [
+            {
+              "type": "dated",
+              "items": [
+                {
+                  "id": "c9d0e1f2-7222-4000-8000-000000000001",
+                  "text": "communicated to his tank unit that they had permission to shell an Israeli home",
+                  "children": [
+                    { "id": "c9d0e1f2-7222-4000-8000-000000000002", "text": "said to his tank unit that they had permission to shell an Israeli home" },
+                    { "id": "c9d0e1f2-7222-4000-8000-000000000003", "text": "signed to his tank unit that they had permission to shell an Israeli home" },
+                    { "id": "c9d0e1f2-7222-4000-8000-000000000004", "text": "signalled to his tank unit that they had permission to shell an Israeli home" },
+                    { "id": "c9d0e1f2-7222-4000-8000-000000000005", "text": "messaged to his tank unit that they had permission to shell an Israeli home" }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        "roleRecipes": {
+          "Agent": {
+            "wikidata": "Q27020200"
+          },
+          "Patient": {
+            "isGroup": true,
+            "items": [
+              {
+                "id": "c9d0e1f2-7112-4000-8000-000000000001",
+                "text": "Is a military unit",
+                "children": [
+                  { "id": "c9d0e1f2-7112-4000-8000-000000000004", "text": "Is an organizational structure" },
+                  { "id": "c9d0e1f2-7112-4000-8000-000000000002", "text": "Is part of a military organization" },
+                  { "id": "c9d0e1f2-7112-4000-8000-000000000003", "text": "Contains personnel" }
+                ]
+              },
+              {
+                "id": "c9d0e1f2-7112-4000-8000-000000000005",
+                "text": "Is a tank unit",
+                "children": [
+                  { "id": "c9d0e1f2-7112-4000-8000-000000000006", "text": "Operates tank vehicles" }
+                ]
+              },
+              {
+                "id": "c9d0e1f2-7112-4000-8000-000000000009",
+                "text": "Is subordinate to Barak Hiram",
+                "children": [
+                  { "id": "c9d0e1f2-7112-4000-8000-000000000010", "text": "Reports to Barak Hiram" },
+                  { "id": "c9d0e1f2-7112-4000-8000-000000000011", "text": "Receives orders from Barak Hiram" }
+                ]
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": 8,
+      "sentence": "An Egyptian official said \"We have warned them an explosion of the situation is coming, and very soon, and it would be big. But they underestimated such warnings\"",
+      "stative": false,
+      "endDate": "2023-10-09T00:00",
+      "roles": [
+        { "word": "An Egyptian official", "role": "Agent" },
+        { "word": "said", "role": "Action", "isAction": true },
+        { "word": "We have warned them an explosion of the situation is coming, and very soon, and it would be big. But they underestimated such warnings", "role": "Content.quote" }
+      ],
+      "evidence": [
+        {
+          "id": "ev-3-001",
+          "type": "article",
+          "title": "What went wrong? Questions emerge over Israel's intelligence prowess after Hamas attack",
+          "url": "https://apnews.com/article/israel-hamas-gaza-attack-intel-a5287a18773232f26ca171233be01721",
+          "source": "AP News",
+          "supports": ["e5f6a7b8-3222-4000-8000-000000000001"],
+          "sourceType": "secondary",
+          "evidenceCategory": "direct"
+        }
+      ],
+      "recipes": {
+        "mainRecipe": {
+          "sections": [
+            {
+              "type": "dated",
+              "items": [
+                {
+                  "id": "e5f6a7b8-3222-4000-8000-000000000001",
+                  "text": "communicated \"We have warned them an explosion of the situation is coming, and very soon, and it would be big. But they underestimated such warnings\"",
+                  "children": [
+                    { "id": "e5f6a7b8-3222-4000-8000-000000000002", "text": "said \"We have warned them an explosion of the situation is coming, and very soon, and it would be big. But they underestimated such warnings\"" },
+                    { "id": "e5f6a7b8-3222-4000-8000-000000000003", "text": "signed \"We have warned them an explosion of the situation is coming, and very soon, and it would be big. But they underestimated such warnings\"" },
+                    { "id": "e5f6a7b8-3222-4000-8000-000000000004", "text": "signalled \"We have warned them an explosion of the situation is coming, and very soon, and it would be big. But they underestimated such warnings\"" },
+                    { "id": "e5f6a7b8-3222-4000-8000-000000000005", "text": "messaged \"We have warned them an explosion of the situation is coming, and very soon, and it would be big. But they underestimated such warnings\"" }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        "roleRecipes": {
+          "Agent": {
+            "items": [
+              {
+                "id": "e5f6a7b8-3111-4000-8000-000000000002",
+                "text": "Is Egyptian",
+                "children": [
+                  { "id": "e5f6a7b8-3111-4000-8000-000000000003", "text": "Holds Egyptian citizenship" },
+                  { "id": "e5f6a7b8-3111-4000-8000-000000000004", "text": "Is born in Egypt" },
+                  { "id": "e5f6a7b8-3111-4000-8000-000000000005", "text": "Represents the Egyptian government" }
+                ]
+              },
+              {
+                "id": "e5f6a7b8-3111-4000-8000-000000000006",
+                "text": "Is an official",
+                "children": [
+                  { "id": "e5f6a7b8-3111-4000-8000-000000000007", "text": "Holds a position in government" },
+                  { "id": "e5f6a7b8-3111-4000-8000-000000000008", "text": "Has authority to speak on behalf of the government" },
+                  { "id": "e5f6a7b8-3111-4000-8000-000000000009", "text": "Is appointed or elected to a governmental role" }
+                ]
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": 9,
+      "sentence": "Benjamin Netanyahu's Office denied that Israel had received prior warning of the October 7th attacks",
+      "stative": false,
+      "startDate": "2023-10-09T16:20:44.935Z",
+      "endDate": "2023-10-09T16:20:44.935Z",
+      "roles": [
+        { "word": "Benjamin Netanyahu's Office", "role": "Agent" },
+        { "word": "denied", "role": "Action", "isAction": true },
+        { "word": "Israel had received prior warning of the October 7th attacks", "role": "Content.clause" }
+      ],
+      "evidence": [
+        {
+          "id": "ev-4-001",
+          "type": "tweet",
+          "tweetId": "1711416416522346740",
+          "url": "https://x.com/i/status/1711416416522346740",
+          "source": "X",
+          "supports": ["f6a7b8c9-4222-4000-8000-000000000001"],
+          "sourceType": "primary",
+          "evidenceCategory": "direct"
+        }
+      ],
+      "recipes": {
+        "mainRecipe": {
+          "sections": [
+            {
+              "type": "dated",
+              "items": [
+                {
+                  "id": "f6a7b8c9-4222-4000-8000-000000000001",
+                  "text": "communicated that Israel had not received prior warning of the attacks",
+                  "children": [
+                    { "id": "f6a7b8c9-4222-4000-8000-000000000002", "text": "said that Israel had not received prior warning of the attacks" },
+                    { "id": "f6a7b8c9-4222-4000-8000-000000000003", "text": "signed that Israel had not received prior warning of the attacks" },
+                    { "id": "f6a7b8c9-4222-4000-8000-000000000004", "text": "signalled that Israel had not received prior warning of the attacks" },
+                    { "id": "f6a7b8c9-4222-4000-8000-000000000005", "text": "messaged that Israel had not received prior warning of the attacks" }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        "roleRecipes": {
+          "Agent": [
+            {
+              "name": "Benjamin Netanyahu",
+              "wikidata": "Q43723"
+            },
+            {
+              "name": "Benjamin Netanyahu's Office",
+              "items": [
+                {
+                  "id": "f6a7b8c9-4111-4000-8000-000000000001",
+                  "text": "Is the official communication channel of Benjamin Netanyahu",
+                  "children": [
+                    { "id": "f6a7b8c9-4111-4000-8000-000000000002", "text": "Represents Benjamin Netanyahu's official position" },
+                    { "id": "f6a7b8c9-4111-4000-8000-000000000003", "text": "Is authorized to speak on behalf of Benjamin Netanyahu" }
+                  ]
+                },
+                {
+                  "id": "f6a7b8c9-4111-4000-8000-000000000004",
+                  "text": "Is part of the Israeli government",
+                  "children": [
+                    { "id": "f6a7b8c9-4111-4000-8000-000000000005", "text": "Is an official government office" },
+                    { "id": "f6a7b8c9-4111-4000-8000-000000000006", "text": "Is associated with the Prime Minister's role" }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

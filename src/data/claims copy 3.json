@@ -32,29 +32,7 @@
             "a7b8c9d0-5222-4000-8000-000000000001"
           ],
           "sourceType": "primary",
-          "evidenceCategory": "direct",
-          "subclaims": [
-            {
-              "id": "sc-ev-5-001-001",
-              "text": "Al Jazeera messaged that the recording is attributable to Mohammed Deif",
-              "frame": "MESSAGE"
-            },
-            {
-              "id": "sc-ev-5-001-002",
-              "text": "The recording shows the speaker saying 'we announce the Al-Aqsa Flood operation'",
-              "frame": "SAY_ALOUD"
-            }
-          ],
-          "reasoning": [
-            {
-              "recipeItemId": "a7b8c9d0-5222-4000-8000-000000000002",
-              "recipeText": "said that Operation Al-Aqsa Flood had started",
-              "points": [
-                "Subclaim 2 directly indicates the SAY_ALOUD frame: the speaker verbally stated the announcement",
-                "Subclaim 1 establishes the speaker's identity as Mohammed Deif per Al Jazeera's attribution"
-              ]
-            }
-          ]
+          "evidenceCategory": "direct"
         }
       ],
       "recipes": {
@@ -135,30 +113,7 @@
             "b2c3d4e5-2222-4000-8000-000000000001"
           ],
           "sourceType": "primary",
-          "evidenceCategory": "direct",
-          "subclaims": [
-            {
-              "id": "sc-ev-1-001-001",
-              "text": "Wikimedia Commons titled the video 'Hamas terrorists fire into moving civilian car near Sderot police station'",
-              "frame": "MESSAGE"
-            },
-            {
-              "id": "sc-ev-1-001-002",
-              "text": "The video shows Armed individuals firing at a vehicle",
-              "frame": "USE_FIREARM"
-            }
-          ],
-          "reasoning": [
-            {
-              "recipeItemId": "b2c3d4e5-2222-4000-8000-000000000001",
-              "recipeText": "performed some violent action(s) against Israel",
-              "points": [
-                "Subclaim 1 establishes the attribution to Hamas and location in Israel (Sderot)",
-                "Subclaim 2 establishes that violent action (firing weapons) occurred",
-                "Together, these indicate Hamas militants performed violent action against Israel"
-              ]
-            }
-          ]
+          "evidenceCategory": "direct"
         },
         {
           "id": "ev-1-002",
@@ -170,36 +125,7 @@
             "b2c3d4e5-2222-4000-8000-000000000001"
           ],
           "sourceType": "primary",
-          "evidenceCategory": "direct",
-          "subclaims": [
-            {
-              "id": "sc-ev-1-002-001",
-              "text": "Wikimedia Commons titled the video 'Hamas members attacking civilians in Kibbutz Mefalsim, Israel'",
-              "frame": "MESSAGE"
-            },
-            {
-              "id": "sc-ev-1-002-002",
-              "text": "The video shows Armed individuals shooting at people",
-              "frame": "USE_FIREARM"
-            },
-            {
-              "id": "sc-ev-1-002-003",
-              "text": "The video displays timestamp 07/10/2023 07:54",
-              "frame": "TIMESTAMP"
-            }
-          ],
-          "reasoning": [
-            {
-              "recipeItemId": "b2c3d4e5-2222-4000-8000-000000000001",
-              "recipeText": "performed some violent action(s) against Israel",
-              "points": [
-                "Subclaim 1 establishes the attribution to Hamas and location in Israel (Kibbutz Mefalsim)",
-                "Subclaim 2 establishes that violent action (shooting at people) occurred",
-                "Subclaim 3 establishes the timing as October 7th, 2023",
-                "Together, these indicate Hamas militants performed violent action against Israel on October 7th"
-              ]
-            }
-          ]
+          "evidenceCategory": "direct"
         },
         {
           "id": "ev-1-003",
@@ -211,30 +137,7 @@
             "b2c3d4e5-2222-4000-8000-000000000001"
           ],
           "sourceType": "primary",
-          "evidenceCategory": "direct",
-          "subclaims": [
-            {
-              "id": "sc-ev-1-003-001",
-              "text": "The website is titled 'Bearing Witness to the October 7th Massacre'",
-              "frame": "MESSAGE"
-            },
-            {
-              "id": "sc-ev-1-003-002",
-              "text": "The 3D documentation shows physical damage at multiple locations in Israel",
-              "frame": "DISPLAY"
-            }
-          ],
-          "reasoning": [
-            {
-              "recipeItemId": "b2c3d4e5-2222-4000-8000-000000000001",
-              "recipeText": "performed some violent action(s) against Israel",
-              "points": [
-                "Subclaim 1 establishes the source characterizes the events as a massacre",
-                "Subclaim 2 establishes physical evidence of violent destruction in Israel",
-                "Together, these indicate violent action was performed against Israel"
-              ]
-            }
-          ]
+          "evidenceCategory": "direct"
         },
         {
           "id": "ev-1-004",
@@ -246,38 +149,7 @@
             "c3d4e5f6-3333-4000-8000-000000000001"
           ],
           "sourceType": "primary",
-          "evidenceCategory": "direct",
-          "subclaims": [
-            {
-              "id": "sc-ev-1-004-001",
-              "text": "Al Jazeera messaged that the recording is attributable to Mohammed Deif",
-              "frame": "MESSAGE"
-            },
-            {
-              "id": "sc-ev-1-004-002",
-              "text": "The recording shows the speaker saying 'turn the land into flames beneath the feet of the occupiers'",
-              "frame": "SAY_ALOUD"
-            }
-          ],
-          "reasoning": [
-            {
-              "recipeItemId": "c3d4e5f6-3333-4000-8000-000000000001",
-              "recipeText": "communicated intent to cause harm to Israel on October 7th 2023",
-              "points": [
-                "Subclaim 1 establishes the speaker's identity as Mohammed Deif per Al Jazeera's attribution",
-                "Subclaim 2 establishes the speaker communicated intent to cause harm ('turn the land into flames')",
-                "Together, these indicate Mohammed Deif communicated intent to cause harm to Israel"
-              ]
-            },
-            {
-              "recipeItemId": "c3d4e5f6-3333-4000-8000-000000000002",
-              "recipeText": "said that they were going to harm Israel on October 7th 2023",
-              "points": [
-                "Subclaim 2 directly indicates the SAY_ALOUD frame: the speaker verbally stated intent to harm",
-                "Subclaim 1 establishes the speaker's identity as Mohammed Deif per Al Jazeera's attribution"
-              ]
-            }
-          ]
+          "evidenceCategory": "direct"
         },
         {
           "id": "ev-1-005",
@@ -289,30 +161,7 @@
             "c3d4e5f6-3333-4000-8000-000000000001"
           ],
           "sourceType": "secondary",
-          "evidenceCategory": "circumstantial",
-          "subclaims": [
-            {
-              "id": "sc-ev-1-005-001",
-              "text": "Wikimedia Commons titled the category '2023 Hamas attack on Israel'",
-              "frame": "MESSAGE"
-            },
-            {
-              "id": "sc-ev-1-005-002",
-              "text": "The archive shows multiple media items documenting coordinated attacks",
-              "frame": "DISPLAY"
-            }
-          ],
-          "reasoning": [
-            {
-              "recipeItemId": "c3d4e5f6-3333-4000-8000-000000000001",
-              "recipeText": "communicated intent to cause harm to Israel on October 7th 2023",
-              "points": [
-                "Subclaim 1 establishes the source attributes the attacks to Hamas against Israel",
-                "Subclaim 2 establishes the coordinated nature of the attacks implies prior planning and intent",
-                "Together, these circumstantially indicate communicated intent preceded the attacks"
-              ]
-            }
-          ]
+          "evidenceCategory": "circumstantial"
         },
         {
           "id": "ev-1-006",
@@ -320,29 +169,6 @@
           "description": "Repeated, protracted violence demonstrates intent",
           "supports": [
             "c3d4e5f6-3333-4000-8000-000000000001"
-          ],
-          "subclaims": [
-            {
-              "id": "sc-ev-1-006-001",
-              "text": "Other evidence shows multiple separate violent incidents occurred across different locations",
-              "frame": "ACT_VIOLENTLY"
-            },
-            {
-              "id": "sc-ev-1-006-002",
-              "text": "Other evidence shows the attacks were sustained over an extended period on October 7th",
-              "frame": "DURATION"
-            }
-          ],
-          "reasoning": [
-            {
-              "recipeItemId": "c3d4e5f6-3333-4000-8000-000000000001",
-              "recipeText": "communicated intent to cause harm to Israel on October 7th 2023",
-              "points": [
-                "Subclaim 1 establishes coordinated multi-location attacks indicating prior planning",
-                "Subclaim 2 establishes sustained effort indicating premeditation rather than spontaneous action",
-                "Together, these circumstantially indicate intent was communicated prior to the attacks"
-              ]
-            }
           ]
         }
       ],
@@ -477,7 +303,6 @@
                 {
                   "id": "a1b2c3d4-1111-4000-8000-000000000006",
                   "text": "Is a member of Hamas",
-                  "frame": "MEMBERSHIP",
                   "children": [
                     {
                       "id": "a1b2c3d4-1111-4000-8000-000000000007",
@@ -606,45 +431,7 @@
             "d4e5f6a7-2222-4000-8000-000000000002"
           ],
           "sourceType": "secondary",
-          "evidenceCategory": "circumstantial",
-          "subclaims": [
-            {
-              "id": "sc-ev-2-001-001",
-              "text": "Rockets were launched from Gaza toward Israel"
-            },
-            {
-              "id": "sc-ev-2-001-002",
-              "text": "The attack began in the early morning hours"
-            },
-            {
-              "id": "sc-ev-2-001-003",
-              "text": "Multiple rockets were fired in barrages"
-            },
-            {
-              "id": "sc-ev-2-001-004",
-              "text": "The attack was described as a surprise"
-            }
-          ],
-          "reasoning": [
-            {
-              "recipeItemId": "d4e5f6a7-2222-4000-8000-000000000001",
-              "recipeText": "performed some action",
-              "points": [
-                "Timeline documents militants actively launching rockets",
-                "The firing of missiles constitutes a deliberate action by the militants",
-                "Journalistic account establishes that agents performed the described actions"
-              ]
-            },
-            {
-              "recipeItemId": "d4e5f6a7-2222-4000-8000-000000000002",
-              "recipeText": "Missiles moved from the Gaza Strip to Tel Aviv",
-              "points": [
-                "Article describes rocket trajectory from Gaza into Israeli territory",
-                "Timeline confirms missiles traveled from launch point to target areas",
-                "News coverage corroborates the path of projectiles across the region"
-              ]
-            }
-          ]
+          "evidenceCategory": "circumstantial"
         },
         {
           "id": "ev-2-002",
@@ -656,37 +443,7 @@
             "d4e5f6a7-2222-4000-8000-000000000002"
           ],
           "sourceType": "secondary",
-          "evidenceCategory": "direct",
-          "subclaims": [
-            {
-              "id": "sc-ev-2-002-001",
-              "text": "Approximately 2,200 rockets were fired by 10:26 AM"
-            },
-            {
-              "id": "sc-ev-2-002-002",
-              "text": "The IDF spokesperson provided the rocket count"
-            },
-            {
-              "id": "sc-ev-2-002-003",
-              "text": "UN Commission documented the rocket attacks"
-            },
-            {
-              "id": "sc-ev-2-002-004",
-              "text": "The attacks were of significant scale"
-            }
-          ],
-          "reasoning": [
-            {
-              "recipeItemId": "d4e5f6a7-2222-4000-8000-000000000002",
-              "recipeText": "Missiles moved from the Gaza Strip to Tel Aviv",
-              "points": [
-                "Official UN report quantifies the scale of missile movement",
-                "2,200 rockets documented as having been launched toward Israel",
-                "Timestamp provides temporal precision for missile movement claims",
-                "Authoritative international source validates missile trajectory claims"
-              ]
-            }
-          ]
+          "evidenceCategory": "direct"
         },
         {
           "id": "ev-2-003",
@@ -699,45 +456,7 @@
             "d4e5f6a7-2222-4000-8000-000000000002"
           ],
           "sourceType": "secondary",
-          "evidenceCategory": "circumstantial",
-          "subclaims": [
-            {
-              "id": "sc-ev-2-003-001",
-              "text": "Hamas-led armed groups conducted an assault on Israel"
-            },
-            {
-              "id": "sc-ev-2-003-002",
-              "text": "The assault occurred on October 7, 2023"
-            },
-            {
-              "id": "sc-ev-2-003-003",
-              "text": "Multiple armed groups participated in the attack"
-            },
-            {
-              "id": "sc-ev-2-003-004",
-              "text": "Human Rights Watch investigated the events"
-            }
-          ],
-          "reasoning": [
-            {
-              "recipeItemId": "d4e5f6a7-2222-4000-8000-000000000001",
-              "recipeText": "performed some action",
-              "points": [
-                "HRW documents that armed groups actively conducted assault operations",
-                "Investigation confirms militants performed deliberate actions",
-                "Independent human rights organization corroborates agent involvement"
-              ]
-            },
-            {
-              "recipeItemId": "d4e5f6a7-2222-4000-8000-000000000002",
-              "recipeText": "Missiles moved from the Gaza Strip to Tel Aviv",
-              "points": [
-                "HRW report contextualizes rocket attacks as part of broader assault",
-                "Documentation supports claims of projectiles launched from Gaza",
-                "Independent verification adds credibility to missile movement claims"
-              ]
-            }
-          ]
+          "evidenceCategory": "circumstantial"
         },
         {
           "id": "ev-2-004",
@@ -750,45 +469,7 @@
             "d4e5f6a7-2222-4000-8000-000000000002"
           ],
           "sourceType": "secondary",
-          "evidenceCategory": "circumstantial",
-          "subclaims": [
-            {
-              "id": "sc-ev-2-004-001",
-              "text": "Kibbutz Alumim was attacked on a Saturday"
-            },
-            {
-              "id": "sc-ev-2-004-002",
-              "text": "Hamas was responsible for the attack"
-            },
-            {
-              "id": "sc-ev-2-004-003",
-              "text": "The attack coincided with the broader October 7 assault"
-            },
-            {
-              "id": "sc-ev-2-004-004",
-              "text": "Eyewitness accounts describe the attack"
-            }
-          ],
-          "reasoning": [
-            {
-              "recipeItemId": "d4e5f6a7-2222-4000-8000-000000000001",
-              "recipeText": "performed some action",
-              "points": [
-                "First-person accounts describe militants actively attacking the kibbutz",
-                "Narrative journalism documents specific actions taken by attackers",
-                "Eyewitness testimony confirms agents performed violent actions"
-              ]
-            },
-            {
-              "recipeItemId": "d4e5f6a7-2222-4000-8000-000000000002",
-              "recipeText": "Missiles moved from the Gaza Strip to Tel Aviv",
-              "points": [
-                "Article describes rocket fire as part of the coordinated attack",
-                "Kibbutz location in southern Israel confirms missiles traveled across the region",
-                "Ground-level perspective corroborates aerial bombardment claims"
-              ]
-            }
-          ]
+          "evidenceCategory": "circumstantial"
         }
       ],
       "recipes": {
@@ -857,11 +538,9 @@
                             "text": "messaged that they support a political cause",
                             "frame": "MESSAGE"
                           }
-                        ],
-                        "frame": "COMMUNICATION"
+                        ]
                       }
-                    ],
-                    "frame": "SUPPORTING"
+                    ]
                   },
                   {
                     "id": "d4e5f6a7-2111-4000-8000-000000000005",
@@ -895,7 +574,6 @@
               {
                 "id": "d4e5f6a7-2112-4000-8000-000000000007",
                 "text": "Is man-made",
-                "frame": "ARTIFACT",
                 "children": [
                   {
                     "id": "d4e5f6a7-2112-4000-8000-000000000008",
@@ -958,45 +636,7 @@
             "b8c9d0e1-6222-4000-8000-000000000002"
           ],
           "sourceType": "secondary",
-          "evidenceCategory": "circumstantial",
-          "subclaims": [
-            {
-              "id": "sc-ev-6-001-001",
-              "text": "Hamas invaded Kibbutz Kissufim"
-            },
-            {
-              "id": "sc-ev-6-001-002",
-              "text": "IDF forces responded to the invasion"
-            },
-            {
-              "id": "sc-ev-6-001-003",
-              "text": "Some attackers remained in the kibbutz for multiple days"
-            },
-            {
-              "id": "sc-ev-6-001-004",
-              "text": "The attack resulted in casualties"
-            }
-          ],
-          "reasoning": [
-            {
-              "recipeItemId": "b8c9d0e1-6222-4000-8000-000000000001",
-              "recipeText": "performed some action",
-              "points": [
-                "Article describes Hamas militants actively invading the kibbutz",
-                "IDF response confirms that hostile actions were being performed",
-                "Prolonged presence of attackers indicates sustained violent action"
-              ]
-            },
-            {
-              "recipeItemId": "b8c9d0e1-6222-4000-8000-000000000002",
-              "recipeText": "10 civilians died",
-              "points": [
-                "News report documents the attack that resulted in civilian deaths",
-                "Context establishes the circumstances under which civilians died",
-                "Article provides framework for understanding the killing events"
-              ]
-            }
-          ]
+          "evidenceCategory": "circumstantial"
         },
         {
           "id": "ev-6-002",
@@ -1008,52 +648,7 @@
             "b8c9d0e1-6222-4000-8000-000000000002"
           ],
           "sourceType": "secondary",
-          "evidenceCategory": "direct",
-          "subclaims": [
-            {
-              "id": "sc-ev-6-002-001",
-              "text": "Jina Semiatiz was 90 years old"
-            },
-            {
-              "id": "sc-ev-6-002-002",
-              "text": "She was a great-grandmother"
-            },
-            {
-              "id": "sc-ev-6-002-003",
-              "text": "She was killed in the October 7 attack"
-            },
-            {
-              "id": "sc-ev-6-002-004",
-              "text": "She was a civilian resident"
-            }
-          ],
-          "reasoning": [
-            {
-              "recipeItemId": "b8c9d0e1-6222-4000-8000-000000000002",
-              "recipeText": "10 civilians died",
-              "points": [
-                "Obituary confirms the death of one individual (contributes to count of 10)",
-                "Profile establishes civilian status (great-grandmother, non-combatant)",
-                "Death occurred as a result of the October 7 attack"
-              ]
-            },
-            {
-              "recipeItemId": "b8c9d0e1-6222-4000-8000-000000000003",
-              "recipeText": "10 civilians were alive",
-              "points": [
-                "Biographical details confirm the person was living before the attack",
-                "Family role (great-grandmother) demonstrates prior existence and relationships"
-              ]
-            },
-            {
-              "recipeItemId": "b8c9d0e1-6222-4000-8000-000000000004",
-              "recipeText": "10 civilians were dead",
-              "points": [
-                "Obituary format confirms death has occurred",
-                "Memorial article serves as evidence of transition from alive to dead state"
-              ]
-            }
-          ]
+          "evidenceCategory": "direct"
         },
         {
           "id": "ev-6-003",
@@ -1065,36 +660,7 @@
             "b8c9d0e1-6222-4000-8000-000000000002"
           ],
           "sourceType": "secondary",
-          "evidenceCategory": "direct",
-          "subclaims": [
-            {
-              "id": "sc-ev-6-003-001",
-              "text": "Ofer Ron was 70 years old"
-            },
-            {
-              "id": "sc-ev-6-003-002",
-              "text": "He was a kibbutz resident"
-            },
-            {
-              "id": "sc-ev-6-003-003",
-              "text": "He was killed in the October 7 attack"
-            },
-            {
-              "id": "sc-ev-6-003-004",
-              "text": "He was a civilian community member"
-            }
-          ],
-          "reasoning": [
-            {
-              "recipeItemId": "b8c9d0e1-6222-4000-8000-000000000002",
-              "recipeText": "10 civilians died",
-              "points": [
-                "Obituary confirms the death of one individual (contributes to count of 10)",
-                "Description as 'kibbutznik' and community cook establishes civilian status",
-                "Memorial article documents death as result of attack"
-              ]
-            }
-          ]
+          "evidenceCategory": "direct"
         },
         {
           "id": "ev-6-004",
@@ -1106,40 +672,7 @@
             "b8c9d0e1-6222-4000-8000-000000000002"
           ],
           "sourceType": "secondary",
-          "evidenceCategory": "direct",
-          "subclaims": [
-            {
-              "id": "sc-ev-6-004-001",
-              "text": "Ivan Illarramendi was 46 years old"
-            },
-            {
-              "id": "sc-ev-6-004-002",
-              "text": "Dafna Pamela Garcovich was 47 years old"
-            },
-            {
-              "id": "sc-ev-6-004-003",
-              "text": "Both individuals were killed in the attack"
-            },
-            {
-              "id": "sc-ev-6-004-004",
-              "text": "Identification took approximately one month"
-            },
-            {
-              "id": "sc-ev-6-004-005",
-              "text": "Both were civilians"
-            }
-          ],
-          "reasoning": [
-            {
-              "recipeItemId": "b8c9d0e1-6222-4000-8000-000000000002",
-              "recipeText": "10 civilians died",
-              "points": [
-                "Obituary confirms deaths of two individuals (contributes 2 to count of 10)",
-                "Delayed identification indicates violent deaths requiring forensic work",
-                "Joint memorial confirms both were victims of the same attack event"
-              ]
-            }
-          ]
+          "evidenceCategory": "direct"
         },
         {
           "id": "ev-6-005",
@@ -1151,40 +684,7 @@
             "b8c9d0e1-6222-4000-8000-000000000002"
           ],
           "sourceType": "secondary",
-          "evidenceCategory": "direct",
-          "subclaims": [
-            {
-              "id": "sc-ev-6-005-001",
-              "text": "Itay Zak was 53 years old"
-            },
-            {
-              "id": "sc-ev-6-005-002",
-              "text": "Etti Zak was 50 years old"
-            },
-            {
-              "id": "sc-ev-6-005-003",
-              "text": "Sagi Zak was 15 years old"
-            },
-            {
-              "id": "sc-ev-6-005-004",
-              "text": "All three family members died together"
-            },
-            {
-              "id": "sc-ev-6-005-005",
-              "text": "They were civilians, including a minor"
-            }
-          ],
-          "reasoning": [
-            {
-              "recipeItemId": "b8c9d0e1-6222-4000-8000-000000000002",
-              "recipeText": "10 civilians died",
-              "points": [
-                "Obituary confirms deaths of three family members (contributes 3 to count of 10)",
-                "Family unit (parents and child) establishes clear civilian status",
-                "15-year-old victim confirms civilian/non-combatant nature of casualties"
-              ]
-            }
-          ]
+          "evidenceCategory": "direct"
         },
         {
           "id": "ev-6-006",
@@ -1196,36 +696,7 @@
             "b8c9d0e1-6222-4000-8000-000000000002"
           ],
           "sourceType": "secondary",
-          "evidenceCategory": "direct",
-          "subclaims": [
-            {
-              "id": "sc-ev-6-006-001",
-              "text": "Menuha Chulati was 75 years old"
-            },
-            {
-              "id": "sc-ev-6-006-002",
-              "text": "She was a teacher"
-            },
-            {
-              "id": "sc-ev-6-006-003",
-              "text": "She was a grandmother"
-            },
-            {
-              "id": "sc-ev-6-006-004",
-              "text": "She was killed in the October 7 attack"
-            }
-          ],
-          "reasoning": [
-            {
-              "recipeItemId": "b8c9d0e1-6222-4000-8000-000000000002",
-              "recipeText": "10 civilians died",
-              "points": [
-                "Obituary confirms the death of one individual (contributes to count of 10)",
-                "Profession as teacher establishes civilian occupational status",
-                "Family role as grandmother confirms non-combatant civilian life"
-              ]
-            }
-          ]
+          "evidenceCategory": "direct"
         },
         {
           "id": "ev-6-007",
@@ -1237,36 +708,7 @@
             "b8c9d0e1-6222-4000-8000-000000000002"
           ],
           "sourceType": "secondary",
-          "evidenceCategory": "direct",
-          "subclaims": [
-            {
-              "id": "sc-ev-6-007-001",
-              "text": "Tom Godo was 52 years old"
-            },
-            {
-              "id": "sc-ev-6-007-002",
-              "text": "He was a father of three daughters"
-            },
-            {
-              "id": "sc-ev-6-007-003",
-              "text": "He had musical talents"
-            },
-            {
-              "id": "sc-ev-6-007-004",
-              "text": "He was killed in the October 7 attack"
-            }
-          ],
-          "reasoning": [
-            {
-              "recipeItemId": "b8c9d0e1-6222-4000-8000-000000000002",
-              "recipeText": "10 civilians died",
-              "points": [
-                "Obituary confirms the death of one individual (contributes to count of 10)",
-                "Family role as father establishes civilian domestic life",
-                "Personal interests (music) indicate non-combatant status"
-              ]
-            }
-          ]
+          "evidenceCategory": "direct"
         },
         {
           "id": "ev-6-008",
@@ -1278,36 +720,7 @@
             "b8c9d0e1-6222-4000-8000-000000000002"
           ],
           "sourceType": "secondary",
-          "evidenceCategory": "direct",
-          "subclaims": [
-            {
-              "id": "sc-ev-6-008-001",
-              "text": "Reuven Heinik was 56 years old"
-            },
-            {
-              "id": "sc-ev-6-008-002",
-              "text": "He was a dairy farmer"
-            },
-            {
-              "id": "sc-ev-6-008-003",
-              "text": "He refused to leave his farm during the attack"
-            },
-            {
-              "id": "sc-ev-6-008-004",
-              "text": "He was killed in the October 7 attack"
-            }
-          ],
-          "reasoning": [
-            {
-              "recipeItemId": "b8c9d0e1-6222-4000-8000-000000000002",
-              "recipeText": "10 civilians died",
-              "points": [
-                "Obituary confirms the death of one individual (contributes to count of 10)",
-                "Occupation as dairy farmer establishes civilian agricultural status",
-                "Dedication to livestock demonstrates civilian livelihood and non-combatant role"
-              ]
-            }
-          ]
+          "evidenceCategory": "direct"
         }
       ],
       "recipes": {
@@ -1324,7 +737,6 @@
                 {
                   "id": "b8c9d0e1-6222-4000-8000-000000000002",
                   "text": "10 civilians died",
-                  "frame": "DEATH",
                   "children": [
                     {
                       "id": "b8c9d0e1-6222-4000-8000-000000000003",
@@ -1399,45 +811,7 @@
             "d0e1f2a3-8222-4000-8000-000000000010"
           ],
           "sourceType": "secondary",
-          "evidenceCategory": "circumstantial",
-          "subclaims": [
-            {
-              "id": "sc-ev-8-001-001",
-              "text": "Satellite imagery captured Kibbutz Be'eri"
-            },
-            {
-              "id": "sc-ev-8-001-002",
-              "text": "Severe structural damage is visible"
-            },
-            {
-              "id": "sc-ev-8-001-003",
-              "text": "The damage resulted from armed conflict"
-            },
-            {
-              "id": "sc-ev-8-001-004",
-              "text": "Fighting occurred between opposing forces"
-            }
-          ],
-          "reasoning": [
-            {
-              "recipeItemId": "d0e1f2a3-8222-4000-8000-000000000001",
-              "recipeText": "performed violent action(s) against armed residents",
-              "points": [
-                "Satellite imagery shows damage consistent with violent armed engagement",
-                "Severity of destruction indicates sustained violent action by attackers",
-                "Physical evidence corroborates reports of Hamas violence against residents"
-              ]
-            },
-            {
-              "recipeItemId": "d0e1f2a3-8222-4000-8000-000000000010",
-              "recipeText": "performed violent action(s) against Hamas fighters",
-              "points": [
-                "Damage patterns suggest two-way engagement (defensive resistance)",
-                "Satellite imagery captures aftermath of mutual violent confrontation",
-                "Physical evidence indicates armed residents responded with force"
-              ]
-            }
-          ]
+          "evidenceCategory": "circumstantial"
         },
         {
           "id": "ev-8-002",
@@ -1450,50 +824,7 @@
             "d0e1f2a3-8222-4000-8000-000000000010"
           ],
           "sourceType": "secondary",
-          "evidenceCategory": "circumstantial",
-          "subclaims": [
-            {
-              "id": "sc-ev-8-002-001",
-              "text": "A kibbutz organized a defense against Hamas"
-            },
-            {
-              "id": "sc-ev-8-002-002",
-              "text": "Residents used weapons to defend themselves"
-            },
-            {
-              "id": "sc-ev-8-002-003",
-              "text": "Hamas fighters attacked the kibbutz"
-            },
-            {
-              "id": "sc-ev-8-002-004",
-              "text": "Armed confrontation occurred between the two groups"
-            },
-            {
-              "id": "sc-ev-8-002-005",
-              "text": "The defense was at least partially successful"
-            }
-          ],
-          "reasoning": [
-            {
-              "recipeItemId": "d0e1f2a3-8222-4000-8000-000000000001",
-              "recipeText": "performed violent action(s) against armed residents",
-              "points": [
-                "Article describes Hamas actively attacking the kibbutz",
-                "The need for defense confirms violent actions were directed at residents",
-                "Narrative explicitly describes Hamas fighters engaging in violence"
-              ]
-            },
-            {
-              "recipeItemId": "d0e1f2a3-8222-4000-8000-000000000010",
-              "recipeText": "performed violent action(s) against Hamas fighters",
-              "points": [
-                "Title explicitly states the kibbutz 'defended itself' indicating counter-violence",
-                "Armed residents engaged Hamas fighters with weapons",
-                "Defensive actions constituted violent response to attackers",
-                "Article documents the reciprocal nature of the hostile encounter"
-              ]
-            }
-          ]
+          "evidenceCategory": "circumstantial"
         }
       ],
       "recipes": {
@@ -1535,7 +866,6 @@
               {
                 "id": "d0e1f2a3-8111-4000-8000-000000000005",
                 "text": "Is a member of Hamas",
-                "frame": "MEMBERSHIP",
                 "children": [
                   {
                     "id": "d0e1f2a3-8111-4000-8000-000000000006",
@@ -1613,7 +943,6 @@
               {
                 "id": "d0e1f2a3-8112-4000-8000-000000000002",
                 "text": "Is a resident",
-                "frame": "RESIDENCE",
                 "children": [
                   {
                     "id": "d0e1f2a3-8112-4000-8000-000000000003",
@@ -1632,7 +961,6 @@
               {
                 "id": "d0e1f2a3-8112-4000-8000-000000000005",
                 "text": "Is armed",
-                "frame": "BEING_ARMED",
                 "children": [
                   {
                     "id": "d0e1f2a3-8112-4000-8000-000000000006",
@@ -1681,59 +1009,7 @@
             "e1f2a3b4-9222-4000-8000-000000000001"
           ],
           "sourceType": "secondary",
-          "evidenceCategory": "circumstantial",
-          "subclaims": [
-            {
-              "id": "sc-ev-9-001-001",
-              "text": "Thai laborers work in Israeli agricultural sector"
-            },
-            {
-              "id": "sc-ev-9-001-002",
-              "text": "Foreign workers are employed on kibbutzim"
-            },
-            {
-              "id": "sc-ev-9-001-003",
-              "text": "Thai workers were present during the October 7 attack"
-            },
-            {
-              "id": "sc-ev-9-001-004",
-              "text": "Foreign workers suffered casualties in the attack"
-            },
-            {
-              "id": "sc-ev-9-001-005",
-              "text": "Foreign workers provide essential labor to Israeli farms"
-            }
-          ],
-          "reasoning": [
-            {
-              "recipeItemId": "e1f2a3b4-9222-4000-8000-000000000001",
-              "recipeText": "had an employment relationship with Kibbutz Alumim",
-              "points": [
-                "Article establishes pattern of foreign workers employed at Israeli kibbutzim",
-                "Thai laborers described as 'working hands' confirms employment relationship",
-                "Agricultural labor context matches kibbutz employment model",
-                "Presence of workers at attack sites implies active employment at time of attack"
-              ]
-            },
-            {
-              "recipeItemId": "e1f2a3b4-9222-4000-8000-000000000004",
-              "recipeText": "performed work for Kibbutz Alumim",
-              "points": [
-                "Article describes Thai laborers as performing agricultural work",
-                "Work being performed at time of attack demonstrates active labor",
-                "Employment in 'Israeli farming' confirms WORK frame is satisfied"
-              ]
-            },
-            {
-              "recipeItemId": "e1f2a3b4-9111-4000-8000-000000000005",
-              "recipeText": "Is foreign",
-              "points": [
-                "Thai nationality explicitly identified - not Israeli citizens",
-                "Article distinguishes between foreign workers and local population",
-                "Supports the PEOPLE_BY_JURISDICTION frame for non-Israeli status"
-              ]
-            }
-          ]
+          "evidenceCategory": "circumstantial"
         }
       ],
       "recipes": {
@@ -1803,7 +1079,6 @@
               {
                 "id": "e1f2a3b4-9111-4000-8000-000000000002",
                 "text": "Is a worker",
-                "frame": "BEING_A_WORKER",
                 "children": [
                   {
                     "id": "e1f2a3b4-9111-4000-8000-000000000003",
@@ -1842,7 +1117,6 @@
               {
                 "id": "e1f2a3b4-9111-4000-8000-000000000005",
                 "text": "Is foreign",
-                "frame": "BEING_FOREIGN",
                 "children": [
                   {
                     "id": "e1f2a3b4-9111-4000-8000-000000000006",
@@ -1906,63 +1180,7 @@
             "c9d0e1f2-7222-4000-8000-000000000001"
           ],
           "sourceType": "secondary",
-          "evidenceCategory": "circumstantial",
-          "subclaims": [
-            {
-              "id": "sc-ev-7-001-001",
-              "text": "An Israeli general gave the order"
-            },
-            {
-              "id": "sc-ev-7-001-002",
-              "text": "A tank was ordered to fire"
-            },
-            {
-              "id": "sc-ev-7-001-003",
-              "text": "The target was a house"
-            },
-            {
-              "id": "sc-ev-7-001-004",
-              "text": "Hostages were being held in the house"
-            },
-            {
-              "id": "sc-ev-7-001-005",
-              "text": "The incident occurred at Kibbutz Be'eri"
-            },
-            {
-              "id": "sc-ev-7-001-006",
-              "text": "The general was identified as Barak Hiram"
-            }
-          ],
-          "reasoning": [
-            {
-              "recipeItemId": "c9d0e1f2-7222-4000-8000-000000000001",
-              "recipeText": "communicated to his tank unit that they had permission to shell an Israeli home",
-              "points": [
-                "Article title states general 'ordered' tank to fire - an order communicates permission and instruction",
-                "The order was directed to tank personnel under his command",
-                "Target identified as a house (home) in Israeli territory",
-                "Communication of authorization satisfies the COMMUNICATION frame"
-              ]
-            },
-            {
-              "recipeItemId": "c9d0e1f2-7222-4000-8000-000000000002",
-              "recipeText": "said to his tank unit that they had permission to shell an Israeli home",
-              "points": [
-                "Military orders typically communicated verbally in combat situations",
-                "General giving order to subordinate unit implies verbal command",
-                "SAY_ALOUD frame satisfied through military command communication"
-              ]
-            },
-            {
-              "recipeItemId": "c9d0e1f2-7112-4000-8000-000000000011",
-              "recipeText": "Receives orders from Barak Hiram",
-              "points": [
-                "Article confirms tank unit received and acted on order from Hiram",
-                "Subordinate relationship established through command structure",
-                "Tank crew execution of order demonstrates receipt of authorization"
-              ]
-            }
-          ]
+          "evidenceCategory": "circumstantial"
         }
       ],
       "recipes": {
@@ -2012,7 +1230,6 @@
               {
                 "id": "c9d0e1f2-7112-4000-8000-000000000001",
                 "text": "Is a military unit",
-                "frame": "MILITARY",
                 "children": [
                   {
                     "id": "c9d0e1f2-7112-4000-8000-000000000004",
@@ -2034,7 +1251,6 @@
               {
                 "id": "c9d0e1f2-7112-4000-8000-000000000005",
                 "text": "Is a tank unit",
-                "frame": "MILITARY",
                 "children": [
                   {
                     "id": "c9d0e1f2-7112-4000-8000-000000000006",
@@ -2046,7 +1262,6 @@
               {
                 "id": "c9d0e1f2-7112-4000-8000-000000000009",
                 "text": "Is subordinate to Barak Hiram",
-                "frame": "AUTHORITY",
                 "children": [
                   {
                     "id": "c9d0e1f2-7112-4000-8000-000000000010",
@@ -2141,59 +1356,7 @@
             "e5f6a7b8-3222-4000-8000-000000000001"
           ],
           "sourceType": "secondary",
-          "evidenceCategory": "direct",
-          "subclaims": [
-            {
-              "id": "sc-ev-3-001-001",
-              "text": "Israeli intelligence failed to predict the attack"
-            },
-            {
-              "id": "sc-ev-3-001-002",
-              "text": "Egypt provided warnings to Israel"
-            },
-            {
-              "id": "sc-ev-3-001-003",
-              "text": "The warnings indicated an imminent escalation"
-            },
-            {
-              "id": "sc-ev-3-001-004",
-              "text": "Israel underestimated the warnings received"
-            },
-            {
-              "id": "sc-ev-3-001-005",
-              "text": "An Egyptian official spoke to journalists about the warnings"
-            }
-          ],
-          "reasoning": [
-            {
-              "recipeItemId": "e5f6a7b8-3222-4000-8000-000000000001",
-              "recipeText": "communicated \"We have warned them an explosion of the situation is coming...\"",
-              "points": [
-                "AP News directly quotes the Egyptian official's statement",
-                "The quote is attributed to an Egyptian government source",
-                "Statement confirms that communication (warning) occurred",
-                "The COMMUNICATION frame is satisfied by the official's disclosure to media"
-              ]
-            },
-            {
-              "recipeItemId": "e5f6a7b8-3222-4000-8000-000000000002",
-              "recipeText": "said \"We have warned them...\"",
-              "points": [
-                "The statement was given verbally to journalists",
-                "Direct quotation format indicates spoken words",
-                "SAY_ALOUD frame satisfied through interview/media statement"
-              ]
-            },
-            {
-              "recipeItemId": "e5f6a7b8-3111-4000-8000-000000000006",
-              "recipeText": "Is an official",
-              "points": [
-                "AP News identifies source as 'Egyptian official'",
-                "Official status implies government position",
-                "Speaking on behalf of Egyptian government confirms official capacity"
-              ]
-            }
-          ]
+          "evidenceCategory": "direct"
         }
       ],
       "recipes": {
@@ -2239,7 +1402,6 @@
               {
                 "id": "e5f6a7b8-3111-4000-8000-000000000002",
                 "text": "Is Egyptian",
-                "frame": "ORIGIN",
                 "children": [
                   {
                     "id": "e5f6a7b8-3111-4000-8000-000000000003",
@@ -2268,7 +1430,6 @@
               {
                 "id": "e5f6a7b8-3111-4000-8000-000000000006",
                 "text": "Is an official",
-                "frame": "BEING_AN_OFFICIAL",
                 "children": [
                   {
                     "id": "e5f6a7b8-3111-4000-8000-000000000007",
@@ -2315,59 +1476,7 @@
             "f6a7b8c9-4222-4000-8000-000000000001"
           ],
           "sourceType": "primary",
-          "evidenceCategory": "direct",
-          "subclaims": [
-            {
-              "id": "sc-ev-4-001-001",
-              "text": "A statement was posted on X (Twitter)"
-            },
-            {
-              "id": "sc-ev-4-001-002",
-              "text": "The statement was from Netanyahu's Office"
-            },
-            {
-              "id": "sc-ev-4-001-003",
-              "text": "The statement denied prior warning was received"
-            },
-            {
-              "id": "sc-ev-4-001-004",
-              "text": "The denial was made publicly"
-            },
-            {
-              "id": "sc-ev-4-001-005",
-              "text": "The statement was made shortly after reports of Egyptian warnings"
-            }
-          ],
-          "reasoning": [
-            {
-              "recipeItemId": "f6a7b8c9-4222-4000-8000-000000000001",
-              "recipeText": "communicated that Israel had not received prior warning of the attacks",
-              "points": [
-                "Tweet from official account constitutes public communication",
-                "The content explicitly denies that warning was received",
-                "Social media post satisfies COMMUNICATION frame through public broadcast",
-                "Direct source (primary evidence) from the official channel"
-              ]
-            },
-            {
-              "recipeItemId": "f6a7b8c9-4222-4000-8000-000000000005",
-              "recipeText": "messaged that Israel had not received prior warning of the attacks",
-              "points": [
-                "Tweet is a written message (MESSAGE frame)",
-                "Digital communication via social media platform",
-                "Permanent record of the denial statement"
-              ]
-            },
-            {
-              "recipeItemId": "f6a7b8c9-4111-4000-8000-000000000002",
-              "recipeText": "Represents Benjamin Netanyahu",
-              "points": [
-                "Tweet from Netanyahu's Office official account",
-                "Office speaks on behalf of Prime Minister",
-                "SERVING_IN_CAPACITY.REPRESENT frame satisfied by official channel communication"
-              ]
-            }
-          ]
+          "evidenceCategory": "direct"
         }
       ],
       "recipes": {
@@ -2419,7 +1528,6 @@
                 {
                   "id": "f6a7b8c9-4111-4000-8000-000000000001",
                   "text": "Is the official communication channel of Benjamin Netanyahu",
-                  "frame": "SERVING_IN_CAPACITY",
                   "children": [
                     {
                       "id": "f6a7b8c9-4111-4000-8000-000000000002",

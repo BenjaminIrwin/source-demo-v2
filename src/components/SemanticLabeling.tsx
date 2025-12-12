@@ -131,6 +131,7 @@ export interface TreeNode {
   text: string;
   children?: TreeNode[];
   verified?: boolean;
+  frame?: string;
 }
 
 // Relationship between items in a recipe
@@ -174,6 +175,7 @@ interface SemanticLabelingProps {
   endDate: string;
   location: string;
   stative?: boolean;
+  frame?: string;
 }
 
 interface RecipeSection {
@@ -490,6 +492,11 @@ function TreeNodeItem({
           {!hideEllipsis && <span className="text-slate-400">...</span>}
           {highlightRoles(hideEllipsis ? node.text : node.text.charAt(0).toLowerCase() + node.text.slice(1), roleWords)}
         </span>
+        {node.frame && (
+          <span className="text-slate-500 text-[10px] font-medium uppercase tracking-wide ml-2 relative top-[5px]">
+            {node.frame}
+          </span>
+        )}
       </div>
       {hasChildren && isExpanded && (
         <ul className="mt-0">
@@ -569,7 +576,7 @@ function getFontSize(roles: SemanticRole[]): string {
   }
 }
 
-export default function SemanticLabeling({ sentence, roles, recipes, startDate, endDate, location, stative = false }: SemanticLabelingProps) {
+export default function SemanticLabeling({ sentence, roles, recipes, startDate, endDate, location, stative = false, frame = '' }: SemanticLabelingProps) {
   const fontSize = getFontSize(roles);
   
   // Refs for measuring positions
@@ -697,7 +704,7 @@ export default function SemanticLabeling({ sentence, roles, recipes, startDate, 
                     className="mt-2"
                   >
                     <span className={`${colors.text} text-[10px] font-medium tracking-wide uppercase`}>
-                      {item.role}
+                      {frame || item.role}
                     </span>
                   </div>
                 </div>
@@ -815,6 +822,9 @@ export default function SemanticLabeling({ sentence, roles, recipes, startDate, 
                                   <div className="mt-2 space-y-1 text-sm text-slate-300">
                                     {entity.birthDate && (
                                       <div>Born: {formatWikidataDate(entity.birthDate)}</div>
+                                    )}
+                                    {entity.deathDate && (
+                                      <div>Died: {formatWikidataDate(entity.deathDate)}</div>
                                     )}
                                     {entity.country && (
                                       <div>Country: {entity.country}</div>
