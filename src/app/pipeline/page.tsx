@@ -37,13 +37,21 @@ interface EnrichedClaim {
 }
 
 // Role color mapping
-const roleColors: Record<string, { bg: string; text: string; border: string }> = {
-  Agent: { bg: 'bg-blue-500/20', text: 'text-blue-300', border: 'border-blue-500/50' },
-  Action: { bg: 'bg-amber-500/20', text: 'text-amber-300', border: 'border-amber-500/50' },
-  Patient: { bg: 'bg-emerald-500/20', text: 'text-emerald-300', border: 'border-emerald-500/50' },
-  Instrument: { bg: 'bg-purple-500/20', text: 'text-purple-300', border: 'border-purple-500/50' },
-  Location: { bg: 'bg-rose-500/20', text: 'text-rose-300', border: 'border-rose-500/50' },
-  Time: { bg: 'bg-cyan-500/20', text: 'text-cyan-300', border: 'border-cyan-500/50' },
+const roleColors: Record<string, { bg: string; text: string; border: string; tooltipBg: string }> = {
+  Agent: { bg: 'bg-blue-500/20', text: 'text-blue-300', border: 'border-blue-500/50', tooltipBg: 'bg-blue-900' },
+  Action: { bg: 'bg-amber-500/20', text: 'text-amber-300', border: 'border-amber-500/50', tooltipBg: 'bg-amber-900' },
+  Patient: { bg: 'bg-emerald-500/20', text: 'text-emerald-300', border: 'border-emerald-500/50', tooltipBg: 'bg-emerald-900' },
+  Instrument: { bg: 'bg-purple-500/20', text: 'text-purple-300', border: 'border-purple-500/50', tooltipBg: 'bg-purple-900' },
+  Location: { bg: 'bg-rose-500/20', text: 'text-rose-300', border: 'border-rose-500/50', tooltipBg: 'bg-rose-900' },
+  Time: { bg: 'bg-cyan-500/20', text: 'text-cyan-300', border: 'border-cyan-500/50', tooltipBg: 'bg-cyan-900' },
+  Content: { bg: 'bg-slate-500/20', text: 'text-slate-300', border: 'border-slate-500/50', tooltipBg: 'bg-slate-800' },
+  Theme: { bg: 'bg-violet-500/20', text: 'text-violet-300', border: 'border-violet-500/50', tooltipBg: 'bg-violet-900' },
+  Init_location: { bg: 'bg-rose-500/20', text: 'text-rose-300', border: 'border-rose-500/50', tooltipBg: 'bg-rose-900' },
+  Path: { bg: 'bg-orange-500/20', text: 'text-orange-300', border: 'border-orange-500/50', tooltipBg: 'bg-orange-900' },
+  Final_location: { bg: 'bg-pink-500/20', text: 'text-pink-300', border: 'border-pink-500/50', tooltipBg: 'bg-pink-900' },
+  Scope: { bg: 'bg-teal-500/20', text: 'text-teal-300', border: 'border-teal-500/50', tooltipBg: 'bg-teal-900' },
+  Co_agent: { bg: 'bg-indigo-500/20', text: 'text-indigo-300', border: 'border-indigo-500/50', tooltipBg: 'bg-indigo-900' },
+  Beneficiary: { bg: 'bg-lime-500/20', text: 'text-lime-300', border: 'border-lime-500/50', tooltipBg: 'bg-lime-900' },
 };
 
 // Evidence type icons
@@ -55,32 +63,58 @@ const evidenceIcons: Record<string, typeof VideoCameraIcon> = {
   document: DocumentCheckIcon,
 };
 
-// Format date for display
-function formatDate(dateStr: string): string {
-  const date = new Date(dateStr);
-  return date.toLocaleDateString('en-US', { 
-    month: 'short', 
-    day: 'numeric', 
-    year: 'numeric',
-    hour: '2-digit',
-    minute: '2-digit'
-  });
+// Check if time is meaningful (not midnight or end of day)
+function hasSignificantTime(date: Date): boolean {
+  const hours = date.getHours();
+  const minutes = date.getMinutes();
+  // Consider 00:00 and 23:59 as "no specific time"
+  if (hours === 0 && minutes === 0) return false;
+  if (hours === 23 && minutes === 59) return false;
+  return true;
 }
 
-// Format date range
+// Format time as HH:MM
+function formatTime(date: Date): string {
+  return date.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: false });
+}
+
+// Format date range with smart granularity
 function formatDateRange(startDate?: string, endDate?: string): string {
   if (!startDate) return 'Unknown';
   const start = new Date(startDate);
   const end = endDate ? new Date(endDate) : null;
   
-  const startFormatted = start.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+  const sameDay = end && start.toDateString() === end.toDateString();
+  const startHasTime = hasSignificantTime(start);
+  const endHasTime = end && hasSignificantTime(end);
   
-  if (!end || start.toDateString() === end.toDateString()) {
-    return startFormatted;
+  const dateFormat: Intl.DateTimeFormatOptions = { month: 'short', day: 'numeric', year: 'numeric' };
+  const startDateStr = start.toLocaleDateString('en-US', dateFormat);
+  
+  // Same day with time interval
+  if (sameDay && startHasTime && endHasTime) {
+    return `${startDateStr}, ${formatTime(start)} – ${formatTime(end)}`;
   }
   
-  const endFormatted = end.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
-  return `${startFormatted} – ${endFormatted}`;
+  // Same day with only start time
+  if (sameDay && startHasTime) {
+    return `${startDateStr} at ${formatTime(start)}`;
+  }
+  
+  // Same day, no specific times
+  if (sameDay || !end) {
+    return startDateStr;
+  }
+  
+  // Different days
+  const endDateStr = end.toLocaleDateString('en-US', dateFormat);
+  
+  // Different days with times
+  if (startHasTime && endHasTime) {
+    return `${startDateStr} ${formatTime(start)} – ${endDateStr} ${formatTime(end)}`;
+  }
+  
+  return `${startDateStr} – ${endDateStr}`;
 }
 
 // Get evidence summary
@@ -114,7 +148,7 @@ function ClaimsList({
   muted?: boolean;
 }) {
   return (
-    <div className={`space-y-3 ${compact ? 'pt-2 pl-2' : 'pt-4 pl-4'}`}>
+    <div className={`space-y-3 ${compact ? 'pt-6 pl-2' : 'pt-4 pl-4'}`}>
       {claims.map((claim, index) => (
         <div
           key={index}
@@ -147,25 +181,28 @@ function ClaimsList({
 // Interactive word with role tooltip
 function RoleWord({ word, role, isAction }: { word: string; role: string; isAction?: boolean }) {
   const [showTooltip, setShowTooltip] = useState(false);
-  const colors = roleColors[role] || { bg: 'bg-slate-500/20', text: 'text-slate-300', border: 'border-slate-500/50' };
+  const colors = roleColors[role] || { bg: 'bg-slate-500/20', text: 'text-slate-300', border: 'border-slate-500/50', tooltipBg: 'bg-slate-800' };
+  
+  // Extract base role name (e.g., "Content.quote" -> "Content")
+  const baseRole = role.split('.')[0];
+  const displayColors = roleColors[baseRole] || colors;
   
   return (
     <span 
-      className="relative inline-block"
+      className="relative inline"
       onMouseEnter={() => setShowTooltip(true)}
       onMouseLeave={() => setShowTooltip(false)}
     >
       <span 
-        className={`px-1 py-0.5 rounded ${colors.bg} ${colors.text} cursor-help transition-all duration-200 ${
+        className={`px-1 py-0.5 rounded ${displayColors.bg} ${displayColors.text} cursor-help transition-all duration-200 ${
           showTooltip ? 'ring-1 ring-white/30' : ''
-        } ${isAction ? 'font-semibold' : ''}`}
+        } ${isAction ? 'font-semibold' : ''} box-decoration-clone`}
       >
         {word}
       </span>
       {showTooltip && (
-        <span className={`absolute bottom-full left-1/2 -translate-x-1/2 mb-1 px-2 py-1 text-[10px] font-bold uppercase tracking-wider rounded ${colors.bg} ${colors.text} border ${colors.border} whitespace-nowrap z-50 shadow-lg`}>
+        <span className={`absolute bottom-full left-1/2 -translate-x-1/2 mb-1.5 px-2 py-1 text-[10px] font-bold uppercase tracking-wider rounded ${displayColors.tooltipBg} ${displayColors.text} border ${displayColors.border} whitespace-nowrap z-50 shadow-lg`}>
           {role}
-          <span className="absolute top-full left-1/2 -translate-x-1/2 border-4 border-transparent border-t-slate-800"></span>
         </span>
       )}
     </span>
@@ -225,16 +262,15 @@ function EnrichedClaimsList({
   const router = useRouter();
   
   return (
-    <div className={`space-y-2 pt-2 pl-2 transition-all duration-700 ${isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-10'}`}>
+    <div className={`space-y-2 pt-6 pl-2 transition-all duration-700 ${isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-10'}`}>
       {claims.map((claim, index) => {
         const evidenceSummary = getEvidenceSummary(claim.evidence);
-        const totalEvidence = claim.evidence.length;
         
         return (
           <div
             key={index}
             onClick={() => router.push(`/claims/${claim.id}`)}
-            className="group relative p-2.5 rounded-lg border bg-slate-800/60 border-indigo-500/30 cursor-pointer hover:border-indigo-400 hover:bg-slate-800/80 transition-all duration-300"
+            className="group relative p-2.5 rounded-lg border bg-slate-800/60 border-indigo-500/30 cursor-pointer hover:border-indigo-400 hover:bg-slate-800/80 transition-all duration-300 overflow-visible"
             style={{ transitionDelay: isVisible ? `${index * 50}ms` : '0ms' }}
           >
             {/* Claim number badge */}
@@ -243,50 +279,37 @@ function EnrichedClaimsList({
             </div>
             
             {/* Annotated sentence */}
-            <div className="text-sm leading-relaxed text-white mb-2 pl-2">
+            <div className="text-sm leading-relaxed text-white mb-2 pl-2 pt-1 overflow-visible">
               <AnnotatedSentence sentence={claim.sentence} roles={claim.roles} />
             </div>
             
             {/* Metadata row */}
             <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-[10px] border-t border-slate-700/50 pt-2 mt-1">
               {/* Time info */}
-              {claim.startDate && (
-                <div className="flex items-center gap-1 text-cyan-400">
-                  <CalendarIcon className="w-3 h-3" />
-                  <span className="font-medium">{formatDateRange(claim.startDate, claim.endDate)}</span>
-                </div>
-              )}
+              <div className={`flex items-center gap-1 ${claim.startDate ? 'text-cyan-400' : 'text-slate-500'}`}>
+                <CalendarIcon className="w-3 h-3" />
+                <span className="font-medium">{claim.startDate ? formatDateRange(claim.startDate, claim.endDate) : '???'}</span>
+              </div>
               
               {/* Location info */}
-              {claim.location && (
-                <div className="flex items-center gap-1 text-rose-400">
-                  <MapPinIcon className="w-3 h-3" />
-                  <span className="font-medium">{claim.location}</span>
-                </div>
-              )}
+              <div className={`flex items-center gap-1 ${claim.location ? 'text-rose-400' : 'text-slate-500'}`}>
+                <MapPinIcon className="w-3 h-3" />
+                <span className="font-medium">{claim.location || '???'}</span>
+              </div>
               
               {/* Evidence summary */}
-              <div className="flex items-center gap-2 ml-auto">
-                <span className="text-slate-500 font-medium">{totalEvidence} evidence</span>
-                <div className="flex items-center gap-1">
-                  {evidenceSummary.map(({ type, count, icon: Icon }) => (
-                    <div 
-                      key={type} 
-                      className="flex items-center gap-0.5 px-1.5 py-0.5 rounded bg-slate-700/50 text-slate-300"
-                      title={`${count} ${type}`}
-                    >
-                      <Icon className="w-2.5 h-2.5" />
-                      <span>{count}</span>
-                    </div>
-                  ))}
-                </div>
+              <div className="flex items-center gap-1.5 ml-auto">
+                {evidenceSummary.map(({ type, count, icon: Icon }) => (
+                  <div 
+                    key={type} 
+                    className="flex items-center gap-0.5 px-1.5 py-0.5 rounded bg-slate-700/50 text-slate-300"
+                    title={`${count} ${type}`}
+                  >
+                    <Icon className="w-2.5 h-2.5" />
+                    <span>{count}</span>
+                  </div>
+                ))}
               </div>
-            </div>
-            
-            {/* Explore prompt */}
-            <div className="flex items-center gap-1 mt-1.5 text-indigo-400 text-[10px] font-medium opacity-0 group-hover:opacity-100 transition-opacity">
-              <span>Click to explore full analysis</span>
-              <ArrowRightIcon className="w-2.5 h-2.5" />
             </div>
           </div>
         );
@@ -340,6 +363,20 @@ export default function PipelinePage() {
     }
   };
 
+  // Keyboard navigation
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'ArrowLeft') {
+        goToPrev();
+      } else if (e.key === 'ArrowRight') {
+        goToNext();
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [currentStage, isTransitioning]);
+
   const getStageDescription = () => {
     if (isTransitioning && currentStage === 2) {
       return 'Enriching claims with specific details...';
@@ -370,7 +407,7 @@ export default function PipelinePage() {
         </div>
 
         {/* Stage Content */}
-        <div className="flex-1 relative overflow-hidden" style={{ maxHeight: 'calc(100vh - 220px)' }}>
+        <div className="flex-1 relative min-h-0">
           <div className={`flex h-full justify-center transition-[gap] duration-700 ${currentStage === 0 ? 'gap-0' : 'gap-6'}`}>
             {/* Spacer for centering in stage 0 */}
             <div 
@@ -385,8 +422,8 @@ export default function PipelinePage() {
                 isStage2
                   ? 'flex-[0] w-0 opacity-0 overflow-hidden' 
                   : currentStage === 0 
-                    ? 'flex-[2] max-w-4xl opacity-100' 
-                    : 'flex-[2] min-w-0 opacity-100'
+                    ? 'flex-[2] max-w-4xl min-h-0 opacity-100' 
+                    : 'flex-[2] min-w-0 min-h-0 opacity-100'
               }`}
               style={{ transform: 'translateZ(0)' }}
             >
@@ -396,7 +433,7 @@ export default function PipelinePage() {
                 <DocumentTextIcon className="w-5 h-5 text-indigo-400" />
                 <h2 className="text-lg font-semibold text-white">Source Article</h2>
               </div>
-              <div className="flex-1 min-h-0">
+              <div className="flex-1 min-h-0 overflow-y-auto">
                 <ArticleViewer
                   article={articleData.content}
                   claims={currentStage >= 1 ? vagueClaims : []}
@@ -409,10 +446,10 @@ export default function PipelinePage() {
             <div 
               className={`flex flex-col transition-all duration-700 ease-out ${
                 isStage2
-                  ? 'flex-1 min-w-0'
+                  ? 'flex-1 min-w-0 min-h-0'
                   : currentStage === 0
                     ? 'flex-[0] w-0 opacity-0 overflow-hidden'
-                    : 'flex-1 min-w-0 opacity-100 translate-x-0'
+                    : 'flex-1 min-w-0 min-h-0 opacity-100 translate-x-0'
               }`}
               style={{ transform: 'translateZ(0)' }}
             >
@@ -422,7 +459,7 @@ export default function PipelinePage() {
                   {isStage2 ? 'Extracted' : 'Identified Claims'}
                 </h2>
               </div>
-              <div className="flex-1 overflow-y-auto pr-2">
+              <div className="flex-1 min-h-0 overflow-y-auto pr-2">
                 <ClaimsList
                   claims={vagueClaims}
                   onHoverClaim={isStage2 ? () => {} : setHighlightedClaimIndex}
@@ -458,7 +495,7 @@ export default function PipelinePage() {
             {/* Enriched Claims Column - slides in from right for stage 2 */}
             <div 
               className={`flex flex-col transition-all duration-700 ease-out ${
-                isStage2 ? 'flex-1 min-w-0' : 'flex-[0] w-0 opacity-0 overflow-hidden'
+                isStage2 ? 'flex-1 min-w-0 min-h-0' : 'flex-[0] w-0 opacity-0 overflow-hidden'
               }`}
               style={{ transform: 'translateZ(0)' }}
             >
@@ -468,7 +505,7 @@ export default function PipelinePage() {
                 <SparklesIcon className="w-5 h-5 text-indigo-400" />
                 <h2 className="text-lg font-semibold text-white">Enriched</h2>
               </div>
-              <div className="flex-1 overflow-y-auto pr-2">
+              <div className="flex-1 min-h-0 overflow-y-auto pr-2">
                 <EnrichedClaimsList
                   claims={enrichedClaims}
                   isVisible={showEnrichedColumn}
