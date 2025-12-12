@@ -155,7 +155,7 @@
       "sentence": "Militants fired missiles from the Gaza Strip over Southern Israel to Tel Aviv",
       "startDate": "2023-10-07T08:00",
       "endDate": "2023-10-07T08:30",
-      "location": "the Gaza Strip",
+      "location": "Gaza Strip",
       "roles": [
         { "word": "Militants", "role": "Agent" },
         { "word": "fired", "role": "Action", "isAction": true },
@@ -437,7 +437,7 @@
     {
       "id": 6,
       "sentence": "10 civilians were killed in Kibbutz Kissufim",
-      "location": "Kibbutz Kissufim",
+      "location": "Kibbutz Kissufim, Israel",
       "roles": [
         { "word": "10 civilians", "role": "Patient" },
         { "word": "were killed", "role": "Action", "isAction": true }

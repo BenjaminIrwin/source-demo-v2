@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
 import { DocumentTextIcon, SparklesIcon, BeakerIcon, ArrowLeftIcon, ChevronLeftIcon, ChevronRightIcon, ArrowRightIcon, CalendarIcon, MapPinIcon, DocumentCheckIcon, VideoCameraIcon, ArchiveBoxIcon, LightBulbIcon, PhotoIcon } from '@heroicons/react/24/solid';
 import ArticleViewer from '@/components/ArticleViewer';
@@ -138,7 +138,8 @@ function ClaimsList({
   highlightedIndex,
   showNumbers = true,
   compact = false,
-  muted = false
+  muted = false,
+  targetHeights = []
 }: { 
   claims: string[]; 
   onHoverClaim: (index: number | null) => void;
@@ -146,32 +147,47 @@ function ClaimsList({
   showNumbers?: boolean;
   compact?: boolean;
   muted?: boolean;
+  targetHeights?: number[];
 }) {
   return (
-    <div className={`space-y-3 ${compact ? 'pt-6 pl-2' : 'pt-4 pl-4'}`}>
+    <div className={`flex flex-col ${compact ? 'pt-6 pl-2 gap-2' : 'pt-4 pl-4 gap-3'}`}>
       {claims.map((claim, index) => (
         <div
           key={index}
           onMouseEnter={() => onHoverClaim(index)}
           onMouseLeave={() => onHoverClaim(null)}
-          className={`relative ${compact ? 'p-3' : 'p-4'} rounded-xl border transition-all duration-300 ${
+          className={`relative ${compact ? 'p-2.5' : 'p-4'} rounded-lg border transition-all duration-500 ${
             muted 
               ? 'bg-slate-800/30 border-slate-700/50'
               : highlightedIndex === index
                 ? 'bg-indigo-500/20 border-indigo-500/50 scale-[1.02] cursor-pointer'
                 : 'bg-slate-800/30 border-slate-700/50 hover:border-slate-600 cursor-pointer'
-          }`}
+          } ${compact ? 'flex flex-col' : 'flex items-center'}`}
+          style={targetHeights[index] ? { minHeight: `${targetHeights[index]}px` } : undefined}
         >
           {showNumbers && (
-            <div className={`absolute -left-2 -top-2 ${compact ? 'w-6 h-6 text-xs' : 'w-7 h-7 text-sm'} ${muted ? 'bg-slate-600' : 'bg-indigo-600'} rounded-full flex items-center justify-center text-white font-bold shadow-lg`}>
+            <div className={`absolute -left-2 -top-2 w-5 h-5 text-[10px] ${muted ? 'bg-slate-600' : 'bg-indigo-600'} rounded-full flex items-center justify-center text-white font-bold shadow-lg`}>
               {index + 1}
             </div>
           )}
-          <p className={`${compact ? 'text-sm' : 'text-sm'} leading-relaxed transition-colors duration-300 ${
+          <p className={`${compact ? 'text-sm mb-2 pl-2 pt-1' : 'text-sm'} leading-relaxed transition-colors duration-300 ${
             muted ? 'text-slate-400' : highlightedIndex === index ? 'text-white' : 'text-slate-400'
           }`}>
             {claim}
           </p>
+          {/* Metadata row - only show when compact/muted */}
+          {compact && (
+            <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-[10px] border-t border-slate-700/50 pt-2 mt-auto">
+              <div className="flex items-center gap-1 text-slate-500">
+                <CalendarIcon className="w-3 h-3" />
+                <span className="font-medium">???</span>
+              </div>
+              <div className="flex items-center gap-1 text-slate-500">
+                <MapPinIcon className="w-3 h-3" />
+                <span className="font-medium">???</span>
+              </div>
+            </div>
+          )}
         </div>
       ))}
     </div>
@@ -254,21 +270,37 @@ function AnnotatedSentence({ sentence, roles }: { sentence: string; roles: Role[
 // Enriched claims column for stage 2
 function EnrichedClaimsList({ 
   claims, 
-  isVisible 
+  isVisible,
+  onHeightsMeasured
 }: { 
   claims: EnrichedClaim[];
   isVisible: boolean;
+  onHeightsMeasured?: (heights: number[]) => void;
 }) {
   const router = useRouter();
+  const itemRefs = useRef<(HTMLDivElement | null)[]>([]);
+  
+  // Measure heights after render
+  useEffect(() => {
+    if (isVisible && onHeightsMeasured) {
+      // Small delay to ensure render is complete
+      const timer = setTimeout(() => {
+        const heights = itemRefs.current.map(ref => ref?.offsetHeight || 0);
+        onHeightsMeasured(heights);
+      }, 100);
+      return () => clearTimeout(timer);
+    }
+  }, [isVisible, onHeightsMeasured, claims]);
   
   return (
-    <div className={`space-y-2 pt-6 pl-2 transition-all duration-700 ${isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-10'}`}>
+    <div className={`flex flex-col gap-2 pt-6 pl-2 transition-all duration-700 ${isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-10'}`}>
       {claims.map((claim, index) => {
         const evidenceSummary = getEvidenceSummary(claim.evidence);
         
         return (
           <div
             key={index}
+            ref={el => { itemRefs.current[index] = el; }}
             onClick={() => router.push(`/claims/${claim.id}`)}
             className="group relative p-2.5 rounded-lg border bg-slate-800/60 border-indigo-500/30 cursor-pointer hover:border-indigo-400 hover:bg-slate-800/80 transition-all duration-300 overflow-visible"
             style={{ transitionDelay: isVisible ? `${index * 50}ms` : '0ms' }}
@@ -324,9 +356,15 @@ export default function PipelinePage() {
   const [highlightedClaimIndex, setHighlightedClaimIndex] = useState<number | null>(null);
   const [isTransitioning, setIsTransitioning] = useState(false);
   const [showEnrichedColumn, setShowEnrichedColumn] = useState(false);
+  const [enrichedHeights, setEnrichedHeights] = useState<number[]>([]);
 
   const vagueClaims = vagueClaimsData.claims;
   const enrichedClaims = enrichedClaimsData.claims as EnrichedClaim[];
+  
+  // Callback to receive heights from enriched claims
+  const handleHeightsMeasured = useCallback((heights: number[]) => {
+    setEnrichedHeights(heights);
+  }, []);
 
   const goToPrev = () => {
     if (currentStage > 0 && !isTransitioning) {
@@ -466,28 +504,32 @@ export default function PipelinePage() {
                   highlightedIndex={isStage2 ? null : highlightedClaimIndex}
                   compact={isStage2}
                   muted={isStage2}
+                  targetHeights={isStage2 ? enrichedHeights : []}
                 />
               </div>
             </div>
 
             {/* Arrow column - only in stage 2 */}
             <div 
-              className={`flex flex-col justify-center items-center transition-all duration-500 ${
+              className={`flex flex-col transition-all duration-500 ${
                 isStage2 && showEnrichedColumn ? 'w-12 opacity-100' : 'w-0 opacity-0 overflow-hidden'
               }`}
             >
-              <div className="flex flex-col items-center gap-4">
+              {/* Spacer to match header height + mb-3 of other columns */}
+              <div className="h-[28px] mb-3 shrink-0" />
+              <div className="flex flex-col gap-2 pt-6">
                 {vagueClaims.map((_, i) => (
-                  <ArrowRightIcon 
-                    key={i} 
-                    className="w-5 h-5 text-indigo-500"
+                  <div 
+                    key={i}
+                    className="flex items-center justify-center transition-all duration-500"
                     style={{ 
-                      marginTop: i === 0 ? '2.5rem' : '2.75rem',
+                      height: enrichedHeights[i] ? `${enrichedHeights[i]}px` : 'auto',
                       opacity: showEnrichedColumn ? 1 : 0,
-                      transition: 'opacity 300ms',
                       transitionDelay: `${i * 50 + 200}ms`
-                    }} 
-                  />
+                    }}
+                  >
+                    <ArrowRightIcon className="w-5 h-5 text-indigo-500" />
+                  </div>
                 ))}
               </div>
             </div>
@@ -509,6 +551,7 @@ export default function PipelinePage() {
                 <EnrichedClaimsList
                   claims={enrichedClaims}
                   isVisible={showEnrichedColumn}
+                  onHeightsMeasured={handleHeightsMeasured}
                 />
               </div>
             </div>
