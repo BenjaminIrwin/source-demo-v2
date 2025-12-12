@@ -96,10 +96,10 @@ export default function ArticleViewer({
   }, [article, claims]);
 
   return (
-    <div className="bg-slate-800/50 backdrop-blur-sm border border-slate-700/50 rounded-2xl p-6" style={{ backfaceVisibility: 'hidden' }}>
-      <div className="prose prose-invert max-w-none">
+    <div className="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm" style={{ backfaceVisibility: 'hidden', fontFamily: 'var(--font-source-serif)' }}>
+      <div className="prose max-w-none">
         {parsedArticle.map((paragraphSegments, pIndex) => (
-          <p key={pIndex} className="text-slate-300 leading-relaxed mb-4 last:mb-0">
+          <p key={pIndex} className="text-slate-900 leading-relaxed mb-4 last:mb-0 text-[14px]">
             {paragraphSegments.map((segment, sIndex) => {
               const isClaim = segment.claimIndex !== null;
               const isHighlighted = isClaim && segment.claimIndex === highlightedClaimIndex;
@@ -108,10 +108,10 @@ export default function ArticleViewer({
               let className = 'transition-all duration-300 ';
               if (isHighlighted) {
                 // Pronounced highlight for hovered claim
-                className += 'bg-indigo-500/50 text-white underline decoration-indigo-300 decoration-2 underline-offset-2 px-1 -mx-1 rounded font-medium';
+                className += 'bg-indigo-100 text-indigo-900 underline decoration-indigo-500 decoration-2 underline-offset-2 px-1 -mx-1 rounded font-medium';
               } else if (isClaim) {
                 // Subtle highlight for all claims
-                className += 'bg-indigo-500/15 text-slate-200 underline decoration-indigo-500/40 decoration-1 underline-offset-2 px-0.5 -mx-0.5 rounded';
+                className += 'bg-amber-100/70 text-slate-900 underline decoration-amber-400/60 decoration-1 underline-offset-2 px-0.5 -mx-0.5 rounded';
               }
               
               return (

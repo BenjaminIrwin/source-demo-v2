@@ -14,14 +14,28 @@ const OUTPUT_PATH = path.join(__dirname, '../src/data/wikidata-cache.json');
 function extractWikidataIds(claims) {
   const ids = new Set();
   
+  function extractFromValue(value) {
+    if (!value) return;
+    
+    if (Array.isArray(value)) {
+      for (const item of value) {
+        extractFromValue(item);
+      }
+    } else if (typeof value === 'object') {
+      if (value.wikidata) {
+        ids.add(value.wikidata);
+      }
+      // Recursively check nested objects
+      for (const nested of Object.values(value)) {
+        extractFromValue(nested);
+      }
+    }
+  }
+  
   for (const claim of claims) {
     const roleRecipes = claim.recipes?.roleRecipes;
     if (roleRecipes) {
-      for (const recipe of Object.values(roleRecipes)) {
-        if (recipe.wikidata) {
-          ids.add(recipe.wikidata);
-        }
-      }
+      extractFromValue(roleRecipes);
     }
   }
   
@@ -189,3 +203,4 @@ async function main() {
 }
 
 main().catch(console.error);
+

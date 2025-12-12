@@ -1,10 +1,36 @@
 'use client';
 
 import { useRef, useEffect, useState, useMemo } from 'react';
-import { CheckCircleIcon, ChevronDownIcon, ChevronRightIcon, ArrowRightCircleIcon, MapPinIcon, ClockIcon } from '@heroicons/react/24/solid';
+import { CheckCircleIcon, ChevronDownIcon, ChevronRightIcon, ArrowRightCircleIcon, MapPinIcon, CalendarIcon } from '@heroicons/react/24/solid';
 import dynamic from 'next/dynamic';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import wikidataCache from '@/data/wikidata-cache.json';
+
+// Role color mapping for semantic labels and underlines
+const roleColors: Record<string, { line: string; text: string }> = {
+  Agent: { line: 'bg-blue-500', text: 'text-blue-400' },
+  Action: { line: 'bg-amber-500', text: 'text-amber-400' },
+  Patient: { line: 'bg-emerald-500', text: 'text-emerald-400' },
+  Instrument: { line: 'bg-purple-500', text: 'text-purple-400' },
+  Location: { line: 'bg-rose-500', text: 'text-rose-400' },
+  Time: { line: 'bg-cyan-500', text: 'text-cyan-400' },
+  Content: { line: 'bg-slate-500', text: 'text-slate-400' },
+  Theme: { line: 'bg-violet-500', text: 'text-violet-400' },
+  Init_location: { line: 'bg-rose-500', text: 'text-rose-400' },
+  Path: { line: 'bg-orange-500', text: 'text-orange-400' },
+  Final_location: { line: 'bg-pink-500', text: 'text-pink-400' },
+  Scope: { line: 'bg-teal-500', text: 'text-teal-400' },
+  Co_agent: { line: 'bg-indigo-500', text: 'text-indigo-400' },
+  Beneficiary: { line: 'bg-lime-500', text: 'text-lime-400' },
+};
+
+// Helper to get role colors with fallback
+function getRoleColors(role: string): { line: string; text: string } {
+  // Normalize role name (capitalize first letter, handle compound roles like "Content.quote")
+  const baseRole = role.split('.')[0];
+  const normalizedRole = baseRole.charAt(0).toUpperCase() + baseRole.slice(1).toLowerCase();
+  return roleColors[normalizedRole] || { line: 'bg-indigo-500', text: 'text-indigo-400' };
+}
 
 // Dynamically import Map components to avoid SSR issues with Mapbox GL
 const MapboxMap = dynamic(
@@ -147,6 +173,7 @@ interface SemanticLabelingProps {
   startDate: string;
   endDate: string;
   location: string;
+  stative?: boolean;
 }
 
 interface RecipeSection {
@@ -261,7 +288,7 @@ function formatDate(dateString: string, includeTime: boolean = false): string {
 }
 
 // Helper function to format date range with appropriate prefix
-function formatDateRangeWithPrefix(startDate: string, endDate: string): string {
+function formatDateRangeWithPrefix(startDate: string, endDate: string, stative: boolean = false): string {
   const startValid = isValidDate(startDate);
   const endValid = isValidDate(endDate);
   
@@ -273,8 +300,27 @@ function formatDateRangeWithPrefix(startDate: string, endDate: string): string {
   // Check if either date has time granularity (minute or second precision)
   const showTime = hasTimeGranularity(startDate) || hasTimeGranularity(endDate);
   
+  // Determine the prefix based on stative
+  const prefix = stative ? 'At the time of' : 'On';
+  
+  // If only endDate exists, show "before {endDate}"
+  if (!startValid && endValid) {
+    return `Before ${formatDate(endDate, showTime)}`;
+  }
+  
+  // If startDate and endDate are identical, only show startDate
   if (startDate === endDate) {
-    return `On ${formatDate(startDate, showTime)}`;
+    return `${prefix} ${formatDate(startDate, showTime)}`;
+  }
+  
+  // If we only have startDate (no valid endDate)
+  if (startValid && !endValid) {
+    return `${prefix} ${formatDate(startDate, showTime)}`;
+  }
+  
+  // Different dates - show range
+  if (stative) {
+    return `At the time of ${formatDate(startDate, showTime)} to ${formatDate(endDate, showTime)}`;
   }
   return `Between ${formatDate(startDate, showTime)} and ${formatDate(endDate, showTime)}`;
 }
@@ -353,7 +399,8 @@ function getMainRecipeData(
   recipes: ClaimRecipes,
   startDate: string,
   endDate: string,
-  location: string
+  location: string,
+  stative: boolean = false
 ): RecipeSection[] {
   const { mainRecipe } = recipes;
   if (!mainRecipe) return [];
@@ -361,7 +408,7 @@ function getMainRecipeData(
   return mainRecipe.sections.map(section => {
     let title: string;
     if (section.type === 'dated') {
-      const dateStr = formatDateRangeWithPrefix(startDate, endDate);
+      const dateStr = formatDateRangeWithPrefix(startDate, endDate, stative);
       title = `${dateStr} in ${displayLocation}, '${agentWord}':`;
     } else {
       title = `On any date, '${agentWord}':`;
@@ -433,13 +480,13 @@ function TreeNodeItem({
         {/* Icon - ArrowRightCircle for caused items, CheckCircle for regular items */}
         {showCheckboxes && (
           isCaused ? (
-            <ArrowRightCircleIcon className={`shrink-0 w-7 h-7 mt-0.5 ${iconColor}`} />
+            <ArrowRightCircleIcon className={`shrink-0 w-4 h-4 mt-0.5 ${iconColor}`} />
           ) : (
-            <CheckCircleIcon className={`shrink-0 w-7 h-7 mt-0.5 ${iconColor}`} />
+            <CheckCircleIcon className={`shrink-0 w-4 h-4 mt-0.5 ${iconColor}`} />
           )
         )}
         
-        <span className="text-white text-xl font-medium">
+        <span className="text-white text-sm font-medium">
           {!hideEllipsis && <span className="text-slate-400">...</span>}
           {highlightRoles(hideEllipsis ? node.text : node.text.charAt(0).toLowerCase() + node.text.slice(1), roleWords)}
         </span>
@@ -489,7 +536,7 @@ function RecipeTree({
     <div className="space-y-4">
       {sections.map((section, sectionIndex) => (
         <div key={sectionIndex}>
-          <div className="text-white font-semibold text-xl mb-3">{highlightRoles(section.title, roleWords)}</div>
+          <div className="text-white font-semibold text-sm mb-1.5">{highlightRoles(section.title, roleWords)}</div>
           <ul className="space-y-0">
             {section.items.map((item, itemIndex) => (
               <TreeNodeItem 
@@ -514,15 +561,15 @@ function getFontSize(roles: SemanticRole[]): string {
   
   // More roles or longer text = smaller font
   if (numRoles >= 5 || totalChars > 60) {
-    return 'text-lg md:text-2xl';
+    return 'text-xs md:text-sm';
   } else if (numRoles >= 4 || totalChars > 45) {
-    return 'text-xl md:text-3xl';
+    return 'text-sm md:text-base';
   } else {
-    return 'text-2xl md:text-4xl';
+    return 'text-base md:text-lg';
   }
 }
 
-export default function SemanticLabeling({ sentence, roles, recipes, startDate, endDate, location }: SemanticLabelingProps) {
+export default function SemanticLabeling({ sentence, roles, recipes, startDate, endDate, location, stative = false }: SemanticLabelingProps) {
   const fontSize = getFontSize(roles);
   
   // Refs for measuring positions
@@ -589,76 +636,96 @@ export default function SemanticLabeling({ sentence, roles, recipes, startDate, 
   return (
     <div ref={containerRef} className="relative">
 
-      {/* Location and time indicators */}
-      {(location || startDate) && (
-        <div className="flex items-center justify-center gap-2 mb-3">
-          {location && (
-            <span className="inline-flex items-center gap-1 text-slate-400 text-sm">
-              <MapPinIcon className="w-3.5 h-3.5" />
-              {location}
-            </span>
-          )}
-          {location && startDate && (
-            <span className="text-slate-600">|</span>
-          )}
-          {startDate && (
-            <span className="inline-flex items-center gap-1 text-slate-400 text-sm">
-              <ClockIcon className="w-3.5 h-3.5" />
-              {(() => {
-                const showTime = hasTimeGranularity(startDate) || hasTimeGranularity(endDate);
-                if (startDate === endDate || !endDate) {
-                  return formatDate(startDate, showTime);
-                }
-                return `${formatDate(startDate, showTime)} – ${formatDate(endDate, showTime)}`;
-              })()}
-            </span>
-          )}
-        </div>
-      )}
-
-      {/* Semantic Labeling UI */}
-      <div className="flex items-stretch justify-center max-w-full overflow-x-auto">
-        {roles.map((item, index) => (
-          <div key={index} className="flex flex-col-reverse items-center px-[15px]">
-            {/* Connector block - first in DOM, renders at bottom due to flex-col-reverse */}
-            {item.isAction ? (
-              // Action column - vertical line + horizontal line + label
-              <div className="relative flex flex-col items-center w-full">
-                <div className="absolute left-1/2 -translate-x-1/2 top-0 w-0.5 h-[22px] bg-indigo-500"></div>
-                <div className="w-full h-0.5 bg-indigo-500 mt-[22px]"></div>
-                <div 
-                  ref={el => { labelRefs.current[index] = el; }}
-                  className="mt-[14px]"
-                >
-                  <span className="text-indigo-400 text-sm md:text-base font-medium tracking-wide uppercase">
-                    {item.role}
-                  </span>
-                </div>
-              </div>
-            ) : (
-              // Non-action column - thick oval line + label
-              <div className="flex flex-col items-center w-full mt-5">
-                <div className="w-full h-1.5 bg-indigo-500 rounded-full"></div>
-                <div 
-                  ref={el => { labelRefs.current[index] = el; }}
-                  className="mt-3"
-                >
-                  <span className="text-indigo-400 text-sm md:text-base font-medium tracking-wide uppercase">
-                    {item.role}
-                  </span>
-                </div>
-              </div>
+      {/* Semantic Diagram Card */}
+      <div className="bg-slate-800/60 border border-indigo-500/30 rounded-xl p-3 mb-4">
+        {/* Location and time indicators */}
+        {(location || startDate || endDate) && (
+          <div className="flex items-center justify-center gap-3 mb-3">
+            {location && (
+              <span className="inline-flex items-center gap-1 text-rose-400 text-xs font-medium">
+                <MapPinIcon className="w-3.5 h-3.5" />
+                {location}
+              </span>
             )}
+            {location && (startDate || endDate) && (
+              <span className="text-slate-600">|</span>
+            )}
+            {(startDate || endDate) && (
+              <span className="inline-flex items-center gap-1 text-cyan-400 text-xs font-medium">
+                <CalendarIcon className="w-3.5 h-3.5" />
+                {(() => {
+                  const showTime = hasTimeGranularity(startDate) || hasTimeGranularity(endDate);
+                  const startValid = isValidDate(startDate);
+                  const endValid = isValidDate(endDate);
+                  const prefix = stative ? 'At the time of ' : '';
+                  
+                  // Only endDate exists
+                  if (!startValid && endValid) {
+                    return `Before ${formatDate(endDate, showTime)}`;
+                  }
+                  
+                  // startDate and endDate are identical, or only startDate exists
+                  if (startDate === endDate || !endValid) {
+                    return `${prefix}${formatDate(startDate, showTime)}`;
+                  }
+                  
+                  // Different dates - show range
+                  if (stative) {
+                    return `At the time of ${formatDate(startDate, showTime)} to ${formatDate(endDate, showTime)}`;
+                  }
+                  return `${formatDate(startDate, showTime)} – ${formatDate(endDate, showTime)}`;
+                })()}
+              </span>
+            )}
+          </div>
+        )}
+
+        {/* Semantic Labeling UI */}
+        <div className="flex items-stretch justify-center max-w-full overflow-x-auto">
+        {roles.map((item, index) => (
+          <div key={index} className="flex flex-col-reverse items-center px-2">
+            {/* Connector block - first in DOM, renders at bottom due to flex-col-reverse */}
+            {(() => {
+              const colors = getRoleColors(item.role);
+              return item.isAction ? (
+                // Action column - vertical line + horizontal line + label
+                <div className="relative flex flex-col items-center w-full">
+                  <div className={`absolute left-1/2 -translate-x-1/2 top-0 w-0.5 h-[14px] ${colors.line}`}></div>
+                  <div className={`w-full h-0.5 ${colors.line} mt-[14px]`}></div>
+                  <div 
+                    ref={el => { labelRefs.current[index] = el; }}
+                    className="mt-2"
+                  >
+                    <span className={`${colors.text} text-[10px] font-medium tracking-wide uppercase`}>
+                      {item.role}
+                    </span>
+                  </div>
+                </div>
+              ) : (
+                // Non-action column - thick oval line + label
+                <div className="flex flex-col items-center w-full mt-3">
+                  <div className={`w-full h-1 ${colors.line} rounded-full`}></div>
+                  <div 
+                    ref={el => { labelRefs.current[index] = el; }}
+                    className="mt-2"
+                  >
+                    <span className={`${colors.text} text-[10px] font-medium tracking-wide uppercase`}>
+                      {item.role}
+                    </span>
+                  </div>
+                </div>
+              );
+            })()}
 
             {/* Word container - second in DOM, renders at top due to flex-col-reverse, grows upward */}
             <div className="flex-1 flex items-end justify-center">
               {item.isAction ? (
-                <div className={`bg-indigo-500 text-white px-4 md:px-8 py-2 md:py-3 rounded-lg ${fontSize} font-bold whitespace-nowrap`}>
+                <div className={`${getRoleColors(item.role).line} text-white px-3 md:px-4 py-1.5 md:py-2 rounded-md ${fontSize} font-bold whitespace-nowrap`}>
                   {item.word}
                 </div>
               ) : (
                 <div 
-                  className={`${fontSize} font-semibold text-white py-2 md:py-3 max-w-[900px] text-center line-clamp-3`}
+                  className={`${fontSize} font-semibold text-white py-1 md:py-1.5 max-w-[600px] text-center line-clamp-3`}
                   title={item.word}
                 >
                   {item.word}
@@ -667,6 +734,7 @@ export default function SemanticLabeling({ sentence, roles, recipes, startDate, 
             </div>
           </div>
         ))}
+        </div>
       </div>
 
       {/* SVG for connecting lines */}
@@ -685,14 +753,12 @@ export default function SemanticLabeling({ sentence, roles, recipes, startDate, 
       </svg>
 
       {/* Recipe Section */}
-      <div className="mt-20 relative -mx-32" style={{ zIndex: 2 }}>
+      <div className="mt-8 relative" style={{ zIndex: 2 }}>
         {/* Role Recipes Row - each role gets its own box */}
         {rolesWithRecipes.length > 0 && (
-          <div className="relative flex gap-4 mb-6">
-            {/* Left margin label - positioned in actual margin */}
-            <div className="absolute right-full mr-4 top-1/2 -translate-y-1/2">
-              <span className="text-slate-400 text-sm font-medium uppercase tracking-wider whitespace-nowrap">Definitions:</span>
-            </div>
+          <div className="flex flex-col gap-3 mb-4">
+            <span className="text-slate-400 text-[10px] font-medium uppercase tracking-wider">Definitions</span>
+            <div className="flex gap-3">
             {rolesWithRecipes.map(({ role, index }, boxIndex) => {
               const roleName = role.role.charAt(0).toUpperCase() + role.role.slice(1).toLowerCase();
               const strippedWord = stripPrepositions(role.word);
@@ -702,11 +768,11 @@ export default function SemanticLabeling({ sentence, roles, recipes, startDate, 
                 <div
                   key={index}
                   ref={el => { roleRecipeRefs.current[boxIndex] = el; }}
-                  className="flex-1 min-w-0 bg-slate-800/30 backdrop-blur-sm border border-slate-700/50 rounded-2xl p-6"
+                  className="flex-1 min-w-0 bg-slate-800/30 backdrop-blur-sm border border-slate-700/50 rounded-xl p-4 pl-6"
                 >
                   {roleData.location ? (
                     <div className="flex flex-col h-full">
-                      <div className="text-white font-semibold text-xl mb-3">
+                      <div className="text-white font-semibold text-sm mb-1.5">
                         <span className="underline decoration-indigo-500 decoration-2 underline-offset-2">
                           {strippedWord}
                         </span>
@@ -724,7 +790,7 @@ export default function SemanticLabeling({ sentence, roles, recipes, startDate, 
                         const displayName = entry.name || strippedWord;
                         return (
                           <div key={`wikidata-${idx}`}>
-                            <div className="text-white font-semibold text-xl mb-3">
+                            <div className="text-white font-semibold text-sm mb-1.5">
                               <span className="underline decoration-indigo-500 decoration-2 underline-offset-2">
                                 {displayName}
                               </span>
@@ -791,21 +857,19 @@ export default function SemanticLabeling({ sentence, roles, recipes, startDate, 
                 </div>
               );
             })}
+            </div>
           </div>
         )}
 
         {/* Main Recipe - full width below role recipes */}
-        <div className="relative">
-          {/* Left margin label - positioned in actual margin */}
-          <div className="absolute right-full mr-4 top-8">
-            <span className="text-slate-400 text-sm font-medium uppercase tracking-wider whitespace-nowrap">Recipe:</span>
-          </div>
+        <div className="flex flex-col gap-2">
+          <span className="text-slate-400 text-[10px] font-medium uppercase tracking-wider">Recipe</span>
           <div 
             ref={mainRecipeRef}
-            className="bg-slate-800/30 backdrop-blur-sm border border-slate-700/50 rounded-2xl p-8"
+            className="bg-slate-800/30 backdrop-blur-sm border border-slate-700/50 rounded-xl p-4 pl-6"
           >
             <RecipeTree 
-              sections={getMainRecipeData(roles[agentIndex]?.word || 'Agent', recipes, startDate, endDate, location)} 
+              sections={getMainRecipeData(roles[agentIndex]?.word || 'Agent', recipes, startDate, endDate, location, stative)} 
               roleWords={roles.map(r => r.word)}
               relationships={recipes.mainRecipe?.relationships || []}
             />
@@ -813,36 +877,33 @@ export default function SemanticLabeling({ sentence, roles, recipes, startDate, 
         </div>
 
         {/* Evidence Section */}
-        <div className="relative mt-6">
-          {/* Left margin label - positioned in actual margin */}
-          <div className="absolute right-full mr-4 top-8">
-            <span className="text-slate-400 text-sm font-medium uppercase tracking-wider whitespace-nowrap">Evidence:</span>
-          </div>
-          <div className="bg-slate-800/30 backdrop-blur-sm border border-slate-700/50 rounded-2xl p-8">
+        <div className="flex flex-col gap-2 mt-4">
+          <span className="text-slate-400 text-[10px] font-medium uppercase tracking-wider">Evidence</span>
+          <div className="bg-slate-800/30 backdrop-blur-sm border border-slate-700/50 rounded-xl p-4">
             {/* Evidence content will go here */}
           </div>
         </div>
 
         {/* Legend */}
-        <div className="mt-6 flex items-center justify-center gap-8 text-sm text-slate-400">
-          <div className="flex items-center gap-4">
-            <div className="flex items-center gap-1.5">
-              <CheckCircleIcon className="w-5 h-5 text-emerald-500" />
+        <div className="mt-3 flex items-center justify-center gap-4 text-[10px] text-slate-400">
+          <div className="flex items-center gap-2">
+            <div className="flex items-center gap-0.5">
+              <CheckCircleIcon className="w-3 h-3 text-emerald-500" />
               <span>Verified</span>
             </div>
-            <div className="flex items-center gap-1.5">
-              <CheckCircleIcon className="w-5 h-5 text-slate-500" />
+            <div className="flex items-center gap-0.5">
+              <CheckCircleIcon className="w-3 h-3 text-slate-500" />
               <span>Unverified</span>
             </div>
           </div>
-          <div className="w-px h-4 bg-slate-600" />
-          <div className="flex items-center gap-4">
-            <div className="flex items-center gap-1.5">
-              <ArrowRightCircleIcon className="w-5 h-5 text-emerald-500" />
+          <div className="w-px h-2.5 bg-slate-600" />
+          <div className="flex items-center gap-2">
+            <div className="flex items-center gap-0.5">
+              <ArrowRightCircleIcon className="w-3 h-3 text-emerald-500" />
               <span>Verified consequence</span>
             </div>
-            <div className="flex items-center gap-1.5">
-              <ArrowRightCircleIcon className="w-5 h-5 text-slate-500" />
+            <div className="flex items-center gap-0.5">
+              <ArrowRightCircleIcon className="w-3 h-3 text-slate-500" />
               <span>Unverified consequence</span>
             </div>
           </div>

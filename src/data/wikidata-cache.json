@@ -1,22 +1,21 @@
 {
-  "fetchedAt": "2025-12-11T15:19:07.696Z",
+  "fetchedAt": "2025-12-12T11:13:11.129Z",
   "entities": {
-    "Q43723": {
-      "id": "Q43723",
-      "label": "Benjamin Netanyahu",
-      "description": "Prime Minister of Israel (1996–1999; 2009–2021; since 2022)",
-      "image": "https://commons.wikimedia.org/wiki/Special:FilePath/Benjamin_Netanyahu%2C_February_2023.jpg?width=300",
+    "Q94839": {
+      "id": "Q94839",
+      "label": "Mohammed Deif",
+      "description": "Palestinian militant leader, former commander-in-chief of the Izz ad-Din al-Qassam Brigades",
+      "image": null,
       "instanceOf": [
         "human"
       ],
-      "birthDate": "+1949-10-21T00:00:00Z",
-      "deathDate": null,
+      "birthDate": "+1965-08-12T00:00:00Z",
+      "deathDate": "+2024-07-13T00:00:00Z",
       "occupation": [
-        "politician",
-        "diplomat",
-        "statesperson"
+        "militant",
+        "military leader"
       ],
-      "country": "Israel"
+      "country": "Palestine"
     },
     "Q38799": {
       "id": "Q38799",
@@ -48,6 +47,23 @@
       "deathDate": null,
       "occupation": [
         "military officer"
+      ],
+      "country": "Israel"
+    },
+    "Q43723": {
+      "id": "Q43723",
+      "label": "Benjamin Netanyahu",
+      "description": "Prime Minister of Israel (1996–1999; 2009–2021; since 2022)",
+      "image": "https://commons.wikimedia.org/wiki/Special:FilePath/Benjamin_Netanyahu%2C_February_2023.jpg?width=300",
+      "instanceOf": [
+        "human"
+      ],
+      "birthDate": "+1949-10-21T00:00:00Z",
+      "deathDate": null,
+      "occupation": [
+        "politician",
+        "diplomat",
+        "statesperson"
       ],
       "country": "Israel"
     }

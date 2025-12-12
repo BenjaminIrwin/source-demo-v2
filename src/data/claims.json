@@ -2,7 +2,58 @@
   "claims": [
     {
       "id": 1,
+      "sentence": "Mohammed Deif announced the start of Operation Al-Aqsa Flood",
+      "stative": false,
+      "startDate": "2023-10-07T06:25",
+      "endDate": "2023-10-07T06:30",
+      "roles": [
+        { "word": "Mohammed Deif", "role": "Agent" },
+        { "word": "announced", "role": "Action", "isAction": true },
+        { "word": "the start of Operation Al-Aqsa Flood", "role": "Content.entity" }
+      ],
+      "evidence": [
+        {
+          "id": "ev-5-001",
+          "type": "video",
+          "title": "Mohammad Deif speech announcing Operation Al-Aqsa Flood",
+          "url": "https://www.youtube.com/watch?v=N74O67NSwKo",
+          "source": "YouTube",
+          "supports": ["a7b8c9d0-5222-4000-8000-000000000001"],
+          "sourceType": "primary",
+          "evidenceCategory": "direct"
+        }
+      ],
+      "recipes": {
+        "mainRecipe": {
+          "sections": [
+            {
+              "type": "dated",
+              "items": [
+                {
+                  "id": "a7b8c9d0-5222-4000-8000-000000000001",
+                  "text": "communicated that Operation Al-Aqsa Flood had started",
+                  "children": [
+                    { "id": "a7b8c9d0-5222-4000-8000-000000000002", "text": "said that Operation Al-Aqsa Flood had started" },
+                    { "id": "a7b8c9d0-5222-4000-8000-000000000003", "text": "signed that Operation Al-Aqsa Flood had started" },
+                    { "id": "a7b8c9d0-5222-4000-8000-000000000004", "text": "signalled that Operation Al-Aqsa Flood had started" },
+                    { "id": "a7b8c9d0-5222-4000-8000-000000000005", "text": "messaged that Operation Al-Aqsa Flood had started" }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        "roleRecipes": {
+          "Agent": {
+            "wikidata": "Q94839"
+          }
+        }
+      }
+    },
+    {
+      "id": 2,
       "sentence": "Hamas militants attacked Israel",
+      "stative": false,
       "startDate": "2023-10-07T00:00",
       "endDate": "2023-10-07T23:59",
       "location": "Israel",
@@ -151,8 +202,9 @@
       }
     },
     {
-      "id": 2,
+      "id": 3,
       "sentence": "Militants fired missiles from the Gaza Strip over Southern Israel to Tel Aviv",
+      "stative": false,
       "startDate": "2023-10-07T08:00",
       "endDate": "2023-10-07T08:30",
       "location": "Gaza Strip",
@@ -271,172 +323,11 @@
       }
     },
     {
-      "id": 3,
-      "sentence": "An Egyptian official said \"We have warned them an explosion of the situation is coming, and very soon, and it would be big. But they underestimated such warnings\"",
-      "roles": [
-        { "word": "An Egyptian official", "role": "Agent" },
-        { "word": "said", "role": "Action", "isAction": true },
-        { "word": "We have warned them an explosion of the situation is coming, and very soon, and it would be big. But they underestimated such warnings", "role": "Content.quote" }
-      ],
-      "evidence": [
-        {
-          "id": "ev-3-001",
-          "type": "article",
-          "title": "What went wrong? Questions emerge over Israel's intelligence prowess after Hamas attack",
-          "url": "https://apnews.com/article/israel-hamas-gaza-attack-intel-a5287a18773232f26ca171233be01721",
-          "source": "AP News",
-          "supports": ["e5f6a7b8-3222-4000-8000-000000000001"],
-          "sourceType": "secondary",
-          "evidenceCategory": "direct"
-        }
-      ],
-      "recipes": {
-        "mainRecipe": {
-          "sections": [
-            {
-              "type": "dated",
-              "items": [
-                {
-                  "id": "e5f6a7b8-3222-4000-8000-000000000001",
-                  "text": "communicated \"We have warned them an explosion of the situation is coming, and very soon, and it would be big. But they underestimated such warnings\"",
-                  "children": [
-                    { "id": "e5f6a7b8-3222-4000-8000-000000000002", "text": "said \"We have warned them an explosion of the situation is coming, and very soon, and it would be big. But they underestimated such warnings\"" },
-                    { "id": "e5f6a7b8-3222-4000-8000-000000000003", "text": "signed \"We have warned them an explosion of the situation is coming, and very soon, and it would be big. But they underestimated such warnings\"" },
-                    { "id": "e5f6a7b8-3222-4000-8000-000000000004", "text": "signalled \"We have warned them an explosion of the situation is coming, and very soon, and it would be big. But they underestimated such warnings\"" },
-                    { "id": "e5f6a7b8-3222-4000-8000-000000000005", "text": "messaged \"We have warned them an explosion of the situation is coming, and very soon, and it would be big. But they underestimated such warnings\"" }
-                  ]
-                }
-              ]
-            }
-          ]
-        },
-        "roleRecipes": {
-          "Agent": {
-            "items": [
-              {
-                "id": "e5f6a7b8-3111-4000-8000-000000000002",
-                "text": "Is Egyptian",
-                "children": [
-                  { "id": "e5f6a7b8-3111-4000-8000-000000000003", "text": "Holds Egyptian citizenship" },
-                  { "id": "e5f6a7b8-3111-4000-8000-000000000004", "text": "Is born in Egypt" },
-                  { "id": "e5f6a7b8-3111-4000-8000-000000000005", "text": "Represents the Egyptian government" }
-                ]
-              },
-              {
-                "id": "e5f6a7b8-3111-4000-8000-000000000006",
-                "text": "Is an official",
-                "children": [
-                  { "id": "e5f6a7b8-3111-4000-8000-000000000007", "text": "Holds a position in government" },
-                  { "id": "e5f6a7b8-3111-4000-8000-000000000008", "text": "Has authority to speak on behalf of the government" },
-                  { "id": "e5f6a7b8-3111-4000-8000-000000000009", "text": "Is appointed or elected to a governmental role" }
-                ]
-              }
-            ]
-          }
-        }
-      }
-    },
-    {
       "id": 4,
-      "sentence": "Benjamin Netanyahu denied that Israel had received prior warning of the October 7th attacks",
-      "startDate": "2023-10-09T16:20:44.935Z",
-      "endDate": "2023-10-09T16:20:44.935Z",
-      "roles": [
-        { "word": "Benjamin Netanyahu", "role": "Agent" },
-        { "word": "denied", "role": "Action", "isAction": true },
-        { "word": "Israel had received prior warning of the attacks", "role": "Content.clause" }
-      ],
-      "evidence": [
-        {
-          "id": "ev-4-001",
-          "type": "tweet",
-          "tweetId": "1711416416522346740",
-          "url": "https://x.com/i/status/1711416416522346740",
-          "source": "X",
-          "supports": ["f6a7b8c9-4222-4000-8000-000000000001"],
-          "sourceType": "primary",
-          "evidenceCategory": "direct"
-        }
-      ],
-      "recipes": {
-        "mainRecipe": {
-          "sections": [
-            {
-              "type": "dated",
-              "items": [
-                {
-                  "id": "f6a7b8c9-4222-4000-8000-000000000001",
-                  "text": "communicated that Israel had not received prior warning of the attacks",
-                  "children": [
-                    { "id": "f6a7b8c9-4222-4000-8000-000000000002", "text": "said that Israel had not received prior warning of the attacks" },
-                    { "id": "f6a7b8c9-4222-4000-8000-000000000003", "text": "signed that Israel had not received prior warning of the attacks" },
-                    { "id": "f6a7b8c9-4222-4000-8000-000000000004", "text": "signalled that Israel had not received prior warning of the attacks" },
-                    { "id": "f6a7b8c9-4222-4000-8000-000000000005", "text": "messaged that Israel had not received prior warning of the attacks" }
-                  ]
-                }
-              ]
-            }
-          ]
-        },
-        "roleRecipes": {
-          "Agent": {
-            "wikidata": "Q43723"
-          }
-        }
-      }
-    },
-    {
-      "id": 5,
-      "sentence": "Hamas announced the start of Operation Al-Aqsa Flood",
-      "startDate": "2023-10-07T06:25",
-      "endDate": "2023-10-07T06:30",
-      "roles": [
-        { "word": "Hamas", "role": "Agent" },
-        { "word": "announced", "role": "Action", "isAction": true },
-        { "word": "the start of Operation Al-Aqsa Flood", "role": "Content.entity" }
-      ],
-      "evidence": [
-        {
-          "id": "ev-5-001",
-          "type": "video",
-          "title": "Mohammad Deif speech announcing Operation Al-Aqsa Flood",
-          "url": "https://www.youtube.com/watch?v=N74O67NSwKo",
-          "source": "YouTube",
-          "supports": ["a7b8c9d0-5222-4000-8000-000000000001"],
-          "sourceType": "primary",
-          "evidenceCategory": "direct"
-        }
-      ],
-      "recipes": {
-        "mainRecipe": {
-          "sections": [
-            {
-              "type": "dated",
-              "items": [
-                {
-                  "id": "a7b8c9d0-5222-4000-8000-000000000001",
-                  "text": "communicated that Operation Al-Aqsa Flood had started",
-                  "children": [
-                    { "id": "a7b8c9d0-5222-4000-8000-000000000002", "text": "said that Operation Al-Aqsa Flood had started" },
-                    { "id": "a7b8c9d0-5222-4000-8000-000000000003", "text": "signed that Operation Al-Aqsa Flood had started" },
-                    { "id": "a7b8c9d0-5222-4000-8000-000000000004", "text": "signalled that Operation Al-Aqsa Flood had started" },
-                    { "id": "a7b8c9d0-5222-4000-8000-000000000005", "text": "messaged that Operation Al-Aqsa Flood had started" }
-                  ]
-                }
-              ]
-            }
-          ]
-        },
-        "roleRecipes": {
-          "Agent": {
-            "wikidata": "Q38799"
-          }
-        }
-      }
-    },
-    {
-      "id": 6,
-      "sentence": "10 civilians were killed in Kibbutz Kissufim",
+      "sentence": "10 civilians were killed",
+      "stative": false,
+      "startDate": "2023-10-07T06:30",
+      "endDate": "2023-10-09T23:59",
       "location": "Kibbutz Kissufim, Israel",
       "roles": [
         { "word": "10 civilians", "role": "Patient" },
@@ -561,91 +452,12 @@
       }
     },
     {
-      "id": 7,
-      "sentence": "Barak Hiram authorized his tank unit to shell an Israeli home",
-      "startDate": "2023-10-07T17:57",
-      "endDate": "2023-10-07T18:03",
-      "location": "Kibbutz Be'eri, Israel",
-      "roles": [
-        { "word": "Barak Hiram", "role": "Agent" },
-        { "word": "authorized", "role": "Action", "isAction": true },
-        { "word": "his tank unit", "role": "Patient" },
-        { "word": "to shell an Israeli home", "role": "Scope" }
-      ],
-      "evidence": [
-        {
-          "id": "ev-7-001",
-          "type": "article",
-          "title": "Israeli General Ordered Tank to Fire on House Where Hostages Were Held",
-          "url": "https://www.nytimes.com/2023/12/27/world/middleeast/israel-beeri-hiram-hamas.html",
-          "source": "New York Times",
-          "supports": ["c9d0e1f2-7222-4000-8000-000000000001"],
-          "sourceType": "secondary",
-          "evidenceCategory": "circumstantial"
-        }
-      ],
-      "recipes": {
-        "mainRecipe": {
-          "sections": [
-            {
-              "type": "dated",
-              "items": [
-                {
-                  "id": "c9d0e1f2-7222-4000-8000-000000000001",
-                  "text": "communicated to his tank unit that they had permission to shell an Israeli home",
-                  "children": [
-                    { "id": "c9d0e1f2-7222-4000-8000-000000000002", "text": "said to his tank unit that they had permission to shell an Israeli home" },
-                    { "id": "c9d0e1f2-7222-4000-8000-000000000003", "text": "signed to his tank unit that they had permission to shell an Israeli home" },
-                    { "id": "c9d0e1f2-7222-4000-8000-000000000004", "text": "signalled to his tank unit that they had permission to shell an Israeli home" },
-                    { "id": "c9d0e1f2-7222-4000-8000-000000000005", "text": "messaged to his tank unit that they had permission to shell an Israeli home" }
-                  ]
-                }
-              ]
-            }
-          ]
-        },
-        "roleRecipes": {
-          "Agent": {
-            "wikidata": "Q27020200"
-          },
-          "Patient": {
-            "isGroup": true,
-            "items": [
-              {
-                "id": "c9d0e1f2-7112-4000-8000-000000000001",
-                "text": "Is a military unit",
-                "children": [
-                  { "id": "c9d0e1f2-7112-4000-8000-000000000004", "text": "Is an organizational structure" },
-                  { "id": "c9d0e1f2-7112-4000-8000-000000000002", "text": "Is part of a military organization" },
-                  { "id": "c9d0e1f2-7112-4000-8000-000000000003", "text": "Contains personnel" }
-                ]
-              },
-              {
-                "id": "c9d0e1f2-7112-4000-8000-000000000005",
-                "text": "Is a tank unit",
-                "children": [
-                  { "id": "c9d0e1f2-7112-4000-8000-000000000006", "text": "Operates tank vehicles" }
-                ]
-              },
-              {
-                "id": "c9d0e1f2-7112-4000-8000-000000000009",
-                "text": "Is subordinate to Barak Hiram",
-                "children": [
-                  { "id": "c9d0e1f2-7112-4000-8000-000000000010", "text": "Reports to Barak Hiram" },
-                  { "id": "c9d0e1f2-7112-4000-8000-000000000011", "text": "Receives orders from Barak Hiram" }
-                ]
-              }
-            ]
-          }
-        }
-      }
-    },
-    {
-      "id": 8,
+      "id": 5,
       "sentence": "Hamas fighters fought against armed residents",
+      "stative": false,
       "startDate": "2023-10-07T07:00",
       "endDate": "2023-10-07T23:00",
-      "location": "Kibbutz Be'eri, Israel",
+      "location": "Kibbutz Nir Am, Israel",
       "roles": [
         { "word": "Hamas fighters", "role": "Agent" },
         { "word": "fought", "role": "Action", "isAction": true },
@@ -746,13 +558,17 @@
       }
     },
     {
-      "id": 9,
+      "id": 6,
       "sentence": "41 foreign workers were employed by Kibbutz Alumim",
+      "stative": true,
+      "startDate": "2023-10-07T00:00",
+      "endDate": "2023-10-07T23:59",
+      "location": "Kibbutz Alumim, Israel",
       "frame": "BEING_EMPLOYED",
       "roles": [
-        { "word": "41 foreign workers", "role": "Agent" },
+        { "word": "41 foreign workers", "role": "Employee" },
         { "word": "were employed", "role": "Action", "isAction": true },
-        { "word": "Kibbutz Alumim", "role": "Beneficiary" }
+        { "word": "Kibbutz Alumim", "role": "Employer" }
       ],
       "evidence": [
         {
@@ -787,7 +603,7 @@
           ]
         },
         "roleRecipes": {
-          "Agent": {
+          "Employee": {
             "isGroup": true,
             "aggregateCount": 41,
             "items": [
@@ -810,12 +626,235 @@
               }
             ]
           },
-          "Beneficiary": {
+          "Employer": {
             "location": {
               "lat": 31.3833,
               "lng": 34.4667
             }
           }
+        }
+      }
+    },
+    {
+      "id": 7,
+      "sentence": "Barak Hiram authorized his tank unit to shell an Israeli home",
+      "stative": false,
+      "startDate": "2023-10-07T17:57",
+      "endDate": "2023-10-07T18:03",
+      "location": "Kibbutz Be'eri, Israel",
+      "roles": [
+        { "word": "Barak Hiram", "role": "Agent" },
+        { "word": "authorized", "role": "Action", "isAction": true },
+        { "word": "his tank unit", "role": "Patient" },
+        { "word": "to shell an Israeli home", "role": "Scope" }
+      ],
+      "evidence": [
+        {
+          "id": "ev-7-001",
+          "type": "article",
+          "title": "Israeli General Ordered Tank to Fire on House Where Hostages Were Held",
+          "url": "https://www.nytimes.com/2023/12/27/world/middleeast/israel-beeri-hiram-hamas.html",
+          "source": "New York Times",
+          "supports": ["c9d0e1f2-7222-4000-8000-000000000001"],
+          "sourceType": "secondary",
+          "evidenceCategory": "circumstantial"
+        }
+      ],
+      "recipes": {
+        "mainRecipe": {
+          "sections": [
+            {
+              "type": "dated",
+              "items": [
+                {
+                  "id": "c9d0e1f2-7222-4000-8000-000000000001",
+                  "text": "communicated to his tank unit that they had permission to shell an Israeli home",
+                  "children": [
+                    { "id": "c9d0e1f2-7222-4000-8000-000000000002", "text": "said to his tank unit that they had permission to shell an Israeli home" },
+                    { "id": "c9d0e1f2-7222-4000-8000-000000000003", "text": "signed to his tank unit that they had permission to shell an Israeli home" },
+                    { "id": "c9d0e1f2-7222-4000-8000-000000000004", "text": "signalled to his tank unit that they had permission to shell an Israeli home" },
+                    { "id": "c9d0e1f2-7222-4000-8000-000000000005", "text": "messaged to his tank unit that they had permission to shell an Israeli home" }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        "roleRecipes": {
+          "Agent": {
+            "wikidata": "Q27020200"
+          },
+          "Patient": {
+            "isGroup": true,
+            "items": [
+              {
+                "id": "c9d0e1f2-7112-4000-8000-000000000001",
+                "text": "Is a military unit",
+                "children": [
+                  { "id": "c9d0e1f2-7112-4000-8000-000000000004", "text": "Is an organizational structure" },
+                  { "id": "c9d0e1f2-7112-4000-8000-000000000002", "text": "Is part of a military organization" },
+                  { "id": "c9d0e1f2-7112-4000-8000-000000000003", "text": "Contains personnel" }
+                ]
+              },
+              {
+                "id": "c9d0e1f2-7112-4000-8000-000000000005",
+                "text": "Is a tank unit",
+                "children": [
+                  { "id": "c9d0e1f2-7112-4000-8000-000000000006", "text": "Operates tank vehicles" }
+                ]
+              },
+              {
+                "id": "c9d0e1f2-7112-4000-8000-000000000009",
+                "text": "Is subordinate to Barak Hiram",
+                "children": [
+                  { "id": "c9d0e1f2-7112-4000-8000-000000000010", "text": "Reports to Barak Hiram" },
+                  { "id": "c9d0e1f2-7112-4000-8000-000000000011", "text": "Receives orders from Barak Hiram" }
+                ]
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": 8,
+      "sentence": "An Egyptian official said \"We have warned them an explosion of the situation is coming, and very soon, and it would be big. But they underestimated such warnings\"",
+      "stative": false,
+      "endDate": "2023-10-09T00:00",
+      "roles": [
+        { "word": "An Egyptian official", "role": "Agent" },
+        { "word": "said", "role": "Action", "isAction": true },
+        { "word": "We have warned them an explosion of the situation is coming, and very soon, and it would be big. But they underestimated such warnings", "role": "Content.quote" }
+      ],
+      "evidence": [
+        {
+          "id": "ev-3-001",
+          "type": "article",
+          "title": "What went wrong? Questions emerge over Israel's intelligence prowess after Hamas attack",
+          "url": "https://apnews.com/article/israel-hamas-gaza-attack-intel-a5287a18773232f26ca171233be01721",
+          "source": "AP News",
+          "supports": ["e5f6a7b8-3222-4000-8000-000000000001"],
+          "sourceType": "secondary",
+          "evidenceCategory": "direct"
+        }
+      ],
+      "recipes": {
+        "mainRecipe": {
+          "sections": [
+            {
+              "type": "dated",
+              "items": [
+                {
+                  "id": "e5f6a7b8-3222-4000-8000-000000000001",
+                  "text": "communicated \"We have warned them an explosion of the situation is coming, and very soon, and it would be big. But they underestimated such warnings\"",
+                  "children": [
+                    { "id": "e5f6a7b8-3222-4000-8000-000000000002", "text": "said \"We have warned them an explosion of the situation is coming, and very soon, and it would be big. But they underestimated such warnings\"" },
+                    { "id": "e5f6a7b8-3222-4000-8000-000000000003", "text": "signed \"We have warned them an explosion of the situation is coming, and very soon, and it would be big. But they underestimated such warnings\"" },
+                    { "id": "e5f6a7b8-3222-4000-8000-000000000004", "text": "signalled \"We have warned them an explosion of the situation is coming, and very soon, and it would be big. But they underestimated such warnings\"" },
+                    { "id": "e5f6a7b8-3222-4000-8000-000000000005", "text": "messaged \"We have warned them an explosion of the situation is coming, and very soon, and it would be big. But they underestimated such warnings\"" }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        "roleRecipes": {
+          "Agent": {
+            "items": [
+              {
+                "id": "e5f6a7b8-3111-4000-8000-000000000002",
+                "text": "Is Egyptian",
+                "children": [
+                  { "id": "e5f6a7b8-3111-4000-8000-000000000003", "text": "Holds Egyptian citizenship" },
+                  { "id": "e5f6a7b8-3111-4000-8000-000000000004", "text": "Is born in Egypt" },
+                  { "id": "e5f6a7b8-3111-4000-8000-000000000005", "text": "Represents the Egyptian government" }
+                ]
+              },
+              {
+                "id": "e5f6a7b8-3111-4000-8000-000000000006",
+                "text": "Is an official",
+                "children": [
+                  { "id": "e5f6a7b8-3111-4000-8000-000000000007", "text": "Holds a position in government" },
+                  { "id": "e5f6a7b8-3111-4000-8000-000000000008", "text": "Has authority to speak on behalf of the government" },
+                  { "id": "e5f6a7b8-3111-4000-8000-000000000009", "text": "Is appointed or elected to a governmental role" }
+                ]
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": 9,
+      "sentence": "Benjamin Netanyahu's Office denied that Israel had received prior warning of the October 7th attacks",
+      "stative": false,
+      "startDate": "2023-10-09T16:20:44.935Z",
+      "endDate": "2023-10-09T16:20:44.935Z",
+      "roles": [
+        { "word": "Benjamin Netanyahu's Office", "role": "Agent" },
+        { "word": "denied", "role": "Action", "isAction": true },
+        { "word": "Israel had received prior warning of the October 7th attacks", "role": "Content.clause" }
+      ],
+      "evidence": [
+        {
+          "id": "ev-4-001",
+          "type": "tweet",
+          "tweetId": "1711416416522346740",
+          "url": "https://x.com/i/status/1711416416522346740",
+          "source": "X",
+          "supports": ["f6a7b8c9-4222-4000-8000-000000000001"],
+          "sourceType": "primary",
+          "evidenceCategory": "direct"
+        }
+      ],
+      "recipes": {
+        "mainRecipe": {
+          "sections": [
+            {
+              "type": "dated",
+              "items": [
+                {
+                  "id": "f6a7b8c9-4222-4000-8000-000000000001",
+                  "text": "communicated that Israel had not received prior warning of the attacks",
+                  "children": [
+                    { "id": "f6a7b8c9-4222-4000-8000-000000000002", "text": "said that Israel had not received prior warning of the attacks" },
+                    { "id": "f6a7b8c9-4222-4000-8000-000000000003", "text": "signed that Israel had not received prior warning of the attacks" },
+                    { "id": "f6a7b8c9-4222-4000-8000-000000000004", "text": "signalled that Israel had not received prior warning of the attacks" },
+                    { "id": "f6a7b8c9-4222-4000-8000-000000000005", "text": "messaged that Israel had not received prior warning of the attacks" }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        "roleRecipes": {
+          "Agent": [
+            {
+              "name": "Benjamin Netanyahu",
+              "wikidata": "Q43723"
+            },
+            {
+              "name": "Benjamin Netanyahu's Office",
+              "items": [
+                {
+                  "id": "f6a7b8c9-4111-4000-8000-000000000001",
+                  "text": "Is the official communication channel of Benjamin Netanyahu",
+                  "children": [
+                    { "id": "f6a7b8c9-4111-4000-8000-000000000002", "text": "Represents Benjamin Netanyahu's official position" },
+                    { "id": "f6a7b8c9-4111-4000-8000-000000000003", "text": "Is authorized to speak on behalf of Benjamin Netanyahu" }
+                  ]
+                },
+                {
+                  "id": "f6a7b8c9-4111-4000-8000-000000000004",
+                  "text": "Is part of the Israeli government",
+                  "children": [
+                    { "id": "f6a7b8c9-4111-4000-8000-000000000005", "text": "Is an official government office" },
+                    { "id": "f6a7b8c9-4111-4000-8000-000000000006", "text": "Is associated with the Prime Minister's role" }
+                  ]
+                }
+              ]
+            }
+          ]
         }
       }
     }
